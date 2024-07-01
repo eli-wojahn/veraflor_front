@@ -1,0 +1,160 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 80px;
+}
+
+.videoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 854px;
+    margin-bottom: 40px; /* Espaço entre o vídeo e a faixa rosa */
+}
+
+.mapSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DE2C62; /* Rosa */
+    padding: 40px 0; /* Ajuste o padding conforme necessário */
+    width: 100vw; /* Ocupa toda a largura da viewport */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    color: white; /* Textos em branco */
+    margin-top: 20px; /* Espaço entre o vídeo e a faixa rosa */
+}
+
+.mapInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 20%;
+    margin-left: 80px;
+}
+
+.mapIcon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.mapTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mapAddress {
+    font-size: 16px;
+}
+
+.mapContainer {
+    display: flex;
+    justify-content: center;
+    width: 70%; /* Ajuste a largura conforme necessário */
+}
+
+.iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+}
+
+.contactSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px; /* Ajuste o padding conforme necessário */
+    width: 100%; /* Ocupa toda a largura da viewport */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    margin-top: 20px; /* Espaço entre a faixa rosa e a seção de contato */
+}
+
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 30%;
+    color: black;
+}
+
+.contactIcon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.contactTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.contactDetail {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.contactDetailIcon {
+    margin-right: 10px;
+    color: black;
+}
+
+.deliveryInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 70%;
+    color: black;
+}
+
+.deliveryImage {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.hoursSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DE2C62; /* Rosa */
+    padding: 40px 20px; /* Ajuste o padding conforme necessário */
+    width: 100vw; /* Ocupa toda a largura da viewport */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    color: white; /* Textos em branco */
+    margin-top: 20px; /* Espaço entre a seção de contato e a faixa rosa */
+}
+
+.hoursContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.hoursImage {
+    max-width: 50%;
+    height: auto;
+    margin-right: 20px;
+}

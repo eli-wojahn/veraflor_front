@@ -1,0 +1,150 @@
+/* pages/pelotas.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0; /* Cor de fundo */
+    padding: 20px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 80px;
+}
+
+.videoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 854px;
+    margin-bottom: 40px; /* Espaço entre o vídeo e a faixa rosa */
+}
+
+.videoContainer video {
+    width: 100%;
+    height: auto;
+}
+
+.mapSection, .hoursSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espaça os elementos igualmente */
+    padding: 40px 20px;
+    width: 100vw; /* Ocupa toda a largura da viewport */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    margin-top: 20px; /* Espaço entre as seções */
+    background-color: #DE2C62; /* Rosa */
+    color: white; /* Textos em branco */
+}
+
+.contactSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espaça os elementos igualmente */
+    padding: 40px 20px;
+    width: 100vw; /* Ocupa toda a largura da viewport */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    margin-top: 20px; /* Espaço entre as seções */
+    color: rgb(0, 0, 0); /* Textos em branco */
+}
+
+.mapSection .mapInfo, .contactSection .contactInfo, .hoursSection .hoursContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 30%; /* Largura fixa para a info */
+}
+
+.mapSection .mapContainer, .contactSection .deliveryInfo, .hoursSection .hoursContent {
+    width: 60%; /* Largura fixa para o mapa, delivery e horas */
+}
+
+.mapIcon, .contactIcon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.mapTitle, .contactTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mapAddress, .contactDetail {
+    font-size: 16px;
+}
+
+.contactDetailIcon {
+    margin-right: 10px;
+    color: black;
+}
+
+.deliveryImage, .hoursImage {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Garantir que o iframe seja responsivo */
+.mapContainer iframe {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; /* Mantém a proporção do mapa */
+    border: 0;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .mapSection, .contactSection, .hoursSection {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+    }
+
+    .mapSection .mapInfo, .contactSection .contactInfo, .hoursSection .hoursContent {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .mapSection .mapContainer, .contactSection .deliveryInfo, .hoursSection .hoursContent {
+        width: 100%;
+    }
+
+    .videoContainer {
+        max-width: 100%;
+    }
+
+    .title {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    .mapTitle, .contactTitle {
+        font-size: 20px;
+    }
+
+    .mapAddress, .contactDetail {
+        font-size: 14px;
+    }
+
+    .mapIcon, .contactIcon {
+        font-size: 30px;
+    }
+
+    .videoContainer video {
+        width: 100%;
+        height: auto;
+    }
+
+    .iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9; /* Mantém a proporção do mapa */
+    }
+}

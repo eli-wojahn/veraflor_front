@@ -1,0 +1,8 @@
+node_modules/
+.next/cache/webpack/client-development/
+.next/cache/webpack/server-development/
+.next/cache/
+.next/server/
+.next/static/
+.next/trace
+public/videos

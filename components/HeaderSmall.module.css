@@ -1,0 +1,163 @@
+/* components/HeaderSmall.module.css */
+
+.navbar {
+  background-color: #ffffff;
+  color: #79972B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.logo {
+  font-size: 34px;
+  margin-bottom: 20px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.menuIcon {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.searchIcon {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.logoutContainer {
+  display: flex;
+  align-items: center;
+  color: #79972B;
+}
+
+.logout {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logoutIcon {
+  font-size: 30px;
+  margin-left: 10px;
+  transition: font-size 0.3s;
+}
+
+.logoutIcon:hover {
+  font-size: 35px;
+}
+
+.logoutIcon:hover ~ .logoutTooltip {
+  display: block;
+}
+
+.logoutTooltip {
+  display: none;
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.menu {
+  display: none;
+  width: 100%;
+}
+
+.menu.active {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  color: #79972B;
+  font-family: "Proxima Nova", sans-serif;
+}
+
+.menu ul li {
+  width: 100%;
+  text-align: left;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.menu ul li.active div {
+  width: fit-content;
+  border-bottom: 2px solid #79972B;
+}
+
+.searchBarExpanded {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.searchInputExpanded {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #79972B;
+  border-radius: 15px;
+  font-family: "Proxima Nova", sans-serif;
+  color: black;
+  background-color: #ffffff;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdownContent {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdownContent,
+.dropdown.active .dropdownContent {
+  display: flex;
+}
+
+.dropdownContent div {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #79972B;
+}
+
+.dropdownContent div:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdownContent a {
+  text-decoration: none;
+  color: #79972B;
+  width: 100%;
+}
+
+.dropdownContent a:hover {
+  background-color: #f1f1f1;
+}

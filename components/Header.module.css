@@ -1,0 +1,227 @@
+/* components/Header.module.css */
+.navbar {
+  background-color: #ffffff;
+  color: #79972B;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.logo {
+  font-size: 24px;
+  margin-bottom: 20px; /* Ajusta o espaçamento em telas menores */
+}
+
+.menuIcon {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  font-family: "Proxima Nova", sans-serif;
+  flex-wrap: wrap;
+}
+
+.menu ul li {
+  margin: 10px 20px;
+  position: relative;
+}
+
+.menu ul li.active div {
+  display: inline-block;
+  border-bottom: 2px solid #79972B;
+}
+
+.dropdown {
+  position: relative;
+  cursor: pointer; /* Add cursor pointer to dropdown */
+}
+
+.dropdownTitle {
+  cursor: pointer; /* Add cursor pointer to dropdown title */
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 160px;
+  padding: 10px 0;
+}
+
+.dropdownMenu li {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownMenu li div {
+  padding: 10px 20px;
+  cursor: pointer; /* Add cursor pointer to dropdown menu items */
+}
+
+.dropdownMenu li div:hover {
+  background-color: #f0f0f0;
+}
+
+.searchBar {
+  font-family: "Proxima Nova", sans-serif;
+  background-color: #ffffff;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  margin-left: auto;
+  border: 1px solid rgb(73, 68, 68);
+  width: 300px; /* Aumenta a largura da barra de busca */
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  color: black;
+}
+
+.searchIcon {
+  padding: 0 10px;
+  order: -1; /* Muda a ordem do ícone para o início da flexbox */
+  cursor: pointer; /* Add cursor pointer to search icon */
+}
+
+.searchIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.logoutContainer {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logout {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logoutIcon {
+  font-size: 30px;
+  margin-left: 10px;
+  transition: font-size 0.3s;
+  cursor: pointer; /* Add cursor pointer to logout icon */
+}
+
+.logoutIcon:hover {
+  font-size: 35px;
+}
+
+.logoutIcon:hover ~ .logoutTooltip {
+  display: block;
+}
+
+.logoutTooltip {
+  display: none;
+  position: absolute;
+  top: -25px; /* Ajusta a posição da tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .menuIcon {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    width: 100%;
+  }
+
+  .menu.active {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .menu ul li {
+    width: 100%;
+    text-align: left;
+  }
+
+  .menu ul li.active div {
+    width: fit-content;
+  }
+
+  .searchBar {
+    margin-top: 10px;
+    margin-left: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  .searchIcon {
+    order: 1;
+  }
+
+  .logoutContainer {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+
+  .dropdownMenu {
+    position: static;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .dropdownMenu li div {
+    background-color: #fff;
+  }
+}
+
+.confirmButton {
+  background-color: #79972B !important;
+  color: white !important;
+}

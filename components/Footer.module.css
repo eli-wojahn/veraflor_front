@@ -1,0 +1,68 @@
+.footer {
+  background-color: #6B4726;
+  color: #fff;
+  padding: 20px 10px;
+}
+
+.infoSection {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.paymentSection {
+  margin-top: 20px;
+}
+
+.paymentIcons {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.paymentIcons img {
+  width: 28px;
+  border-radius: 3px;
+}
+
+.contact, .institutional, .virtualStore {
+  font-size: 13px;
+}
+
+.contact h4, .institutional h4, .virtualStore h4 {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.contact p, .institutional p, .virtualStore p {
+  margin-bottom: 5px;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .infoSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .infoSection {
+    grid-template-columns: 1fr;
+  }
+  
+  .paymentSection {
+    margin-top: 0;
+  }
+
+  .paymentIcons {
+    justify-content: flex-start;
+  }
+}

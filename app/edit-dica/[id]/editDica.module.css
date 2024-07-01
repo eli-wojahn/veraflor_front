@@ -1,0 +1,117 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #79972B;
+    padding: 20px;
+    overflow-y: auto; /* Adicionado para permitir a rolagem vertical */
+    box-sizing: border-box; /* Inclui o padding e a borda no cálculo da altura total */
+}
+
+.formArea {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    width: 65%;
+    max-height: 100%; /* Garante que o formArea não exceda a altura da tela */
+    overflow-y: auto; /* Permite rolagem se o conteúdo do formulário for maior que a área disponível */
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+    color: black;
+}
+
+.form {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.formColumn {
+    flex: 1;
+    padding: 10px;
+    min-width: 250px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input, .textarea {
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid black;
+    color: black;
+    font-size: medium;
+}
+
+.buttonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.submitButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.clearButton {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.imagemPreview {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+@media (max-width: 768px) {
+    .formArea {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .formRow {
+        flex-direction: column;
+    }
+
+    .formColumn {
+        width: 100%;
+        padding: 0;
+    }
+
+    .buttonGroup {
+        justify-content: center;
+    }
+}
