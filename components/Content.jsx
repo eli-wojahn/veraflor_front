@@ -4,7 +4,6 @@ import styles from './Content.module.css';
 import CustomCarousel from './CustomCarousel';
 import Link from 'next/link';
 
-// Use caminhos relativos a partir da pasta 'public'
 import image1 from '/public/images/image2.jpg';
 import image2 from '/public/images/image3.jpg';
 import image3 from '/public/images/image5.png';

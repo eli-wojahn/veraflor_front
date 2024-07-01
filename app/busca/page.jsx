@@ -1,9 +1,9 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './busca.module.css';
 
-const BuscaPage = () => {
+const BuscaContent = () => {
     const searchParams = useSearchParams();
     const keyword = searchParams.get('keyword') || '';
 
@@ -71,6 +71,14 @@ const BuscaPage = () => {
                 )}
             </div>
         </div>
+    );
+};
+
+const BuscaPage = () => {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <BuscaContent />
+        </Suspense>
     );
 };
 

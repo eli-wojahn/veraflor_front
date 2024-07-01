@@ -1,5 +1,3 @@
-/* components/HeaderSmall.module.css */
-
 .navbar {
   background-color: #ffffff;
   color: #79972B;
@@ -160,4 +158,9 @@
 
 .dropdownContent a:hover {
   background-color: #f1f1f1;
+}
+
+.confirmButton {
+  background-color: #79972B !important;
+  color: white !important;
 }

@@ -1,4 +1,5 @@
 'use client';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './Header.module.css';
@@ -21,7 +22,7 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const router = useRouter(); 
+    const router = useRouter();
     const dropdownRef = useRef(null);
 
     function logout() {
@@ -170,4 +171,12 @@ const Header = () => {
     );
 };
 
-export default Header;
+const SearchPage = () => {
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <Header />
+        </Suspense>
+    );
+};
+
+export default SearchPage;
