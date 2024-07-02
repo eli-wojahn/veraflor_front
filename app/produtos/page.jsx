@@ -21,53 +21,34 @@ const ProductPage = () => {
     });
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
-    const [showProductModal, setShowProductModal] = useState(false); // New state for product modal
+    const [showProductModal, setShowProductModal] = useState(false);
 
     useEffect(() => {
-        fetchProducts();
-    }, []);
-
-    useEffect(() => {
-        applyFilters();
-    }, [filters]);
-
-    const fetchProducts = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch('http://localhost:3004/produtos');
-            if (!response.ok) {
-                throw new Error('Erro ao obter produtos');
-            }
-            const data = await response.json();
-            setProductList(data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const applyFilters = async () => {
-        setLoading(true);
-        try {
-            const query = new URLSearchParams();
-            Object.keys(filters).forEach(key => {
-                if (filters[key].length > 0 || key === 'maxPreco') {
-                    query.append(key, filters[key]);
+        const fetchAndFilterProducts = async () => {
+            setLoading(true);
+            try {
+                const query = new URLSearchParams();
+                Object.keys(filters).forEach(key => {
+                    if (filters[key].length > 0 || key === 'maxPreco') {
+                        query.append(key, filters[key]);
+                    }
+                });
+                const url = query.toString() ? `http://localhost:3004/produtos/filtro?${query.toString()}` : 'http://localhost:3004/produtos';
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Erro ao obter produtos');
                 }
-            });
-            const response = await fetch(`http://localhost:3004/produtos/filtro?${query.toString()}`);
-            if (!response.ok) {
-                throw new Error('Erro ao obter produtos filtrados');
+                const data = await response.json();
+                setProductList(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
-            const data = await response.json();
-            setProductList(data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+        };
+
+        fetchAndFilterProducts();
+    }, [filters]);
 
     const openInfoModal = (product) => {
         setSelectedProduct(product);
