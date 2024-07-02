@@ -15,10 +15,15 @@ const CamaquaPage = () => {
             <h1 className={styles.title}>Camaquã</h1>
             <div className={styles.videoContainer}>
                 {isClient && (
-                    <video width="854" height="480" controls autoPlay muted>
-                        <source src="/videos/VeraflorCamaqua.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
+                    <iframe
+                        width="854"
+                        height="480"
+                        src="https://www.youtube.com/embed/Lg7CBeYfzF0?autoplay=1"
+                        title="Veraflor Camaquã"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
                 )}
             </div>
             <div className={styles.mapSection}>
