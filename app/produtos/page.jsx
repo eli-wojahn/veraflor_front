@@ -21,6 +21,7 @@ const ProductPage = () => {
     });
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
+    const [showProductModal, setShowProductModal] = useState(false); // New state for product modal
 
     useEffect(() => {
         fetchProducts();
@@ -73,6 +74,11 @@ const ProductPage = () => {
         setShowInfoModal(true);
     };
 
+    const openProductModal = (product) => {
+        setSelectedProduct(product);
+        setShowProductModal(true);
+    };
+
     const toggleFilters = () => {
         setShowFilters(!showFilters);
     };
@@ -110,13 +116,16 @@ const ProductPage = () => {
                     <ProductCard
                         key={index}
                         product={product}
-                        openPriceModal={ProductModal}
+                        openPriceModal={openProductModal}
                         openInfoModal={openInfoModal}
                     />
                 ))}
             </div>
             {showInfoModal && selectedProduct && (
                 <InfoModal product={selectedProduct} onClose={() => setShowInfoModal(false)} />
+            )}
+            {showProductModal && selectedProduct && (
+                <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
             )}
         </div>
     );
