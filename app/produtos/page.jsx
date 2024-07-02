@@ -1,3 +1,4 @@
+// components/ProductPage.js
 'use client'
 import React, { useState, useEffect } from 'react';
 import styles from './produtos.module.css';
@@ -80,6 +81,16 @@ const ProductPage = () => {
         });
     };
 
+    const clearFilters = () => {
+        setFilters({
+            ambiente: [],
+            tamanho: [],
+            tipo: [],
+            categoria: [],
+            maxPreco: 1000
+        });
+    };
+
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
@@ -90,7 +101,7 @@ const ProductPage = () => {
                 <button className={styles.filterButton} onClick={toggleFilters}>Filtrar <BsSliders /></button>
             </div>
             {showFilters && (
-                <FilterMenu filters={filters} handleFilterChange={handleFilterChange} toggleFilters={toggleFilters} />
+                <FilterMenu filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
             )}
             <div className={styles.cardContainer}>
                 {productList.map((product, index) => (
