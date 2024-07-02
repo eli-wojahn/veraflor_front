@@ -1,8 +1,8 @@
-// File: /home/elias/Área de Trabalho/TCC1/veraflor_front/app/pelotas/page.jsx
-import * as entry from '../../../../app/pelotas/page.js'
+// File: /home/elias/Área de Trabalho/TCC1/veraflor_front/app/destaques/page.jsx
+import * as entry from '../../../../app/destaques/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../app/pelotas/page.js')
+type TEntry = typeof import('../../../../app/destaques/page.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{
