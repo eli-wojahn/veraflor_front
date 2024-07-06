@@ -28,7 +28,7 @@ const ProductModal = ({ product, onClose }) => {
             title: '<span style="font-size: 18px;">Com qual loja você quer falar?</span>',
             html: (
                 <div className={styles.modalContent}>
-                    <img src={`http://localhost:3004/public/upload/${product.imagem}`} alt={product.descricao} className={styles.modalImage} />
+                    <img src={`https://veraflor.onrender.com/public/upload/${product.imagem}`} alt={product.descricao} className={styles.modalImage} />
                     <h2 className={styles.modalProductName}>{product.descricao}</h2>
                     <div className={styles.modalItems}>
                         <div className={styles.modalItem} onClick={() => handleWhatsAppClick('Pelotas')}>

@@ -14,7 +14,7 @@ const InfoModal = ({ product, onClose }) => {
         const fetchDicas = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:3004/dicas/produto/${product.id}`);
+                const response = await fetch(`https://veraflor.onrender.com/dicas/produto/${product.id}`);
                 if (!response.ok) {
                     throw new Error('Erro ao obter dicas');
                 }
@@ -35,7 +35,7 @@ const InfoModal = ({ product, onClose }) => {
             MySwal.fire({
                 html: (
                     <div className={styles.modalContent}>
-                        <img src={`http://localhost:3004/public/upload/${product.imagem}`} alt={product.descricao} className={styles.modalImage} />
+                        <img src={`https://veraflor.onrender.com/public/upload/${product.imagem}`} alt={product.descricao} className={styles.modalImage} />
                         <div className={styles.modalDetails}>
                             <h2 className={styles.modalProductName}>{product.descricao}</h2>
                             {dicas.length > 0 ? (

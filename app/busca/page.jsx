@@ -51,7 +51,7 @@ const BuscaContent = () => {
                     productList.map((product, index) => (
                         <div key={index} className={styles.card}>
                             <img
-                                src={`http://localhost:3004/public/upload/${product.imagem}`}
+                                src={`https://veraflor.onrender.com/public/upload/${product.imagem}`}
                                 alt={product.descricao}
                                 className={styles.image}
                             />
