@@ -128,13 +128,6 @@ const Header = () => {
                             </Link>
                         </li>
                         {adminId && (
-                            <li className={pathname === '/cadastro' ? styles.active : ''}>
-                                <Link href="/cadastro" passHref>
-                                    <div>Cadastro</div>
-                                </Link>
-                            </li>
-                        )}
-                        {adminId && (
                             <li className={pathname === '/listagem' ? styles.active : ''}>
                                 <Link href="/listagem" passHref>
                                     <div>Gerenciamento</div>

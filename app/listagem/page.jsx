@@ -108,7 +108,7 @@ const ProductListPage = () => {
                 window.location.href = `/edit-dica/${productId}`;
             } else {
                 Swal.fire({
-                    title: 'Aviso!',
+                    title: '',
                     text: 'Esse produto não tem dicas.',
                     icon: 'info',
                     confirmButtonText: 'OK'
@@ -130,7 +130,7 @@ const ProductListPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>Manutenção de Produtos</div>
+                <div className={styles.title}>Gerenciamento de Produtos</div>
                 <Link href="/cadastro" passHref>
                     <button className={styles.newProductButton}><BiPlusMedical/> Novo produto </button>
                 </Link>

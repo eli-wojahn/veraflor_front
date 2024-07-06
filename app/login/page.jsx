@@ -22,7 +22,7 @@ export default function Login() {
         )
 
         if (response.status === 400 || response.status === 404) {
-            Swal.fire('Ops...', 'E-mail ou senha inválidos', 'error');
+            Swal.fire('', 'E-mail ou senha inválidos', 'warning');
         } else if (response.status === 200) {
             const administrador = await response.json()
             mudaId(administrador.id);
