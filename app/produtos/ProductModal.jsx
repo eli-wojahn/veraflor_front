@@ -15,7 +15,7 @@ const ProductModal = ({ product, onClose }) => {
         }
 
         const handleWhatsAppClick = (location) => {
-            const phoneNumbers = {
+            const phoneNumbers = {  
                 Pelotas: '5553999561558',
                 Camaqua: '5553999272822',
             };
