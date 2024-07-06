@@ -16,7 +16,7 @@ const ProductListPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3004/produtos');
+                const response = await fetch('https://veraflor.onrender.com/produtos');
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
                 }
@@ -34,7 +34,7 @@ const ProductListPage = () => {
 
     async function destaque(id, status_atual) {
         try {
-            const response = await fetch(`http://localhost:3004/produtos/destaque/${id}`, {
+            const response = await fetch(`https://veraflor.onrender.com/produtos/destaque/${id}`, {
                 method: 'PATCH',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify({ destaque: !status_atual })
@@ -66,7 +66,7 @@ const ProductListPage = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3004/produtos/${productId}`, {
+                fetch(`https://veraflor.onrender.com/produtos/${productId}`, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -98,7 +98,7 @@ const ProductListPage = () => {
 
     const handleEditDica = async (productId) => {
         try {
-            const response = await fetch(`http://localhost:3004/dicas/produto/${productId}`);
+            const response = await fetch(`https://veraflor.onrender.com/dicas/produto/${productId}`);
             if (!response.ok) {
                 throw new Error('Erro ao verificar dicas');
             }

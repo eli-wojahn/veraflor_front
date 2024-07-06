@@ -25,13 +25,13 @@ const EditProductPage = ({ params }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3004/produtos/${id}`)
+        fetch(`https://veraflor.onrender.com/produtos/${id}`)
             .then(response => response.json())
             .then(data => {
                 setProduto({
                     ...data,
                     destaque: data.destaque.toString(),
-                    imagemPreview: data.imagem ? `http://localhost:3004/public/upload/${data.imagem}` : null
+                    imagemPreview: data.imagem ? `https://veraflor.onrender.com/public/upload/${data.imagem}` : null
                 });
                 setLoading(false);
             })
@@ -90,7 +90,7 @@ const EditProductPage = ({ params }) => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3004/produtos/${id}`, {
+            const response = await fetch(`https://veraflor.onrender.com/produtos/${id}`, {
                 method: 'PUT',
                 body: formData
             });

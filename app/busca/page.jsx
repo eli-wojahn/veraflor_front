@@ -20,7 +20,7 @@ const BuscaContent = () => {
 
         const fetchProducts = async () => {
             try {
-                const response = await fetch(`http://localhost:3004/produtos/busca?search=${keyword}`);
+                const response = await fetch(`https://veraflor.onrender.com/produtos/busca?search=${keyword}`);
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
                 }

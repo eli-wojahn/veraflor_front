@@ -20,7 +20,7 @@ const EditDicaPage = () => {
         if (id) {
             const fetchDica = async () => {
                 try {
-                    const response = await fetch(`http://localhost:3004/dicas/produto/${id}`);
+                    const response = await fetch(`https://veraflor.onrender.com/dicas/produto/${id}`);
                     if (!response.ok) {
                         throw new Error('Erro ao obter dica');
                     }
@@ -45,7 +45,7 @@ const EditDicaPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:3004/dicas/altera/${dica.id}`, {
+            const response = await fetch(`https://veraflor.onrender.com/dicas/altera/${dica.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dica)

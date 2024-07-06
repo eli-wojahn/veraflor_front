@@ -16,7 +16,7 @@ const DestaquesPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3004/produtos/destaque');
+                const response = await fetch('https://veraflor.onrender.com/produtos/destaque');
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
                 }

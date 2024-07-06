@@ -77,7 +77,7 @@ export default function Cadastro() {
         formData.append('imagem', produto.imagem);
 
         try {
-            const response = await fetch('http://localhost:3004/produtos', {
+            const response = await fetch('https://veraflor.onrender.com/produtos', {
                 method: 'POST',
                 body: formData
             });
