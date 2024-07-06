@@ -23,6 +23,7 @@ const ProductPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
+    const [newProductList, setNewProductList] = useState([]); 
 
     useEffect(() => {
         const fetchAndFilterProducts = async () => {
@@ -40,7 +41,7 @@ const ProductPage = () => {
                     throw new Error('Erro ao obter produtos');
                 }
                 const data = await response.json();
-                setProductList(data);
+                setNewProductList(data); 
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -50,6 +51,12 @@ const ProductPage = () => {
 
         fetchAndFilterProducts();
     }, [filters]);
+
+    useEffect(() => {
+        if (newProductList.length > 0) {
+            setProductList(newProductList); 
+        }
+    }, [newProductList]);
 
     const openInfoModal = (product) => {
         setSelectedProduct(product);
@@ -91,7 +98,6 @@ const ProductPage = () => {
         });
     };
 
-    if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
     return (
@@ -103,16 +109,29 @@ const ProductPage = () => {
             {showFilters && (
                 <FilterMenu filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
             )}
-            <div className={styles.cardContainer}>
-                {productList.map((product, index) => (
-                    <ProductCard
-                        key={index}
-                        product={product}
-                        openPriceModal={openProductModal}
-                        openInfoModal={openInfoModal}
-                    />
-                ))}
-            </div>
+            {loading ? (
+                <div className={styles.cardContainer}>
+                    {productList.map((product, index) => (
+                        <ProductCard
+                            key={index}
+                            product={product}
+                            openPriceModal={openProductModal}
+                            openInfoModal={openInfoModal}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className={styles.cardContainer}>
+                    {newProductList.map((product, index) => (
+                        <ProductCard
+                            key={index}
+                            product={product}
+                            openPriceModal={openProductModal}
+                            openInfoModal={openInfoModal}
+                        />
+                    ))}
+                </div>
+            )}
             {showInfoModal && selectedProduct && (
                 <InfoModal product={selectedProduct} onClose={() => setShowInfoModal(false)} />
             )}

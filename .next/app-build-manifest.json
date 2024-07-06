@@ -47,6 +47,12 @@
       "static/chunks/main-app.js",
       "static/css/app/cadastra-admin/page.css",
       "static/chunks/app/cadastra-admin/page.js"
+    ],
+    "/destaques/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/destaques/page.css",
+      "static/chunks/app/destaques/page.js"
     ]
   }
 }
