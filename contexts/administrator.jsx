@@ -1,15 +1,15 @@
 'use client'
 import Cookies from 'js-cookie';
-
 import { createContext, useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export const AdministradorContext = createContext();
 
 function AdministradorProvider({ children }) {
     const [adminId, setAdminId] = useState(null);
     const [adminNome, setAdminNome] = useState("");
+    const router = useRouter();
 
-    // Verifica se há um cookie de admin_logado
     useEffect(() => {
         const administradorCookie = Cookies.get('admin_logado');
         if (administradorCookie) {
@@ -17,16 +17,14 @@ function AdministradorProvider({ children }) {
             setAdminId(administrador.id);
             setAdminNome(administrador.nome);
         }
-    }, []); // executa apenas uma vez no início
+    }, []);
 
     function mudaId(id) {
-        // Atualiza o estado e cria ou atualiza o cookie
         setAdminId(id);
-        Cookies.set('admin_logado', JSON.stringify({ id }), { expires: 7 }); // Cookie expira em 7 dias
+        Cookies.set('admin_logado', JSON.stringify({ id, nome: adminNome }), { expires: 7 });
     }
 
     function mudaNome(nome) {
-        // Atualiza o estado e atualiza o cookie
         setAdminNome(nome);
         const administradorCookie = Cookies.get('admin_logado');
         if (administradorCookie) {
@@ -35,8 +33,15 @@ function AdministradorProvider({ children }) {
         }
     }
 
+    function logout() {
+        setAdminId(null);
+        setAdminNome('');
+        Cookies.remove('admin_logado');
+        router.push('/');
+    }
+
     return (
-        <AdministradorContext.Provider value={{ adminId, adminNome, mudaId, mudaNome }}>
+        <AdministradorContext.Provider value={{ adminId, adminNome, mudaId, mudaNome, logout }}>
             {children}
         </AdministradorContext.Provider>
     );

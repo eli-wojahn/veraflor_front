@@ -17,7 +17,7 @@ const MySwal = withReactContent(Swal);
 
 const Header = () => {
     const pathname = usePathname();
-    const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
+    const { adminId, adminNome, logout } = useContext(AdministradorContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -25,7 +25,7 @@ const Header = () => {
     const router = useRouter();
     const dropdownRef = useRef(null);
 
-    function logout() {
+    function handleLogout() {
         MySwal.fire({
             title: 'Confirma saída do sistema?',
             icon: 'warning',
@@ -37,8 +37,7 @@ const Header = () => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                mudaId(null);
-                mudaNome('');
+                logout();
             }
         });
     }
@@ -138,7 +137,7 @@ const Header = () => {
                         {adminId && (
                             <li className={pathname === '/listagem' ? styles.active : ''}>
                                 <Link href="/listagem" passHref>
-                                    <div>Listagem</div>
+                                    <div>Gerenciamento</div>
                                 </Link>
                             </li>
                         )}
@@ -161,7 +160,7 @@ const Header = () => {
                     {adminNome !== '' && (
                         <div className={styles.logout}>
                             <span>{adminNome}{' '}</span>
-                            <IoExitOutline onClick={logout} className={styles.logoutIcon} />
+                            <IoExitOutline onClick={handleLogout} className={styles.logoutIcon} />
                             <span className={styles.logoutTooltip}>Sair</span>
                         </div>
                     )}

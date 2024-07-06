@@ -37,6 +37,8 @@ const HeaderSmall = () => {
             if (result.isConfirmed) {
                 mudaId(null);
                 mudaNome('');
+                Cookies.remove('admin_logado');
+                router.push('/');
             }
         });
     }

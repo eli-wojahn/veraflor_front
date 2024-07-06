@@ -118,7 +118,7 @@ const ProductListPage = () => {
                 title: 'Erro!',
                 text: 'Erro ao verificar dicas.',
                 icon: 'error',
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK' 
             });
         }
     };
@@ -131,7 +131,7 @@ const ProductListPage = () => {
             <div className={styles.header}>
                 <div className={styles.title}>Manutenção de Produtos</div>
                 <Link href="/cadastro" passHref>
-                    <button className={styles.newProductButton}>Nova Planta</button>
+                    <button className={styles.newProductButton}>Novo produto</button>
                 </Link>
             </div>
             <div className={styles.productListContainer}>
