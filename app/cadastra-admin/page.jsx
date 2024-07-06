@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
+import { withAuth } from '@/util/auth';
 import styles from './cadastroAdmin.module.css';
 import Swal from 'sweetalert2';
 
-export default function CadastraAdminPage() {
+const CadastraAdminPage = () => {
     const initialAdminState = {
         nome: '',
         email: '',
@@ -107,3 +108,5 @@ export default function CadastraAdminPage() {
         </div>
     );
 }
+
+export default withAuth(CadastraAdminPage)

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { withAuth } from '@/util/auth';
 import styles from './edit.module.css';
 import Swal from 'sweetalert2';
 
@@ -218,4 +219,4 @@ const EditProductPage = ({ params }) => {
     );
 };
 
-export default EditProductPage;
+export default withAuth(EditProductPage);

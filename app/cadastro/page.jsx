@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
+import { withAuth } from '@/util/auth';
 import styles from './cadastro.module.css';
 import Swal from 'sweetalert2';
 
-export default function Cadastro() {
+const Cadastro = () => {
     const initialProductState = {
         codigo: '',
         descricao: '',
@@ -210,3 +211,5 @@ export default function Cadastro() {
         </div>
     );
 }
+
+export default withAuth(Cadastro)

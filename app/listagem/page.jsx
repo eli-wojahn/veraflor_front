@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import styles from './listagem.module.css';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
+import { withAuth } from '@/util/auth';
+
+
 import { TiPencil } from 'react-icons/ti';
 import { BsTrash3 } from 'react-icons/bs';
 import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
@@ -178,4 +181,4 @@ const ProductListPage = () => {
     );
 };
 
-export default ProductListPage;
+export default withAuth(ProductListPage);

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { withAuth } from '@/util/auth';
 import Swal from 'sweetalert2';
 import styles from './editDica.module.css';
 
@@ -141,4 +142,4 @@ const EditDicaPage = () => {
     );
 };
 
-export default EditDicaPage;
+export default withAuth(EditDicaPage);
