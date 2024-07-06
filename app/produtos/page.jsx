@@ -34,7 +34,7 @@ const ProductPage = () => {
                         query.append(key, filters[key]);
                     }
                 });
-                const url = query.toString() ? `http://localhost:3004/produtos/filtro?${query.toString()}` : 'http://localhost:3004/produtos';
+                const url = query.toString() ? `https://veraflor.onrender.com/produtos/filtro?${query.toString()}` : 'https://veraflor.onrender.com/produtos';
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
