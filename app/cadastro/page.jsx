@@ -44,6 +44,15 @@ export default function Cadastro() {
         }
     };
 
+    const handlePrecoChange = (e) => {
+        const { value } = e.target;
+        const precoFormatado = value.replace(',', '.'); 
+        setProduto(prevState => ({
+            ...prevState,
+            preco: precoFormatado
+        }));
+    };
+
     const handleClear = () => {
         setProduto(initialProductState);
         document.getElementById('imagem').value = null;
@@ -127,7 +136,7 @@ export default function Cadastro() {
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="preco">Preço R$</label>
-                                <input type="text" id="preco" name="preco" className={styles.input} value={produto.preco} onChange={handleChange} />
+                                <input type="text" id="preco" name="preco" className={styles.input} value={produto.preco} onChange={handlePrecoChange} />
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="categoria">Categoria</label>
