@@ -7,6 +7,7 @@ import { TiPencil } from 'react-icons/ti';
 import { BsTrash3 } from 'react-icons/bs';
 import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
 import { IoBulbOutline } from "react-icons/io5";
+import { BiPlusMedical } from "react-icons/bi";
 
 const ProductListPage = () => {
     const [productList, setProductList] = useState([]);
@@ -131,7 +132,7 @@ const ProductListPage = () => {
             <div className={styles.header}>
                 <div className={styles.title}>Manutenção de Produtos</div>
                 <Link href="/cadastro" passHref>
-                    <button className={styles.newProductButton}>Novo produto</button>
+                    <button className={styles.newProductButton}><BiPlusMedical/> Novo produto </button>
                 </Link>
             </div>
             <div className={styles.productListContainer}>

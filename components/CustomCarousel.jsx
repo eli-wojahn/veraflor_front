@@ -1,4 +1,3 @@
-// CustomCarousel.js
 import React, { useState, useEffect } from 'react';
 import styles from './CustomCarousel.module.css';
 import Image from 'next/image';
@@ -39,9 +38,9 @@ const CustomCarousel = ({ images }) => {
         <Image
           src={images[currentIndex]}
           alt={`Slide ${currentIndex + 1}`}
-          width={500} // Ajuste o tamanho conforme necessário
-          height={500} // Ajuste o tamanho conforme necessário
-          layout="responsive" // Ajuste o layout conforme necessário
+          layout="fill"
+          objectFit="cover"
+          className={styles.image}
         />
       </div>
       {/* Botão para avançar para a próxima imagem */}

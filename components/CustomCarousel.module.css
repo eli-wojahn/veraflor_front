@@ -1,36 +1,41 @@
-/* CustomCarousel.module.css */
-
 .carousel {
-    position: relative;
-    width: 100%;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    overflow: hidden;
-    margin-bottom: 60px;
-  }
-  
-  .image {
-    width: 100%;
-    height: auto;
-  }
-  
-  .prevButton,
-  .nextButton {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    color: #79972B;
-    border: none;
-    padding: 10px;
-    font-size: 50px;
-    cursor: pointer;
-  }
-  
-  .prevButton {
-    left: 10px;
-  }
-  
-  .nextButton {
-    right: 10px;
-  }
-  
+  position: relative;
+  width: 100%;
+  height: 80vh; /* Ajuste a altura conforme necessário */
+  margin: 0 auto; /* Centraliza horizontalmente */
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta a imagem para cobrir o contêiner */
+}
+
+.prevButton,
+.nextButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  color: #79972B;
+  border: none;
+  padding: 10px;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.prevButton {
+  left: 10px;
+}
+
+.nextButton {
+  right: 10px;
+}
