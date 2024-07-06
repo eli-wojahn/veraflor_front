@@ -10,7 +10,7 @@ const FilterMenu = ({ filters, handleFilterChange, clearFilters }) => {
                 <FormControl component="fieldset" className={styles.filterColumn}>
                     <Typography variant="subtitle1" className={styles.filterTitle}>Ambiente</Typography>
                     <FormGroup>
-                        {['Interno', 'Externo'].map(option => (
+                        {['Interno', 'Externo', 'Outro'].map(option => (
                             <FormControlLabel
                                 key={option}
                                 control={
@@ -30,7 +30,7 @@ const FilterMenu = ({ filters, handleFilterChange, clearFilters }) => {
                 <FormControl component="fieldset" className={styles.filterColumn}>
                     <Typography variant="subtitle1" className={styles.filterTitle}>Tamanho</Typography>
                     <FormGroup>
-                        {['Pequeno', 'Médio', 'Grande'].map(option => (
+                        {['Pequeno', 'Médio', 'Grande', 'Outro'].map(option => (
                             <FormControlLabel
                                 key={option}
                                 control={
@@ -70,7 +70,7 @@ const FilterMenu = ({ filters, handleFilterChange, clearFilters }) => {
                 <FormControl component="fieldset" className={styles.filterColumn}>
                     <Typography variant="subtitle1" className={styles.filterTitle}>Categoria</Typography>
                     <FormGroup>
-                        {['Ornamentais', 'Frutíferas', 'Medicinais'].map(option => (
+                        {['Ornamentais', 'Frutíferas', 'Medicinais', 'Outro'].map(option => (
                             <FormControlLabel
                                 key={option}
                                 control={

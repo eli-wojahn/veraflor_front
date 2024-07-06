@@ -155,6 +155,7 @@ const EditProductPage = ({ params }) => {
                                     <option value="Muda">Muda</option>
                                     <option value="Haste">Haste</option>
                                     <option value="Frutífera">Frutífera</option>
+                                    <option value="Outro">Outro</option>
                                 </select>
                             </div>
                             <div className={styles.formGroup}>
@@ -163,6 +164,7 @@ const EditProductPage = ({ params }) => {
                                     <option value="Selecione">Selecione</option>
                                     <option value="Interno">Interno</option>
                                     <option value="Externo">Externo</option>
+                                    <option value="Outro">Outro</option>
                                 </select>
                             </div>
                         </div>
@@ -184,6 +186,7 @@ const EditProductPage = ({ params }) => {
                                     <option value="Pequeno">Pequeno</option>
                                     <option value="Médio">Médio</option>
                                     <option value="Grande">Grande</option>
+                                    <option value="Outro">Outro</option>
                                 </select>
                             </div>
                             <div className={styles.formGroup}>
