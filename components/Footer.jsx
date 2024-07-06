@@ -35,14 +35,14 @@ const Footer = () => {
           <p><a href="https://www.facebook.com/veraflorgarden"><FaFacebook /> Facebook</a></p>
           <p><a href="https://www.instagram.com/veraflor_garden/"><FaInstagram /> Instagram</a></p>
           <p><FaWhatsapp /> (53) 99956-1458</p>
-          <p><IoLocationSharp/> Av. Dr. Felix Antônio Caputo, n 251 (rua em frente ao Treichel)</p>
+          <p><IoLocationSharp/> Av. Dr. Felix Antônio Caputo, 251 (Rua em frente ao Treichel)</p>
         </div>
         <div className={styles.institutional}>
           <h4>CAMAQUÃ </h4>
           <p><a href="https://www.facebook.com/veraflorgarden"><FaFacebook /> Facebook</a></p>
           <p><a href="https://www.instagram.com/veraflorcamaqua"><FaInstagram /> Instagram</a></p>
-          <p><FaWhatsapp /> (53) 99956-1458</p>
-          <p><IoLocationSharp/> Av. Dr. Felix Antônio Caputo, n 251 (rua em frente ao Treichel)</p>
+          <p><FaWhatsapp /> (51) 99927-2822</p>
+          <p><IoLocationSharp/> Av. Cônego Luíz Walter Hanquet, 517(Quase ao lado do Krolow)</p>
         </div>
         <div className={styles.virtualStore}>
           <h4>OUTRAS INFORMAÇÕES</h4>
