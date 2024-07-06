@@ -11,6 +11,7 @@ import { IoExitOutline } from 'react-icons/io5';
 import { FaBars } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import Cookies from 'js-cookie';
 
 const MySwal = withReactContent(Swal);
 
@@ -126,16 +127,9 @@ const HeaderSmall = () => {
                                 </Link>
                             </li>
                             {adminId && (
-                                <li className={pathname === '/cadastro' ? styles.active : ''}>
-                                    <Link href="/cadastro" passHref>
-                                        <div>Cadastro</div>
-                                    </Link>
-                                </li>
-                            )}
-                            {adminId && (
                                 <li className={pathname === '/listagem' ? styles.active : ''}>
                                     <Link href="/listagem" passHref>
-                                        <div>Listagem</div>
+                                        <div>Gerenciamento</div>
                                     </Link>
                                 </li>
                             )}

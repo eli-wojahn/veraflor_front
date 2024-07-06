@@ -12,12 +12,13 @@ import { FaBars } from 'react-icons/fa';
 import HeaderSmall from './HeaderSmall';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import Cookies from 'js-cookie';
 
 const MySwal = withReactContent(Swal);
 
 const Header = () => {
     const pathname = usePathname();
-    const { adminId, adminNome, logout } = useContext(AdministradorContext);
+    const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -25,7 +26,7 @@ const Header = () => {
     const router = useRouter();
     const dropdownRef = useRef(null);
 
-    function handleLogout() {
+    function logout() {
         MySwal.fire({
             title: 'Confirma saída do sistema?',
             icon: 'warning',
@@ -37,7 +38,10 @@ const Header = () => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                logout();
+                mudaId(null);
+                mudaNome('');
+                Cookies.remove('admin_logado');
+                router.push('/');
             }
         });
     }
@@ -153,7 +157,7 @@ const Header = () => {
                     {adminNome !== '' && (
                         <div className={styles.logout}>
                             <span>{adminNome}{' '}</span>
-                            <IoExitOutline onClick={handleLogout} className={styles.logoutIcon} />
+                            <IoExitOutline onClick={logout} className={styles.logoutIcon} />
                             <span className={styles.logoutTooltip}>Sair</span>
                         </div>
                     )}
