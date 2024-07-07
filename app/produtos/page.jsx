@@ -23,11 +23,10 @@ const ProductPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
-    const [newProductList, setNewProductList] = useState([]); 
-    const [page, setPage] = useState(1); 
-    const [totalPages, setTotalPages] = useState(1); 
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-    const itemsPerPage = 20; 
+    const itemsPerPage = 15;
 
     useEffect(() => {
         const fetchAndFilterProducts = async () => {
@@ -35,8 +34,8 @@ const ProductPage = () => {
             try {
                 const query = new URLSearchParams({
                     ...filters,
-                    _page: page,
-                    _limit: itemsPerPage,
+                    page,
+                    limit: itemsPerPage,
                 });
                 const url = `https://veraflor.onrender.com/produtos/filtro?${query.toString()}`;
                 const response = await fetch(url);
@@ -44,9 +43,12 @@ const ProductPage = () => {
                     throw new Error('Erro ao obter produtos');
                 }
                 const data = await response.json();
-                const totalItems = response.headers.get('X-Total-Count'); 
-                setTotalPages(Math.ceil(totalItems / itemsPerPage));
-                setNewProductList(data);
+                const totalItems = parseInt(response.headers.get('X-Total-Count'), 10);
+                console.log('Total Items:', totalItems); // Verificar contagem total de itens
+                const pages = Math.ceil(totalItems / itemsPerPage);
+                console.log('Total Pages:', pages); // Verificar contagem total de páginas
+                setTotalPages(pages);
+                setProductList(data);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -56,12 +58,6 @@ const ProductPage = () => {
 
         fetchAndFilterProducts();
     }, [filters, page]);
-
-    useEffect(() => {
-        if (newProductList.length > 0) {
-            setProductList(newProductList); 
-        }
-    }, [newProductList]);
 
     const openInfoModal = (product) => {
         setSelectedProduct(product);
@@ -118,29 +114,16 @@ const ProductPage = () => {
             {showFilters && (
                 <FilterMenu filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
             )}
-            {loading ? (
-                <div className={styles.cardContainer}>
-                    {productList.map((product, index) => (
-                        <ProductCard
-                            key={index}
-                            product={product}
-                            openPriceModal={openProductModal}
-                            openInfoModal={openInfoModal}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className={styles.cardContainer}>
-                    {newProductList.map((product, index) => (
-                        <ProductCard
-                            key={index}
-                            product={product}
-                            openPriceModal={openProductModal}
-                            openInfoModal={openInfoModal}
-                        />
-                    ))}
-                </div>
-            )}
+            <div className={styles.cardContainer}>
+                {productList.map((product, index) => (
+                    <ProductCard
+                        key={index}
+                        product={product}
+                        openPriceModal={openProductModal}
+                        openInfoModal={openInfoModal}
+                    />
+                ))}
+            </div>
             {showInfoModal && selectedProduct && (
                 <InfoModal product={selectedProduct} onClose={() => setShowInfoModal(false)} />
             )}
@@ -148,11 +131,13 @@ const ProductPage = () => {
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
             )}
             <div className={styles.paginationContainer}>
-                <Pagination 
-                    count={totalPages} 
-                    page={page} 
-                    onChange={handlePageChange} 
-                />
+                {totalPages > 1 && (
+                    <Pagination 
+                        count={totalPages} 
+                        page={page} 
+                        onChange={handlePageChange} 
+                    />
+                )}
             </div>
         </div>
     );

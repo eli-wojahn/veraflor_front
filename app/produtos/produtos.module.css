@@ -225,3 +225,11 @@
     justify-content: center;
     margin-top: 20px;
 }
+
+.MuiPagination-ul {
+    justify-content: center;
+}
+
+.MuiPaginationItem-root {
+    font-size: 1rem; /* Ajuste o tamanho da fonte conforme necessário */
+}
