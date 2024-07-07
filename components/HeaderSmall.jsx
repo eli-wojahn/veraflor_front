@@ -73,33 +73,33 @@ const HeaderSmall = () => {
         <Suspense fallback={<div>Carregando...</div>}>
             <header>
                 <nav className={styles.navbar}>
-                    <div className={styles.logo}>
-                        <Link href="/" passHref>
-                            <Image
-                                src="/images/logoCOR6.png"
-                                alt="Logo"
-                                width={165}
-                                height={52}
-                                layout="responsive"
-                            />
-                        </Link>
-                    </div>
                     <div className={styles.topBar}>
                         <div className={styles.menuIcon} onClick={() => setMenuOpen(!menuOpen)}>
                             <FaBars />
                         </div>
+                        <div className={styles.logo}>
+                            <Link href="/" passHref>
+                                <Image
+                                    src="/images/logoCOR6.png"
+                                    alt="Logo"
+                                    width={165}
+                                    height={52}
+                                    layout="responsive"
+                                />
+                            </Link>
+                        </div>
                         <div className={styles.searchIcon} onClick={() => setSearchOpen(!searchOpen)}>
                             <CiSearch />
                         </div>
-                        <div className={styles.logoutContainer}>
-                            {adminNome !== '' && (
-                                <div className={styles.logout}>
-                                    <span>{adminNome}{' '}</span>
-                                    <IoExitOutline onClick={logout} className={styles.logoutIcon} />
-                                    <span className={styles.logoutTooltip}>Sair</span>
-                                </div>
-                            )}
-                        </div>
+                    </div>
+                    <div className={styles.logoutContainer}>
+                        {adminNome !== '' && (
+                            <div className={styles.logout}>
+                                <span>{adminNome}{' '}</span>
+                                <IoExitOutline onClick={logout} className={styles.logoutIcon} />
+                                <span className={styles.logoutTooltip}>Sair</span>
+                            </div>
+                        )}
                     </div>
                     <div className={`${styles.menu} ${menuOpen ? styles.active : ''}`}>
                         <ul>

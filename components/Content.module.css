@@ -97,7 +97,7 @@
 /* Responsividade */
 @media (max-width: 768px) {
   .title {
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .button {
@@ -133,11 +133,17 @@
   .buttonSecondary {
     font-size: small;
   }
+  
+  .card img {
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 }
 
 @media (max-width: 385px) {
   .title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .button {
@@ -155,12 +161,18 @@
   }
 
   .photos img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     margin: 5px;
   }
 
   .buttonSecondary {
     font-size: x-small;
+  }
+
+  .card img {
+    width: 84%;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 }
