@@ -18,7 +18,7 @@ const ProductPage = () => {
         tamanho: [],
         tipo: [],
         categoria: [],
-        maxPreco: 1000
+        maxPreco: 600
     });
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
@@ -95,7 +95,7 @@ const ProductPage = () => {
             tamanho: [],
             tipo: [],
             categoria: [],
-            maxPreco: 1000
+            maxPreco: 600
         });
     };
 

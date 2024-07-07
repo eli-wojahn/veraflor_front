@@ -41,6 +41,12 @@
       "static/chunks/main-app.js",
       "static/css/app/listagem/page.css",
       "static/chunks/app/listagem/page.js"
+    ],
+    "/produtos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/produtos/page.css",
+      "static/chunks/app/produtos/page.js"
     ]
   }
 }

@@ -94,7 +94,7 @@ const FilterMenu = ({ filters, handleFilterChange, clearFilters }) => {
                     onChange={(e, value) => handleFilterChange({ target: { name: 'maxPreco', value } })}
                     name="maxPreco"
                     min={0}
-                    max={1000}
+                    max={600}
                     step={10}
                     valueLabelDisplay="auto"
                     aria-labelledby="range-slider"
