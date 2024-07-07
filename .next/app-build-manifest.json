@@ -29,6 +29,24 @@
       "static/chunks/main-app.js",
       "static/css/app/destaques/page.css",
       "static/chunks/app/destaques/page.js"
+    ],
+    "/listagem/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/listagem/page.css",
+      "static/chunks/app/listagem/page.js"
+    ],
+    "/edit/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/edit/[id]/page.css",
+      "static/chunks/app/edit/[id]/page.js"
+    ],
+    "/edit-dica/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/edit-dica/[id]/page.css",
+      "static/chunks/app/edit-dica/[id]/page.js"
     ]
   }
 }

@@ -192,9 +192,9 @@ const EditProductPage = ({ params }) => {
                             <div className={styles.formGroup}>
                                 <label>Colocar em destaque</label>
                                 <div className={styles.radioGroup}>
-                                    <input type="radio" id="destaqueSim" name="destaque" value="1" checked={produto.destaque === '1'} onChange={handleChange} />
+                                    <input type="radio" id="destaqueSim" name="destaque" value="true" checked={produto.destaque === 'true'} onChange={handleChange} />
                                     <label htmlFor="destaqueSim">Sim&nbsp;&nbsp;&nbsp;</label>
-                                    <input type="radio" id="destaqueNao" name="destaque" value="0" checked={produto.destaque === '0'} onChange={handleChange} />
+                                    <input type="radio" id="destaqueNao" name="destaque" value="false" checked={produto.destaque === 'false'} onChange={handleChange} />
                                     <label htmlFor="destaqueNao">Não</label>
                                 </div>
                             </div>
