@@ -32,3 +32,19 @@
 .clearButton {
     margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+    .filterRow {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filterColumn {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .sliderContainer {
+        width: 100%;
+    }
+}
