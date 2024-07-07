@@ -4,7 +4,7 @@ import styles from './listagem.module.css';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { withAuth } from '@/util/auth';
-
+import Pagination from '@mui/material/Pagination';
 import { TiPencil } from 'react-icons/ti';
 import { BsTrash3 } from 'react-icons/bs';
 import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
@@ -15,6 +15,8 @@ const ProductListPage = () => {
     const [productList, setProductList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 20;
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -34,6 +36,12 @@ const ProductListPage = () => {
 
         fetchProducts();
     }, []);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
+    };
+
+    const currentPageItems = productList.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     async function destaque(id, status_atual) {
         try {
@@ -139,7 +147,7 @@ const ProductListPage = () => {
             </div>
             <div className={styles.productListContainer}>
                 <ul className={styles.productList}>
-                    {productList.map((product, index) => (
+                    {currentPageItems.map((product, index) => (
                         <li key={product.id} className={index % 2 === 0 ? styles.even : styles.odd}>
                             <span style={product.destaque ? { fontWeight: 'bold' } : {}}>{product.descricao}</span>
                             <div className={styles.actionButtons}>
@@ -175,6 +183,13 @@ const ProductListPage = () => {
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div className={styles.paginationContainer}>
+                <Pagination
+                    count={Math.ceil(productList.length / itemsPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                />
             </div>
         </div>
     );

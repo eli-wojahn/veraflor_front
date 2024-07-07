@@ -8,7 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 80%; /* Ajuste a largura conforme necessário */
+    width: 80%; 
     margin-bottom: 30px; 
 }
 
@@ -30,21 +30,21 @@
 }
 
 .productListContainer {
-    width: 80%; /* Alinhar com o título e o botão */
-    margin: 0 auto; /* Centralizar o contêiner */
+    width: 80%; 
+    margin: 0 auto; 
     margin-bottom: 20px;
-    position: relative; /* Adiciona um contexto de posicionamento */
+    position: relative; 
 }
 
 .productList {
-    list-style-type: none; /* Remove os marcadores de lista */
-    padding: 0; /* Remove o preenchimento padrão da lista */
-    width: 100%; /* Garante que a lista ocupe a largura total */
+    list-style-type: none; 
+    padding: 0; 
+    width: 100%; 
     color: black;
 }
 
 .productList li {
-    padding: 8px; /* Adiciona preenchimento às células da lista */
+    padding: 8px; 
     display: flex;
     font-size: medium;
     justify-content: space-between;
@@ -61,19 +61,19 @@
 
 .actionButtons {
     display: flex;
-    gap: 50px; /* Aumentar espaçamento entre os botões */
+    gap: 50px; 
 }
 
 .iconButton {
-    background: transparent; /* Torna o botão transparente */
-    border: none; /* Remove a borda */
-    padding: 0; /* Remove o padding */
+    background: transparent; 
+    border: none; 
+    padding: 0; 
     cursor: pointer;
     position: relative;
 }
 
 .iconButton:hover .icon {
-    font-size: 26px; /* Aumenta o tamanho do ícone no hover */
+    font-size: 26px; 
 }
 
 .iconButton:hover .tooltip {
@@ -81,33 +81,33 @@
 }
 
 .icon {
-    color: black; /* Define a cor dos ícones como preto */
-    font-size: 20px; /* Tamanho dos ícones */
-    transition: font-size 0.3s; /* Transição suave do tamanho do ícone */
+    color: black; 
+    font-size: 20px; 
+    transition: font-size 0.3s; 
 }
 
 .destaqueIcon {
-    color: black; /* Define a cor do ícone de destaque como preto */
+    color: black; 
     font-size: 24px;
 }
 
 .destaqueIconActive {
-    color: green; /* Define a cor do ícone de destaque ativo como verde */
+    color: green; 
     font-size: 24px;
 }
 
 .destaqueIcon:hover {
-    font-size: 28px; /* Aumenta o tamanho do ícone no hover */
+    font-size: 28px; 
 }
 
 .destaqueIconActive:hover {
-    font-size: 28px; /* Aumenta o tamanho do ícone no hover */
+    font-size: 28px; 
 }
 
 .tooltip {
     display: none;
     position: absolute;
-    top: -25px; /* Ajusta a posição da tooltip */
+    top: -25px; 
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
@@ -117,4 +117,11 @@
     font-size: 12px;
     white-space: nowrap;
     z-index: 1;
+}
+
+.paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
