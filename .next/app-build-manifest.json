@@ -17,6 +17,18 @@
       "static/chunks/main-app.js",
       "static/css/app/produtos/page.css",
       "static/chunks/app/produtos/page.js"
+    ],
+    "/busca/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/busca/page.css",
+      "static/chunks/app/busca/page.js"
+    ],
+    "/destaques/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/destaques/page.css",
+      "static/chunks/app/destaques/page.js"
     ]
   }
 }

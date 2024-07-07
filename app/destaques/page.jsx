@@ -24,7 +24,7 @@ const DestaquesPage = () => {
                 setProductList(data || []);
             } catch (error) {
                 setError(error.message);
-                setProductList([]); // Garantir que productList seja um array no caso de erro
+                setProductList([]); 
             } finally {
                 setLoading(false);
             }
