@@ -1,4 +1,3 @@
-// components/ProductPage.js
 'use client'
 import React, { useState, useEffect } from 'react';
 import styles from './produtos.module.css';
@@ -7,6 +6,7 @@ import ProductCard from './ProdutoCard';
 import FilterMenu from './FilterMenu';
 import InfoModal from './InfoModal';
 import ProductModal from './ProductModal';
+import Pagination from '@mui/material/Pagination';
 
 const ProductPage = () => {
     const [productList, setProductList] = useState([]);
@@ -24,24 +24,29 @@ const ProductPage = () => {
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
     const [newProductList, setNewProductList] = useState([]); 
+    const [page, setPage] = useState(1); 
+    const [totalPages, setTotalPages] = useState(1); 
+
+    const itemsPerPage = 20; 
 
     useEffect(() => {
         const fetchAndFilterProducts = async () => {
             setLoading(true);
             try {
-                const query = new URLSearchParams();
-                Object.keys(filters).forEach(key => {
-                    if (filters[key].length > 0 || key === 'maxPreco') {
-                        query.append(key, filters[key]);
-                    }
+                const query = new URLSearchParams({
+                    ...filters,
+                    _page: page,
+                    _limit: itemsPerPage,
                 });
-                const url = query.toString() ? `https://veraflor.onrender.com/produtos/filtro?${query.toString()}` : 'https://veraflor.onrender.com/produtos';
+                const url = `https://veraflor.onrender.com/produtos/filtro?${query.toString()}`;
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
                 }
                 const data = await response.json();
-                setNewProductList(data); 
+                const totalItems = response.headers.get('X-Total-Count'); 
+                setTotalPages(Math.ceil(totalItems / itemsPerPage));
+                setNewProductList(data);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -50,7 +55,7 @@ const ProductPage = () => {
         };
 
         fetchAndFilterProducts();
-    }, [filters]);
+    }, [filters, page]);
 
     useEffect(() => {
         if (newProductList.length > 0) {
@@ -98,6 +103,10 @@ const ProductPage = () => {
         });
     };
 
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
+
     if (error) return <p>{error}</p>;
 
     return (
@@ -138,6 +147,13 @@ const ProductPage = () => {
             {showProductModal && selectedProduct && (
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
             )}
+            <div className={styles.paginationContainer}>
+                <Pagination 
+                    count={totalPages} 
+                    page={page} 
+                    onChange={handlePageChange} 
+                />
+            </div>
         </div>
     );
 };
