@@ -82,9 +82,8 @@ const HeaderSmall = () => {
                                 <Image
                                     src="/images/logoCOR6.png"
                                     alt="Logo"
-                                    width={165}
-                                    height={52}
-                                    layout="responsive"
+                                    width={100}
+                                    height={46}
                                 />
                             </Link>
                         </div>
