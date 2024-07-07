@@ -48,8 +48,8 @@ const CamaquaPage = () => {
                 <div className={styles.contactInfo}>
                     <FaPhone className={styles.contactIcon} />
                     <h2 className={styles.contactTitle}>Contato</h2>
-                    <p className={styles.contactDetail}><FaWhatsapp className={styles.contactDetailIcon} /> Telefone 51 999 27 28 22</p>
-                    <p className={styles.contactDetail}><FaInstagram className={styles.contactDetailIcon} /> @veraflorcamaqua</p>
+                    <p className={styles.contactDetail}><FaWhatsapp className={styles.contactDetailIcon}/>Telefone 51 999 27 28 22</p>
+                    <p className={styles.contactDetail}><FaInstagram className={styles.contactDetailIcon}/>@veraflorcamaqua</p>
                 </div>
                 <div className={styles.deliveryInfo}>
                     <img src="/images/deliver.png" alt="Delivery de Flores e Plantas" className={styles.deliveryImage} />

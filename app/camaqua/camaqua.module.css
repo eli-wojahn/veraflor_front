@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; 
     padding: 20px;
 }
 
@@ -21,95 +21,63 @@
     align-items: center;
     width: 100%;
     max-width: 854px;
-    margin-bottom: 40px; /* Espaço entre o vídeo e a faixa rosa */
+    margin-bottom: 40px; 
 }
 
-.mapSection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #DE2C62; /* Rosa */
-    padding: 40px 0; /* Ajuste o padding conforme necessário */
-    width: 100vw; /* Ocupa toda a largura da viewport */
-    box-sizing: border-box; /* Inclui padding na largura total */
-    color: white; /* Textos em branco */
-    margin-top: 20px; /* Espaço entre o vídeo e a faixa rosa */
-}
-
-.mapInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 20%;
-    margin-left: 80px;
-}
-
-.mapIcon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.mapTitle {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.mapAddress {
-    font-size: 16px;
-}
-
-.mapContainer {
-    display: flex;
-    justify-content: center;
-    width: 70%; /* Ajuste a largura conforme necessário */
-}
-
-.iframe {
+.videoContainer video {
     width: 100%;
-    height: 450px;
-    border: none;
+    height: auto;
+}
+
+.mapSection, .hoursSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 40px 20px;
+    width: 100vw; 
+    box-sizing: border-box; 
+    margin-top: 20px; 
+    background-color: #DE2C62; 
+    color: white; 
 }
 
 .contactSection {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 40px 20px; /* Ajuste o padding conforme necessário */
-    width: 100%; /* Ocupa toda a largura da viewport */
-    box-sizing: border-box; /* Inclui padding na largura total */
-    margin-top: 20px; /* Espaço entre a faixa rosa e a seção de contato */
+    justify-content: space-between; 
+    padding: 40px 20px;
+    width: 100vw; 
+    box-sizing: border-box; 
+    margin-top: 20px; 
+    color: rgb(0, 0, 0); 
 }
 
-.contactInfo {
+.mapSection .mapInfo, .contactSection .contactInfo, .hoursSection .hoursContent {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 30%;
-    color: black;
+    width: 30%; 
 }
 
-.contactIcon {
+.mapSection .mapContainer, .contactSection .deliveryInfo, .hoursSection .hoursContent {
+    width: 60%; 
+}
+
+.mapIcon, .contactIcon {
     font-size: 40px;
     margin-bottom: 10px;
-    color: black;
 }
 
-.contactTitle {
+.mapTitle, .contactTitle {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: black;
 }
 
-.contactDetail {
+.mapAddress, .contactDetail {
     font-size: 16px;
-    margin-bottom: 10px;
-    color: black;
 }
 
 .contactDetailIcon {
@@ -117,44 +85,65 @@
     color: black;
 }
 
-.deliveryInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 70%;
-    color: black;
-}
-
-.deliveryImage {
+.deliveryImage, .hoursImage {
     max-width: 100%;
     height: auto;
-    margin-bottom: 20px;
 }
 
-.hoursSection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #DE2C62; /* Rosa */
-    padding: 40px 20px; /* Ajuste o padding conforme necessário */
-    width: 100vw; /* Ocupa toda a largura da viewport */
-    box-sizing: border-box; /* Inclui padding na largura total */
-    color: white; /* Textos em branco */
-    margin-top: 20px; /* Espaço entre a seção de contato e a faixa rosa */
-}
 
-.hoursContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.mapContainer iframe {
     width: 100%;
-    max-width: 1200px;
+    height: auto;
+    aspect-ratio: 16 / 9; 
+    border: 0;
 }
 
-.hoursImage {
-    max-width: 50%;
-    height: auto;
-    margin-right: 20px;
+/* Media Queries */
+@media (max-width: 768px) {
+    .mapSection, .contactSection, .hoursSection {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+    }
+
+    .mapSection .mapInfo, .contactSection .contactInfo, .hoursSection .hoursContent {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .mapSection .mapContainer, .contactSection .deliveryInfo, .hoursSection .hoursContent {
+        width: 100%;
+    }
+
+    .videoContainer {
+        max-width: 100%;
+    }
+
+    .title {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    .mapTitle, .contactTitle {
+        font-size: 20px;
+    }
+
+    .mapAddress, .contactDetail {
+        font-size: 14px;
+    }
+
+    .mapIcon, .contactIcon {
+        font-size: 30px;
+    }
+
+    .videoContainer video {
+        width: 100%;
+        height: auto;
+    }
+
+    .iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9; 
+    }
 }

@@ -47,6 +47,18 @@
       "static/chunks/main-app.js",
       "static/css/app/edit-dica/[id]/page.css",
       "static/chunks/app/edit-dica/[id]/page.js"
+    ],
+    "/camaqua/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/camaqua/page.css",
+      "static/chunks/app/camaqua/page.js"
+    ],
+    "/pelotas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/pelotas/page.css",
+      "static/chunks/app/pelotas/page.js"
     ]
   }
 }

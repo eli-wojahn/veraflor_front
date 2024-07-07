@@ -1,11 +1,10 @@
-/* pages/pelotas.module.css */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f0f0f0; /* Cor de fundo */
+    background-color: #f0f0f0; 
     padding: 20px;
 }
 
@@ -22,7 +21,7 @@
     align-items: center;
     width: 100%;
     max-width: 854px;
-    margin-bottom: 40px; /* Espaço entre o vídeo e a faixa rosa */
+    margin-bottom: 40px; 
 }
 
 .videoContainer video {
@@ -33,24 +32,24 @@
 .mapSection, .hoursSection {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Espaça os elementos igualmente */
+    justify-content: space-between; 
     padding: 40px 20px;
-    width: 100vw; /* Ocupa toda a largura da viewport */
-    box-sizing: border-box; /* Inclui padding na largura total */
-    margin-top: 20px; /* Espaço entre as seções */
-    background-color: #DE2C62; /* Rosa */
-    color: white; /* Textos em branco */
+    width: 100vw; 
+    box-sizing: border-box; 
+    margin-top: 20px; 
+    background-color: #DE2C62; 
+    color: white; 
 }
 
 .contactSection {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Espaça os elementos igualmente */
+    justify-content: space-between; 
     padding: 40px 20px;
-    width: 100vw; /* Ocupa toda a largura da viewport */
-    box-sizing: border-box; /* Inclui padding na largura total */
-    margin-top: 20px; /* Espaço entre as seções */
-    color: rgb(0, 0, 0); /* Textos em branco */
+    width: 100vw; 
+    box-sizing: border-box; 
+    margin-top: 20px; 
+    color: rgb(0, 0, 0); 
 }
 
 .mapSection .mapInfo, .contactSection .contactInfo, .hoursSection .hoursContent {
@@ -59,11 +58,11 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 30%; /* Largura fixa para a info */
+    width: 30%; 
 }
 
 .mapSection .mapContainer, .contactSection .deliveryInfo, .hoursSection .hoursContent {
-    width: 60%; /* Largura fixa para o mapa, delivery e horas */
+    width: 60%; 
 }
 
 .mapIcon, .contactIcon {
@@ -91,11 +90,11 @@
     height: auto;
 }
 
-/* Garantir que o iframe seja responsivo */
+
 .mapContainer iframe {
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9; /* Mantém a proporção do mapa */
+    aspect-ratio: 16 / 9; 
     border: 0;
 }
 
@@ -145,6 +144,6 @@
     .iframe {
         width: 100%;
         height: auto;
-        aspect-ratio: 16 / 9; /* Mantém a proporção do mapa */
+        aspect-ratio: 16 / 9; 
     }
 }
