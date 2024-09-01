@@ -51,7 +51,7 @@ const Credenciamento = () => {
 
     const handleClear = () => {
         setCliente(initialClientState);
-        setSenhaRepetida(''); // Limpar a repetição da senha também
+        setSenhaRepetida(''); 
     };
 
     const handleSubmit = async (e) => {

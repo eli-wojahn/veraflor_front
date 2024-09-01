@@ -9,8 +9,14 @@
     "/loginCliente/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/loginCliente/page.js",
-      "static/css/app/loginCliente/page.css"
+      "static/css/app/loginCliente/page.css",
+      "static/chunks/app/loginCliente/page.js"
+    ],
+    "/credenciamento/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/credenciamento/page.css",
+      "static/chunks/app/credenciamento/page.js"
     ]
   }
 }
