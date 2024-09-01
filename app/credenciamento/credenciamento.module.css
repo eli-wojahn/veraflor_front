@@ -4,7 +4,7 @@
     align-items: center;
     height: 100vh;
     background-color: #79972B;
-    padding: 20px; /* Adicionado padding para evitar bordas cortadas */
+    padding: 20px; 
     overflow-y: auto; /* Permite rolagem vertical se o conteúdo exceder a altura da tela */
     box-sizing: border-box; /* Inclui padding e borda no cálculo da altura total */
 }
