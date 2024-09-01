@@ -17,6 +17,12 @@
       "static/chunks/main-app.js",
       "static/css/app/credenciamento/page.css",
       "static/chunks/app/credenciamento/page.js"
+    ],
+    "/cadastroCliente/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/cadastroCliente/page.css",
+      "static/chunks/app/cadastroCliente/page.js"
     ]
   }
 }
