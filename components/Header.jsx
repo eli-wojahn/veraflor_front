@@ -7,8 +7,8 @@ import Image from 'next/image';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { AdministradorContext } from '@/contexts/administrator';
 import { CiSearch } from 'react-icons/ci';
-import { IoExitOutline } from 'react-icons/io5';
-import { FaBars } from 'react-icons/fa';
+import { IoExitOutline, IoCartOutline } from 'react-icons/io5';
+import { FaBars, FaRegUser } from 'react-icons/fa';
 import HeaderSmall from './HeaderSmall';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -152,6 +152,16 @@ const Header = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleSearch}
                     />
+                </div>
+                <div className={styles.userContainer}>
+                    <Link href="/login" passHref>
+                        <FaRegUser className={styles.userIcon} />
+                    </Link>
+                </div>
+                <div className={styles.cartContainer}>
+                    <Link href="/carrinho" passHref>
+                        <IoCartOutline className={styles.cartIcon} />
+                    </Link>
                 </div>
                 <div className={styles.logoutContainer}>
                     {adminNome !== '' && (

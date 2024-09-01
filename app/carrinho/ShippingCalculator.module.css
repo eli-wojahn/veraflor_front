@@ -1,0 +1,57 @@
+.calculator {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calculator h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.inputGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cepInput {
+    flex: 2;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.consultButton {
+    background-color: #79972B;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    flex: 1;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.consultButton:hover {
+    background-color: #687f24;
+}
+
+.cepLink {
+    font-size: 14px;
+    color: #79972B;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.cepLink:hover {
+    color: #687f24;
+}

@@ -225,3 +225,43 @@
   background-color: #79972B !important;
   color: white !important;
 }
+
+.userContainer {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.userIcon {
+  font-size: 24px;
+  color: #79972B;
+  cursor: pointer;
+  transition: color 0.3s;
+  margin-right: 10px;
+}
+
+.userIcon:hover {
+  font-size: 28px;
+}
+
+.cartContainer {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.cartIcon {
+  font-size: 28px;
+  color: #79972B;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: color 0.3s;
+}
+
+.cartIcon:hover {
+  font-size: 32px;
+}
+
+
+
+

@@ -10,6 +10,8 @@
 
 .logo {
   font-size: 34px;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .topBar {
@@ -24,51 +26,38 @@
   cursor: pointer;
 }
 
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+.icon {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.searchBarExpanded {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.searchInputExpanded {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #79972B;
+  border-radius: 15px;
+  font-family: "Proxima Nova", sans-serif;
+  color: black;
+  background-color: #ffffff;
+  flex-grow: 1;
+}
+
 .searchIcon {
   font-size: 30px;
   cursor: pointer;
-}
-
-.logoutContainer {
-  display: flex;
-  align-items: center;
-  color: #79972B;
-}
-
-.logout {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.logoutIcon {
-  font-size: 30px;
   margin-left: 10px;
-  transition: font-size 0.3s;
-}
-
-.logoutIcon:hover {
-  font-size: 35px;
-}
-
-.logoutIcon:hover ~ .logoutTooltip {
-  display: block;
-}
-
-.logoutTooltip {
-  display: none;
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 5px;
-  border-radius: 3px;
-  font-size: 12px;
-  white-space: nowrap;
-  z-index: 1;
 }
 
 .menu {
@@ -103,21 +92,6 @@
 .menu ul li.active div {
   width: fit-content;
   border-bottom: 2px solid #79972B;
-}
-
-.searchBarExpanded {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.searchInputExpanded {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #79972B;
-  border-radius: 15px;
-  font-family: "Proxima Nova", sans-serif;
-  color: black;
-  background-color: #ffffff;
 }
 
 .dropdown {

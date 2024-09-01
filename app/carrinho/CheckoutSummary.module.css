@@ -1,0 +1,42 @@
+.summary {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    margin-left: 20px;
+}
+
+.summary h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.summary div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
+}
+
+.finalizeButton {
+    background-color: #79972B;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.finalizeButton:hover {
+    background-color: #687f24;
+}
