@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import AdministradorProvider from "@/contexts/administrator";
+import ClienteProvider from "@/contexts/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,11 +57,13 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${inter.className} layout`}>
         <AdministradorProvider>
-          <Header />
-          <div className="main-content">
-            <main className="content">{children}</main>
-          </div>
-          <Footer />
+          <ClienteProvider>
+            <Header />
+            <div className="main-content">
+              <main className="content">{children}</main>
+            </div>
+            <Footer />
+          </ClienteProvider>
         </AdministradorProvider>
       </body>
     </html>
