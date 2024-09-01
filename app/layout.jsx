@@ -12,6 +12,28 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Florist",
+    "name": "Veraflor Garden",
+    "description": "Explore a variedade de plantas, flores e acessórios de jardinagem da Veraflor Garden.",
+    "image": "https://veraflor.vercel.app/images/pelotas.png",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Dr. Félix Antônio Caputo, 251",
+      "addressLocality": "Pelotas",
+      "addressRegion": "RS",
+      "postalCode": "96070-060",
+      "addressCountry": "BR"
+    },
+    "telephone": "+55(53)99956-1458",
+    "sameAs": [
+      "https://www.facebook.com/veraflorgarden",
+      "https://www.instagram.com/veraflorgarden"
+    ],
+    "url": "https://veraflor.vercel.app"
+  };
+
   return (
     <html lang="pt-br">
       <head>
@@ -27,31 +49,10 @@ export default function RootLayout({ children }) {
         <meta name="twitter:title" content={metadata.title} />
         <meta name="twitter:description" content={metadata.description} />
         <meta name="twitter:image" content="/images/pelotas.png" />
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "Florist",
-              "name": "Veraflor Garden",
-              "description": "Explore a variedade de plantas, flores e acessórios de jardinagem da Veraflor Garden.",
-              "image": "https://veraflor.vercel.app/images/pelotas.png",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Av. Dr. Félix Antônio Caputo, 251",
-                "addressLocality": "Pelotas",
-                "addressRegion": "RS",
-                "postalCode": "96070-060",
-                "addressCountry": "BR"
-              },
-              "telephone": "+55-(53)99956-1458",
-              "sameAs": [
-                "https://www.facebook.com/veraflorgarden",
-                "https://www.instagram.com/veraflorgarden"
-              ],
-              "url": "https://veraflor.vercel.app"
-            }
-          `}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
       </head>
       <body className={`${inter.className} layout`}>
         <AdministradorProvider>
