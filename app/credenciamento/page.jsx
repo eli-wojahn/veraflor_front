@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { withAuth } from '@/util/auth';
+
 import styles from './credenciamento.module.css';
 import Swal from 'sweetalert2';
 
@@ -164,4 +164,4 @@ const Credenciamento = () => {
     );
 }
 
-export default withAuth(Credenciamento);
+export default Credenciamento;
