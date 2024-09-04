@@ -1,11 +1,12 @@
 'use client';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './Header.module.css';
 import Image from 'next/image';
-import { useContext, useState, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 import { AdministradorContext } from '@/contexts/administrator';
+import { ClienteContext } from '@/contexts/client';
 import { CiSearch } from 'react-icons/ci';
 import { IoExitOutline, IoCartOutline } from 'react-icons/io5';
 import { FaBars, FaRegUser } from 'react-icons/fa';
@@ -19,14 +20,16 @@ const MySwal = withReactContent(Swal);
 const Header = () => {
     const pathname = usePathname();
     const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
+    const { clienteId, clienteNome, logout: clienteLogout } = useContext(ClienteContext); // Usando contexto do cliente
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState(false); // Gerenciando a tooltip
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
     const dropdownRef = useRef(null);
 
-    function logout() {
+    function logoutAdmin() {
         MySwal.fire({
             title: 'Confirma saída do sistema?',
             icon: 'warning',
@@ -52,13 +55,13 @@ const Header = () => {
         }
     };
 
-    const handleDropdownToggle = () => {
-        setDropdownOpen(!dropdownOpen);
+    const toggleTooltip = () => {
+        setTooltipOpen(!tooltipOpen);
     };
 
     const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            setDropdownOpen(false);
+        if (!event.target.closest(`.${styles.userContainer}`)) {
+            setTooltipOpen(false); // Fecha a tooltip se clicar fora
         }
     };
 
@@ -108,7 +111,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className={styles.dropdown} ref={dropdownRef}>
-                            <div className={styles.dropdownTitle} onClick={handleDropdownToggle}>
+                            <div className={styles.dropdownTitle} onClick={() => setDropdownOpen(!dropdownOpen)}>
                                 Lojas
                             </div>
                             {dropdownOpen && (
@@ -154,9 +157,23 @@ const Header = () => {
                     />
                 </div>
                 <div className={styles.userContainer}>
-                    <Link href="/login" passHref>
-                        <FaRegUser className={styles.userIcon} />
-                    </Link>
+                    {clienteId ? (
+                        <div onClick={toggleTooltip} className={styles.userIconWrapper}>
+                            <FaRegUser className={styles.userIcon} />
+                            <p className={styles.userText}>Olá, {clienteNome}</p>
+                            {tooltipOpen && (
+                                <div className={styles.tooltip}>
+                                    <div>Meus dados</div>
+                                    <div className={styles.logoutLink} onClick={clienteLogout}>Sair</div>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <Link href="/loginCliente" passHref>
+                            <FaRegUser className={styles.userIcon} />
+                            <p className={styles.userText}>Faça seu login</p>
+                        </Link>
+                    )}
                 </div>
                 <div className={styles.cartContainer}>
                     <Link href="/carrinho" passHref>
@@ -164,10 +181,10 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className={styles.logoutContainer}>
-                    {adminNome !== '' && (
+                    {adminNome && (
                         <div className={styles.logout}>
                             <span>{adminNome}{' '}</span>
-                            <IoExitOutline onClick={logout} className={styles.logoutIcon} />
+                            <IoExitOutline onClick={logoutAdmin} className={styles.logoutIcon} />
                             <span className={styles.logoutTooltip}>Sair</span>
                         </div>
                     )}
