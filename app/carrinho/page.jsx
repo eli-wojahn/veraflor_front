@@ -1,50 +1,44 @@
 'use client';
-import React, { useState } from 'react';
-import ProductCard from './ProductCard';
-import CheckoutSummary from './CheckoutSummary';
-import ShippingCalculator from './ShippingCalculator';
-import styles from './carrinho.module.css';
+import React, { useState, useEffect } from 'react';
 
-const CartPage = () => {
-    const [products, setProducts] = useState([/* produtos mockados */]);
-    const [subtotal, setSubtotal] = useState(0);
-    const [shipping, setShipping] = useState(0);
-    const [discount, setDiscount] = useState(0);
-    const [total, setTotal] = useState(0);
+const CartPage = ({ clienteId }) => {
+    const [cartItems, setCartItems] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const updateQuantity = (id, quantity) => {
-        setProducts(products.map(product =>
-            product.id === id ? { ...product, quantity } : product
-        ));
-        // Atualize os valores de subtotal e total conforme a mudança de quantidade.
-    };
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(`https://veraflor.onrender.com/carrinho/${clienteId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao obter itens do carrinho');
+                }
+                const data = await response.json();
+                setCartItems(data);
+            } catch (error) {
+                console.error(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const removeProduct = (id) => {
-        setProducts(products.filter(product => product.id !== id));
-        // Atualize os valores de subtotal e total após a remoção.
-    };
+        fetchCartItems();
+    }, [clienteId]);
 
-    const calculateShipping = (cep) => {
-        // Mock do cálculo do frete
-        const shippingCost = 15.00;
-        setShipping(shippingCost);
-        setTotal(subtotal + shippingCost - discount);
-    };
+    if (loading) return <p>Carregando...</p>;
+
+    if (cartItems.length === 0) return <p>Carrinho vazio</p>;
 
     return (
-        <div className={styles.container}>
-            <div className={styles.cartSection}>
-                <div>
-                    <ProductCard />
-                </div>
-                <ShippingCalculator calculateShipping={calculateShipping} />
-            </div>
-            <CheckoutSummary
-                subtotal={subtotal}
-                shipping={shipping}
-                discount={discount}
-                total={total}
-            />
+        <div>
+            <h1>Seu Carrinho</h1>
+            <ul>
+                {cartItems.map(item => (
+                    <li key={item.id}>
+                        {item.produto.descricao} - {item.quantidade} unidades
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

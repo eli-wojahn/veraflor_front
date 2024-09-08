@@ -160,9 +160,10 @@ const Header = () => {
                     {clienteId ? (
                         <div onClick={toggleTooltip} className={styles.userIconWrapper}>
                             <FaRegUser className={styles.userIcon} />
-                            <p className={styles.userText}>Olá, {clienteNome}</p>
                             {tooltipOpen && (
                                 <div className={styles.tooltip}>
+                                    <p className={styles.userText}>Olá, {clienteNome}</p>
+                                    <br/>
                                     <div>Meus dados</div>
                                     <div className={styles.logoutLink} onClick={clienteLogout}>Sair</div>
                                 </div>
@@ -171,7 +172,6 @@ const Header = () => {
                     ) : (
                         <Link href="/loginCliente" passHref>
                             <FaRegUser className={styles.userIcon} />
-                            <p className={styles.userText}>Faça seu login</p>
                         </Link>
                     )}
                 </div>

@@ -57,3 +57,13 @@
 .infoIcon:hover {
     color: #BF1F4A;
 }
+
+.cartIcon {
+    font-size: 20px;
+    color: #79972B;
+    cursor: pointer;
+}
+
+.cartIcon:hover {
+    color: #BF1F4A;
+}

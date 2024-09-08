@@ -6,6 +6,7 @@ import ProductCard from './ProdutoCard';
 import FilterMenu from './FilterMenu';
 import InfoModal from './InfoModal';
 import ProductModal from './ProductModal';
+import CartModal from './CartModal';
 import Pagination from '@mui/material/Pagination';
 
 const ProductPage = () => {
@@ -23,6 +24,7 @@ const ProductPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
+    const [showCartModal, setShowCartModal] = useState(false); // Estado para controlar o modal de carrinho
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
@@ -44,9 +46,7 @@ const ProductPage = () => {
                 }
                 const data = await response.json();
                 const totalItems = parseInt(response.headers.get('X-Total-Count'), 10);
-                console.log('Total Items:', totalItems); // Verificar contagem total de itens
                 const pages = Math.ceil(totalItems / itemsPerPage);
-                console.log('Total Pages:', pages); // Verificar contagem total de páginas
                 setTotalPages(pages);
                 setProductList(data);
             } catch (error) {
@@ -67,6 +67,11 @@ const ProductPage = () => {
     const openProductModal = (product) => {
         setSelectedProduct(product);
         setShowProductModal(true);
+    };
+
+    const openCartModal = (product) => {
+        setSelectedProduct(product);
+        setShowCartModal(true); // Abrir o modal do carrinho
     };
 
     const toggleFilters = () => {
@@ -121,6 +126,7 @@ const ProductPage = () => {
                         product={product}
                         openPriceModal={openProductModal}
                         openInfoModal={openInfoModal}
+                        openCartModal={openCartModal} // Função para abrir o modal de carrinho
                     />
                 ))}
             </div>
@@ -129,6 +135,9 @@ const ProductPage = () => {
             )}
             {showProductModal && selectedProduct && (
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
+            )}
+            {showCartModal && selectedProduct && (
+                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} /> // Modal de carrinho
             )}
             <div className={styles.paginationContainer}>
                 {totalPages > 1 && (
