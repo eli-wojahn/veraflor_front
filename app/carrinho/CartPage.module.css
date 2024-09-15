@@ -1,11 +1,14 @@
 /* CartPage.module.css */
 .cartContainer {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
 .cartContent {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .cartItems {
@@ -25,7 +28,7 @@
 }
 
 .cartItemImage {
-    width: 100px;
+    width: 150px;
     height: auto;
     border-radius: 8px;
 }
@@ -33,6 +36,44 @@
 .cartItemDetails {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+    width: 100%;
+    position: relative;
+}
+
+.trashIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.trashIcon:hover {
+    transform: scale(1.2);
+}
+
+.quantityTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quantityControl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantityButton {
+    font-size: 24px;
+    cursor: pointer;
+    color: #79972B;
+}
+
+.totalPrice {
+    font-weight: bold;
+    font-size: 16px;
 }
