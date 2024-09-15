@@ -86,3 +86,17 @@
     font-weight: bold;
     font-size: 16px;
 }
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajuste conforme necessário */
+    font-size: 20px;
+    color: #666;
+}
+
+.loadingIcon {
+    font-size: 24px;
+    margin-right: 10px;
+}

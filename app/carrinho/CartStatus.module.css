@@ -1,0 +1,52 @@
+.emptyCart {
+    text-align: center;
+    padding: 40px;
+}
+
+.emptyCartIcon {
+    font-size: 58px;
+    margin-bottom: 20px; 
+}
+
+.emptyCart h2 {
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.emptyCart p {
+    font-size: 16px;
+    margin: 20px 0;
+}
+
+.exploreButton {
+    background-color: #79972B;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block; 
+    margin-top: 20px; 
+}
+
+.exploreButton:hover {
+    background-color: #536426;
+}
+
+/* CartPage.module.css */
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ajuste conforme necessário */
+    font-size: 24px;
+    color: #666;
+}
+
+.loadingIcon {
+    margin-right: 10px;
+    font-size: 40px;
+}
+

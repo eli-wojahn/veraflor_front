@@ -5,6 +5,7 @@ import styles from './CartPage.module.css';
 import CheckoutSummary from './CheckoutSummary';
 import { BsTrash } from 'react-icons/bs';
 import { CiCirclePlus, CiCircleMinus } from 'react-icons/ci';
+import CartStatus from './CartStatus';
 
 const CartPage = () => {
     const { clienteId } = useContext(ClienteContext);
@@ -13,6 +14,7 @@ const CartPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [loadingActions, setLoadingActions] = useState([]);
+    const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar o carregamento dos dados
 
     const adicionarLoading = (itemId) => setLoadingActions(prev => [...prev, itemId]);
     const removerLoading = (itemId) => setLoadingActions(prev => prev.filter(id => id !== itemId));
@@ -96,17 +98,26 @@ const CartPage = () => {
     useEffect(() => {
         const fetchCarrinhoEProdutos = async () => {
             if (clienteId) {
-                const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
-                if (carrinhoAtivo) {
-                    const itens = await buscarItensCarrinho(carrinhoAtivo.id);
-                    const produtosIds = itens.map(item => item.produto_id);
-                    const produtos = await buscarDetalhesProdutos(produtosIds);
-                    const itensComProdutos = combinarCarrinhoComProdutos(itens, produtos);
-                    setItensCarrinho(itensComProdutos);
-                } else {
-                    setItensCarrinho([]);
+                try {
+                    const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
+                    if (carrinhoAtivo) {
+                        const itens = await buscarItensCarrinho(carrinhoAtivo.id);
+                        const produtosIds = itens.map(item => item.produto_id);
+                        const produtos = await buscarDetalhesProdutos(produtosIds);
+                        const itensComProdutos = combinarCarrinhoComProdutos(itens, produtos);
+                        setItensCarrinho(itensComProdutos);
+                    } else {
+                        setItensCarrinho([]);
+                    }
+                } catch (error) {
+                    setError('Erro ao carregar o carrinho');
+                } finally {
+                    setLoading(false);
+                    setDataLoaded(true); // Dados foram carregados
                 }
+            } else {
                 setLoading(false);
+                setDataLoaded(true); // Dados foram carregados
             }
         };
 
@@ -119,53 +130,66 @@ const CartPage = () => {
     
     const totalProdutos = itensCarrinho.reduce((acc, item) => acc + item.quantidade, 0);
 
-    if (loading) return <p>Carregando...</p>;
-    if (error) return <p>Erro: {error}</p>;
-    if (!itensCarrinho.length) return <p>Seu carrinho está vazio.</p>;
+    const isEmpty = itensCarrinho.length === 0;
 
     return (
         <div className={styles.cartContainer}>
             <h2>Meu Carrinho</h2>
-            <div className={styles.cartContent}>
-                <div className={styles.cartItems}>
-                    {itensCarrinho.map((item) => (
-                        <div key={item.id} className={styles.cartItem}>
-                            <img
-                                src={`https://veraflor.onrender.com/public/upload/${item.produto.imagem}`}
-                                alt={item.produto.descricao}
-                                className={styles.cartItemImage}
-                            />
-                            <div className={styles.cartItemDetails}>
-                                <div className={styles.itemHeader}>
-                                    <h3>{item.produto.descricao}</h3>
-                                    <BsTrash className={styles.trashIcon} onClick={() => removerItemDoCarrinho(item.id)} />
-                                </div>
-                                <p><strong>Preço:</strong> R$ {item.produto.preco}</p>
-                                <div className={styles.quantityTotal}>
-                                    <div className={styles.quantityControl}>
-                                        <p><strong>Quantidade:</strong></p>
-                                        <div className={styles.quantityButtons}>
-                                            <CiCircleMinus 
-                                                className={styles.quantityButton} 
-                                                onClick={() => atualizarQuantidade(item.produto_id, item.quantidade - 1)} 
-                                                disabled={loadingActions.includes(item.produto_id)} 
-                                            />
-                                            <span>{loadingActions.includes(item.produto_id) ? '...' : item.quantidade}</span>
-                                            <CiCirclePlus 
-                                                className={styles.quantityButton} 
-                                                onClick={() => atualizarQuantidade(item.produto_id, item.quantidade + 1)} 
-                                                disabled={loadingActions.includes(item.produto_id)} 
-                                            />
-                                        </div>
+            {!dataLoaded ? (
+                <div className={styles.loadingContainer}>
+                    <span className={styles.loadingIcon}>⏳</span>
+                    <span>Carregando...</span>
+                </div>
+            ) : (
+                <CartStatus 
+                    loading={loading && !clienteId} 
+                    error={error} 
+                    isEmpty={isEmpty && clienteId} 
+                    isLoggedIn={!!clienteId} 
+                />
+            )}
+            {dataLoaded && clienteId && !loading && !isEmpty && (
+                <div className={styles.cartContent}>
+                    <div className={styles.cartItems}>
+                        {itensCarrinho.map((item) => (
+                            <div key={item.id} className={styles.cartItem}>
+                                <img
+                                    src={`https://veraflor.onrender.com/public/upload/${item.produto.imagem}`}
+                                    alt={item.produto.descricao}
+                                    className={styles.cartItemImage}
+                                />
+                                <div className={styles.cartItemDetails}>
+                                    <div className={styles.itemHeader}>
+                                        <h3>{item.produto.descricao}</h3>
+                                        <BsTrash className={styles.trashIcon} onClick={() => removerItemDoCarrinho(item.id)} />
                                     </div>
-                                    <p className={styles.totalPrice}><strong>Total:</strong> R$ {(item.quantidade * item.produto.preco).toFixed(2)}</p>
+                                    <p><strong>Preço:</strong> R$ {item.produto.preco}</p>
+                                    <div className={styles.quantityTotal}>
+                                        <div className={styles.quantityControl}>
+                                            <p><strong>Quantidade:</strong></p>
+                                            <div className={styles.quantityButtons}>
+                                                <CiCircleMinus 
+                                                    className={styles.quantityButton} 
+                                                    onClick={() => atualizarQuantidade(item.produto_id, item.quantidade - 1)} 
+                                                    disabled={loadingActions.includes(item.produto_id)} 
+                                                />
+                                                <span>{loadingActions.includes(item.produto_id) ? '...' : item.quantidade}</span>
+                                                <CiCirclePlus 
+                                                    className={styles.quantityButton} 
+                                                    onClick={() => atualizarQuantidade(item.produto_id, item.quantidade + 1)} 
+                                                    disabled={loadingActions.includes(item.produto_id)} 
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className={styles.totalPrice}><strong>Total:</strong> R$ {(item.quantidade * item.produto.preco).toFixed(2)}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                    <CheckoutSummary totalProdutos={totalProdutos} totalValor={totalValor} />
                 </div>
-                <CheckoutSummary totalProdutos={totalProdutos} totalValor={totalValor} />
-            </div>
+            )}
         </div>
     );
 };
