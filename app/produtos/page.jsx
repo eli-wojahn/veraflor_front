@@ -24,7 +24,7 @@ const ProductPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
-    const [showCartModal, setShowCartModal] = useState(false); // Estado para controlar o modal de carrinho
+    const [showCartModal, setShowCartModal] = useState(false); 
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
@@ -126,7 +126,7 @@ const ProductPage = () => {
                         product={product}
                         openPriceModal={openProductModal}
                         openInfoModal={openInfoModal}
-                        openCartModal={openCartModal} // Função para abrir o modal de carrinho
+                        openCartModal={openCartModal} 
                     />
                 ))}
             </div>
@@ -137,7 +137,7 @@ const ProductPage = () => {
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
             )}
             {showCartModal && selectedProduct && (
-                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} /> // Modal de carrinho
+                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} /> 
             )}
             <div className={styles.paginationContainer}>
                 {totalPages > 1 && (

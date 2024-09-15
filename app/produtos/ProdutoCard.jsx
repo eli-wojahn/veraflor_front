@@ -12,6 +12,7 @@ const ProductCard = ({ product, openPriceModal, openInfoModal, openCartModal }) 
             <h2 className={styles.name}>{product.descricao}</h2>
             <div className={styles.buttons}>
                 <button className={styles.button} onClick={() => openPriceModal(product)}>R$ {product.preco}</button>
+                < button />
                 <BsBasket3 className={styles.cartIcon} onClick={() => openCartModal(product)} />
                 <IoInformationCircleOutline className={styles.infoIcon} onClick={() => openInfoModal(product)} />
             </div>

@@ -1,0 +1,38 @@
+/* CartPage.module.css */
+.cartContainer {
+    padding: 20px;
+}
+
+.cartContent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartItems {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.cartItem {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.cartItemImage {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.cartItemDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
