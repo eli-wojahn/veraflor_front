@@ -163,8 +163,10 @@ const Header = () => {
                             {tooltipOpen && (
                                 <div className={styles.tooltip}>
                                     <p className={styles.userText}>Olá, {clienteNome}</p>
-                                    <br/>
-                                    <div>Meus dados</div>
+                                    <br />
+                                    <Link href="/cliente-dados" passHref>
+                                        <div>Meus dados</div>
+                                    </Link>
                                     <div className={styles.logoutLink} onClick={clienteLogout}>Sair</div>
                                 </div>
                             )}

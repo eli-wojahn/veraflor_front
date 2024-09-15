@@ -47,6 +47,18 @@
       "static/chunks/main-app.js",
       "static/css/app/edit/[id]/page.css",
       "static/chunks/app/edit/[id]/page.js"
+    ],
+    "/cliente-dados/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/cliente-dados/page.css",
+      "static/chunks/app/cliente-dados/page.js"
+    ],
+    "/credenciamento/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/credenciamento/page.css",
+      "static/chunks/app/credenciamento/page.js"
     ]
   }
 }
