@@ -14,7 +14,7 @@ const CartPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [loadingActions, setLoadingActions] = useState([]);
-    const [dataLoaded, setDataLoaded] = useState(false); // Estado para controlar o carregamento dos dados
+    const [dataLoaded, setDataLoaded] = useState(false);
 
     const adicionarLoading = (itemId) => setLoadingActions(prev => [...prev, itemId]);
     const removerLoading = (itemId) => setLoadingActions(prev => prev.filter(id => id !== itemId));
@@ -97,6 +97,8 @@ const CartPage = () => {
 
     useEffect(() => {
         const fetchCarrinhoEProdutos = async () => {
+            setLoading(true);
+            setDataLoaded(false);
             if (clienteId) {
                 try {
                     const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
@@ -111,14 +113,12 @@ const CartPage = () => {
                     }
                 } catch (error) {
                     setError('Erro ao carregar o carrinho');
-                } finally {
-                    setLoading(false);
-                    setDataLoaded(true); // Dados foram carregados
                 }
             } else {
-                setLoading(false);
-                setDataLoaded(true); // Dados foram carregados
+                setItensCarrinho([]);
             }
+            setLoading(false);
+            setDataLoaded(true);
         };
 
         fetchCarrinhoEProdutos();
@@ -135,19 +135,12 @@ const CartPage = () => {
     return (
         <div className={styles.cartContainer}>
             <h2>Meu Carrinho</h2>
-            {!dataLoaded ? (
-                <div className={styles.loadingContainer}>
-                    <span className={styles.loadingIcon}>⏳</span>
-                    <span>Carregando...</span>
-                </div>
-            ) : (
-                <CartStatus 
-                    loading={loading && !clienteId} 
-                    error={error} 
-                    isEmpty={isEmpty && clienteId} 
-                    isLoggedIn={!!clienteId} 
-                />
-            )}
+            <CartStatus 
+                loading={loading && !dataLoaded} 
+                error={error} 
+                isEmpty={isEmpty && dataLoaded && clienteId} 
+                isLoggedIn={!!clienteId} 
+            />
             {dataLoaded && clienteId && !loading && !isEmpty && (
                 <div className={styles.cartContent}>
                     <div className={styles.cartItems}>
