@@ -3,8 +3,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { ClienteContext } from '@/contexts/client';
 import styles from './CartPage.module.css';
 import CheckoutSummary from './CheckoutSummary';
-import { BsTrash } from 'react-icons/bs';  // Importando o ícone de lixeira
-import { CiCirclePlus, CiCircleMinus } from 'react-icons/ci';  // Ícones para quantidade
+import { BsTrash } from 'react-icons/bs';
+import { CiCirclePlus, CiCircleMinus } from 'react-icons/ci';
 
 const CartPage = () => {
     const { clienteId } = useContext(ClienteContext);
@@ -18,35 +18,37 @@ const CartPage = () => {
     const removerLoading = (itemId) => setLoadingActions(prev => prev.filter(id => id !== itemId));
 
     const buscarCarrinhoAtivo = async (clienteId) => {
-        const response = await fetch(`https://veraflor.onrender.com/carrinho/listaAtivos/${clienteId}`);
-        const carrinho = await response.json();
-        return carrinho.length > 0 ? carrinho[0] : null;
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/carrinho/listaAtivos/${clienteId}`);
+            const carrinho = await response.json();
+            return carrinho.length > 0 ? carrinho[0] : null;
+        } catch (error) {
+            console.error('Erro ao buscar carrinho ativo:', error);
+            return null;
+        }
     };
 
     const buscarItensCarrinho = async (carrinhoId) => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/itens/${carrinhoId}`);
-            if (!response.ok) {
-                throw new Error('Erro ao buscar itens do carrinho');
-            }
+            if (!response.ok) throw new Error('Erro ao buscar itens do carrinho');
             const data = await response.json();
-            setItensCarrinho(data);
             return data;
         } catch (error) {
             setError(error.message);
+            return [];
         }
     };
 
     const buscarDetalhesProdutos = async (produtosIds) => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/produtos?ids=${produtosIds.join(',')}`);
-            if (!response.ok) {
-                throw new Error('Erro ao buscar detalhes dos produtos');
-            }
+            if (!response.ok) throw new Error('Erro ao buscar detalhes dos produtos');
             const data = await response.json();
-            setProdutosDetalhes(data);
+            return data;
         } catch (error) {
             setError(error.message);
+            return [];
         }
     };
 
@@ -63,7 +65,7 @@ const CartPage = () => {
     const removerItemDoCarrinho = async (itemId) => {
         try {
             adicionarLoading(itemId);
-            setItensCarrinho(prev => prev.filter(item => item.id !== itemId)); 
+            setItensCarrinho(prev => prev.filter(item => item.id !== itemId));
             await fetch(`https://veraflor.onrender.com/itens/${itemId}`, { method: 'DELETE' });
         } catch (error) {
             console.error('Erro ao remover item do carrinho:', error);
@@ -98,24 +100,18 @@ const CartPage = () => {
                 if (carrinhoAtivo) {
                     const itens = await buscarItensCarrinho(carrinhoAtivo.id);
                     const produtosIds = itens.map(item => item.produto_id);
-                    await buscarDetalhesProdutos(produtosIds);
+                    const produtos = await buscarDetalhesProdutos(produtosIds);
+                    const itensComProdutos = combinarCarrinhoComProdutos(itens, produtos);
+                    setItensCarrinho(itensComProdutos);
                 } else {
                     setItensCarrinho([]);
-                    setLoading(false);
                 }
+                setLoading(false);
             }
         };
 
         fetchCarrinhoEProdutos();
     }, [clienteId]);
-
-    useEffect(() => {
-        if (itensCarrinho.length && produtosDetalhes.length) {
-            const itensComProdutos = combinarCarrinhoComProdutos(itensCarrinho, produtosDetalhes);
-            setItensCarrinho(itensComProdutos);
-            setLoading(false);
-        }
-    }, [itensCarrinho, produtosDetalhes]);
 
     const totalValor = itensCarrinho.reduce((acc, item) => {
         return acc + (item.produto && item.produto.preco ? (item.produto.preco * item.quantidade) : 0);
@@ -140,24 +136,29 @@ const CartPage = () => {
                                 className={styles.cartItemImage}
                             />
                             <div className={styles.cartItemDetails}>
-                                <h3>{item.produto.descricao}</h3>
-                                <BsTrash className={styles.trashIcon} onClick={() => removerItemDoCarrinho(item.id)} />
-                                <p>Preço: R$ {item.produto.preco}</p>
+                                <div className={styles.itemHeader}>
+                                    <h3>{item.produto.descricao}</h3>
+                                    <BsTrash className={styles.trashIcon} onClick={() => removerItemDoCarrinho(item.id)} />
+                                </div>
+                                <p><strong>Preço:</strong> R$ {item.produto.preco}</p>
                                 <div className={styles.quantityTotal}>
                                     <div className={styles.quantityControl}>
-                                        <CiCircleMinus 
-                                            className={styles.quantityButton} 
-                                            onClick={() => atualizarQuantidade(item.produto_id, item.quantidade - 1)} 
-                                            disabled={loadingActions.includes(item.produto_id)} 
-                                        />
-                                        <span>{loadingActions.includes(item.produto_id) ? '...' : item.quantidade}</span>
-                                        <CiCirclePlus 
-                                            className={styles.quantityButton} 
-                                            onClick={() => atualizarQuantidade(item.produto_id, item.quantidade + 1)} 
-                                            disabled={loadingActions.includes(item.produto_id)} 
-                                        />
+                                        <p><strong>Quantidade:</strong></p>
+                                        <div className={styles.quantityButtons}>
+                                            <CiCircleMinus 
+                                                className={styles.quantityButton} 
+                                                onClick={() => atualizarQuantidade(item.produto_id, item.quantidade - 1)} 
+                                                disabled={loadingActions.includes(item.produto_id)} 
+                                            />
+                                            <span>{loadingActions.includes(item.produto_id) ? '...' : item.quantidade}</span>
+                                            <CiCirclePlus 
+                                                className={styles.quantityButton} 
+                                                onClick={() => atualizarQuantidade(item.produto_id, item.quantidade + 1)} 
+                                                disabled={loadingActions.includes(item.produto_id)} 
+                                            />
+                                        </div>
                                     </div>
-                                    <p className={styles.totalPrice}>Total: R$ {(item.quantidade * item.produto.preco).toFixed(2)}</p>
+                                    <p className={styles.totalPrice}><strong>Total:</strong> R$ {(item.quantidade * item.produto.preco).toFixed(2)}</p>
                                 </div>
                             </div>
                         </div>
