@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-
-import styles from './credenciamento.module.css';
 import Swal from 'sweetalert2';
+import styles from './credenciamento.module.css'; // Atualize para o novo CSS
 
 const Credenciamento = () => {
     const initialClientState = {
@@ -14,23 +13,18 @@ const Credenciamento = () => {
     };
 
     const [cliente, setCliente] = useState(initialClientState);
-    const [senhaRepetida, setSenhaRepetida] = useState(''); // Novo estado para a repetição da senha
+    const [senhaRepetida, setSenhaRepetida] = useState('');
 
     const formatarCPF = (cpf) => {
-        // Remove tudo o que não for dígito
         cpf = cpf.replace(/\D/g, '');
-
-        // Formata o CPF - XXX.XXX.XXX-XX
         cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
         cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
         cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-
         return cpf;
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         if (name === 'cpf') {
             const formattedCPF = formatarCPF(value);
             setCliente(prevState => ({
@@ -51,13 +45,12 @@ const Credenciamento = () => {
 
     const handleClear = () => {
         setCliente(initialClientState);
-        setSenhaRepetida(''); // Limpar a repetição da senha também
+        setSenhaRepetida('');
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validação dos campos
         if (!cliente.nome || !cliente.email || !cliente.cpf || !cliente.dataNasc || !cliente.senha || !senhaRepetida) {
             Swal.fire({
                 title: 'Erro!',
@@ -68,7 +61,6 @@ const Credenciamento = () => {
             return;
         }
 
-        // Verificação da senha
         if (cliente.senha !== senhaRepetida) {
             Swal.fire({
                 title: 'Erro!',
@@ -84,7 +76,7 @@ const Credenciamento = () => {
         formData.append('email', cliente.email);
         formData.append('cpf', cliente.cpf);
         formData.append('dataNasc', cliente.dataNasc);
-        formData.append('senha', cliente.senha);    
+        formData.append('senha', cliente.senha);
 
         try {
             const response = await fetch('https://veraflor.onrender.com/clientes/cadastro', {
@@ -98,7 +90,6 @@ const Credenciamento = () => {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
-                // Limpar os campos do formulário
                 handleClear();
             } else {
                 Swal.fire({
@@ -122,44 +113,73 @@ const Credenciamento = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.formArea}>
-                <h2 className={styles.title}>Cadastro</h2>
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <div className={styles.formRow}>
-                        <div className={styles.formColumn}>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="nome">Nome completo</label>
-                                <input type="text" id="nome" name="nome" className={styles.input} value={cliente.nome} onChange={handleChange} />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="email">E-mail</label>
-                                <input type="text" id="email" name="email" className={styles.input} value={cliente.email} onChange={handleChange} />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="cpf">CPF</label>
-                                <input type="text" id="cpf" name="cpf" className={styles.input} value={cliente.cpf} onChange={handleChange} />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="dataNasc">Data de Nascimento</label>
-                                <input type="date" id="dataNasc" name="dataNasc" className={styles.input} value={cliente.dataNasc} onChange={handleChange} />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="senha">Senha</label>
-                                <input type="password" id="senha" name="senha" className={styles.input} value={cliente.senha} onChange={handleChange} />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="senhaRepetida">Repita a senha</label>
-                                <input type="password" id="senhaRepetida" name="senhaRepetida" className={styles.input} value={senhaRepetida} onChange={handleSenhaRepetidaChange} />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.buttonGroup}>
-                        <button type="submit" className={styles.submitButton}>Enviar</button>
-                        <button type="button" className={styles.clearButton} onClick={handleClear}>Limpar</button>
-                    </div>
-                </form>
-            </div>
+            <h1 className={styles.title}>Cadastro</h1>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <label className={styles.label}>
+                    Nome completo
+                    <input 
+                        type="text" 
+                        name="nome" 
+                        value={cliente.nome} 
+                        onChange={handleChange} 
+                        className={styles.input} 
+                    />
+                </label>
+                <label className={styles.label}>
+                    E-mail
+                    <input 
+                        type="email" 
+                        name="email" 
+                        value={cliente.email} 
+                        onChange={handleChange} 
+                        className={styles.input} 
+                    />
+                </label>
+                <label className={styles.label}>
+                    CPF
+                    <input 
+                        type="text" 
+                        name="cpf" 
+                        value={cliente.cpf} 
+                        onChange={handleChange} 
+                        className={styles.input} 
+                    />
+                </label>
+                <label className={styles.label}>
+                    Data de nascimento
+                    <input 
+                        type="date" 
+                        name="dataNasc" 
+                        value={cliente.dataNasc} 
+                        onChange={handleChange} 
+                        className={styles.input} 
+                    />
+                </label>
+                <label className={styles.label}>
+                    Senha
+                    <input 
+                        type="password" 
+                        name="senha" 
+                        value={cliente.senha} 
+                        onChange={handleChange} 
+                        className={styles.input} 
+                    />
+                </label>
+                <label className={styles.label}>
+                    Repita a senha
+                    <input 
+                        type="password" 
+                        name="senhaRepetida" 
+                        value={senhaRepetida} 
+                        onChange={handleSenhaRepetidaChange} 
+                        className={styles.input} 
+                    />
+                </label>
+                <div className={styles.buttonGroup}>
+                    <button type="submit" className={styles.button}>Enviar</button>
+                    <button type="button" className={styles.button} onClick={handleClear}>Limpar</button>
+                </div>
+            </form>
         </div>
     );
 }

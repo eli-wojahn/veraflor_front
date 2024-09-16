@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState, useContext } from 'react';
+import Swal from 'sweetalert2'; 
 import { ClienteContext } from '@/contexts/client';
 import styles from './ClienteArea.module.css';
 
@@ -12,7 +13,7 @@ const ClienteArea = () => {
         dataNasc: '',
         senha: ''
     });
-    const [statusMessage, setStatusMessage] = useState('');
+    const [activeSection, setActiveSection] = useState('meus-dados');
 
     useEffect(() => {
         if (clienteId) {
@@ -23,7 +24,7 @@ const ClienteArea = () => {
                         throw new Error('Erro ao buscar dados dos clientes');
                     }
                     const data = await response.json();
-                    // Filtra o cliente pelo ID
+
                     const clienteAtual = data.find(cliente => cliente.id === clienteId);
                     if (clienteAtual) {
                         setCliente({
@@ -38,7 +39,11 @@ const ClienteArea = () => {
                     }
                 } catch (error) {
                     console.error(error);
-                    setStatusMessage('Erro ao carregar dados do cliente.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Erro ao carregar dados do cliente.',
+                    });
                 }
             };
             buscarCliente();
@@ -67,60 +72,92 @@ const ClienteArea = () => {
 
             const data = await response.json();
             console.log('Dados atualizados:', data);
-            setStatusMessage('Dados salvos com sucesso!');
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Dados salvos com sucesso!',
+            });
         } catch (error) {
             console.error('Erro ao salvar dados:', error);
-            setStatusMessage('Erro ao salvar dados. Tente novamente.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao salvar dados. Tente novamente.',
+            });
+        }
+    };
+
+    const renderContent = () => {
+        switch (activeSection) {
+            case 'meus-dados':
+                return (
+                    <div className={styles.content}>
+                        <h1>Meus Dados</h1>
+                        <form onSubmit={handleSubmit} className={styles.form}>
+                            <label className={styles.label}>
+                                Nome completo
+                                <input 
+                                    type="text" 
+                                    name="nome" 
+                                    value={cliente.nome} 
+                                    onChange={handleInputChange} 
+                                    className={styles.input} 
+                                />
+                            </label>
+                            <label className={styles.label}>
+                                Data de nascimento
+                                <input 
+                                    type="date" 
+                                    name="dataNasc" 
+                                    value={cliente.dataNasc} 
+                                    onChange={handleInputChange} 
+                                    className={styles.input} 
+                                />
+                            </label>
+                            <label className={styles.label}>
+                                CPF
+                                <input 
+                                    type="text" 
+                                    name="cpf" 
+                                    value={cliente.cpf} 
+                                    onChange={handleInputChange} 
+                                    className={styles.input} 
+                                />
+                            </label>
+                            <label className={styles.label}>
+                                E-mail
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    value={cliente.email} 
+                                    onChange={handleInputChange} 
+                                    className={styles.input} 
+                                />
+                            </label>
+                            <button type="submit" className={styles.button}>Salvar Alterações</button>
+                        </form>
+                    </div>
+                );
+            // Outros casos para 'pedidos' e 'endereços' podem ser adicionados aqui
+            default:
+                return null;
         }
     };
 
     return (
-        <div className={styles.container}>
-            <h1>Seus Dados</h1>
-            {statusMessage && <p className={styles.statusMessage}>{statusMessage}</p>}
-            <form onSubmit={handleSubmit} className={styles.form}>
-                <label className={styles.label}>
-                    Nome completo
-                    <input 
-                        type="text" 
-                        name="nome" 
-                        value={cliente.nome} 
-                        onChange={handleInputChange} 
-                        className={styles.input} 
-                    />
-                </label>
-                <label className={styles.label}>
-                    Data de nascimento
-                    <input 
-                        type="date" 
-                        name="dataNasc" 
-                        value={cliente.dataNasc} 
-                        onChange={handleInputChange} 
-                        className={styles.input} 
-                    />
-                </label>
-                <label className={styles.label}>
-                    CPF
-                    <input 
-                        type="text" 
-                        name="cpf" 
-                        value={cliente.cpf} 
-                        onChange={handleInputChange} 
-                        className={styles.input} 
-                    />
-                </label>
-                <label className={styles.label}>
-                    E-mail
-                    <input 
-                        type="email" 
-                        name="email" 
-                        value={cliente.email} 
-                        onChange={handleInputChange} 
-                        className={styles.input} 
-                    />
-                </label>
-                <button type="submit" className={styles.button}>Salvar Alterações</button>
-            </form>
+        <div className={styles.wrapper}>
+            <aside className={styles.sidebar}>
+                <ul>
+                    <li onClick={() => setActiveSection('meus-dados')} className={activeSection === 'meus-dados' ? styles.active : ''}>Meus dados</li>
+                    <li onClick={() => setActiveSection('pedidos')} className={activeSection === 'pedidos' ? styles.active : ''}>Pedidos</li>
+                    <li onClick={() => setActiveSection('enderecos')} className={activeSection === 'enderecos' ? styles.active : ''}>Endereços</li>
+                </ul>
+            </aside>
+            <div className={styles.contentContainer}>
+                <main className={styles.mainContent}>
+                    {renderContent()}
+                </main>
+            </div>
         </div>
     );
 };
