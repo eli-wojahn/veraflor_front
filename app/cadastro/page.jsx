@@ -14,6 +14,7 @@ const Cadastro = () => {
         destaque: '1',
         tipo: 'Selecione',
         tamanho: 'Selecione',
+        loja: 'Selecione', // Ajustado para iniciar como 'Selecione'
         imagem: null,
         imagemPreview: null
     };
@@ -47,7 +48,7 @@ const Cadastro = () => {
 
     const handlePrecoChange = (e) => {
         const { value } = e.target;
-        const precoFormatado = value.replace(',', '.'); 
+        const precoFormatado = value.replace(',', '.');
         setProduto(prevState => ({
             ...prevState,
             preco: precoFormatado
@@ -65,7 +66,8 @@ const Cadastro = () => {
         // Validação dos campos
         if (!produto.codigo || !produto.descricao || !produto.preco ||
             produto.categoria === 'Selecione' || produto.ambiente === 'Selecione' ||
-            produto.tipo === 'Selecione' || produto.tamanho === 'Selecione' || !produto.imagem) {
+            produto.tipo === 'Selecione' || produto.tamanho === 'Selecione' ||
+            produto.loja === 'Selecione' || !produto.imagem) {
             Swal.fire({
                 title: 'Erro!',
                 text: 'Por favor, preencha todos os campos e selecione uma imagem.',
@@ -84,6 +86,7 @@ const Cadastro = () => {
         formData.append('destaque', produto.destaque);
         formData.append('tipo', produto.tipo);
         formData.append('tamanho', produto.tamanho);
+        formData.append('loja', produto.loja);
         formData.append('imagem', produto.imagem);
 
         try {
@@ -98,7 +101,6 @@ const Cadastro = () => {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 });
-                // Limpar os campos do formulário
                 handleClear();
             } else {
                 Swal.fire({
@@ -180,6 +182,14 @@ const Cadastro = () => {
                                     <option value="Médio">Médio</option>
                                     <option value="Grande">Grande</option>
                                     <option value="Outro">Outro</option>
+                                </select>
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="loja">Loja</label>
+                                <select id="loja" name="loja" className={styles.select} value={produto.loja} onChange={handleChange}>
+                                    <option value="Selecione">Selecione</option>
+                                    <option value="Pelotas">Pelotas</option>
+                                    <option value="Camaquã">Camaquã</option>
                                 </select>
                             </div>
                             <div className={styles.formGroup}>

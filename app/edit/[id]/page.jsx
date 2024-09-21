@@ -18,6 +18,7 @@ const EditProductPage = ({ params }) => {
         destaque: '1',
         tipo: 'Selecione',
         tamanho: 'Selecione',
+        loja: 'Selecione', 
         imagem: null,
         imagemPreview: null
     };
@@ -32,7 +33,8 @@ const EditProductPage = ({ params }) => {
                 setProduto({
                     ...data,
                     destaque: data.destaque.toString(),
-                    imagemPreview: data.imagem ? `https://veraflor.onrender.com/public/upload/${data.imagem}` : null
+                    imagemPreview: data.imagem ? `https://veraflor.onrender.com/public/upload/${data.imagem}` : null,
+                    loja: data.loja 
                 });
                 setLoading(false);
             })
@@ -84,6 +86,8 @@ const EditProductPage = ({ params }) => {
         formData.append('destaque', produto.destaque);
         formData.append('tipo', produto.tipo);
         formData.append('tamanho', produto.tamanho);
+        formData.append('loja', produto.loja);
+
         if (produto.imagem) {
             formData.append('imagem', produto.imagem);
         } else {
@@ -190,11 +194,19 @@ const EditProductPage = ({ params }) => {
                                 </select>
                             </div>
                             <div className={styles.formGroup}>
+                                <label htmlFor="loja">Loja</label>
+                                <select id="loja" name="loja" className={styles.select} value={produto.loja} onChange={handleChange}>
+                                    <option value="Selecione">Selecione</option>
+                                    <option value="Pelotas">Pelotas</option>
+                                    <option value="Camaquã">Camaquã</option>
+                                </select>
+                            </div>
+                            <div className={styles.formGroup}>
                                 <label>Colocar em destaque</label>
                                 <div className={styles.radioGroup}>
-                                    <input type="radio" id="destaqueSim" name="destaque" value="true" checked={produto.destaque === 'true'} onChange={handleChange} />
+                                    <input type="radio" id="destaqueSim" name="destaque" value="1" checked={produto.destaque === '1'} onChange={handleChange} />
                                     <label htmlFor="destaqueSim">Sim&nbsp;&nbsp;&nbsp;</label>
-                                    <input type="radio" id="destaqueNao" name="destaque" value="false" checked={produto.destaque === 'false'} onChange={handleChange} />
+                                    <input type="radio" id="destaqueNao" name="destaque" value="0" checked={produto.destaque === '0'} onChange={handleChange} />
                                     <label htmlFor="destaqueNao">Não</label>
                                 </div>
                             </div>

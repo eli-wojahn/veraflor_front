@@ -8,6 +8,7 @@ import InfoModal from './InfoModal';
 import ProductModal from './ProductModal';
 import CartModal from './CartModal';
 import Pagination from '@mui/material/Pagination';
+import Swal from 'sweetalert2';
 
 const ProductPage = () => {
     const [productList, setProductList] = useState([]);
@@ -59,6 +60,42 @@ const ProductPage = () => {
         fetchAndFilterProducts();
     }, [filters, page]);
 
+    const openStoreSelectionModal = () => {
+        Swal.fire({
+            title: 'Selecione uma loja',
+            html: `
+                <div class="${styles.cardsContainer}">
+                    <div class="${styles.cardCidade}">
+                        <img src="/images/pelotas.png" alt="Pelotas" />
+                        <button class="${styles.button}" onclick="window.open('/produtos/', '_self')">Pelotas</button>
+                    </div>
+                    <div class="${styles.cardCidade}">
+                        <img src="/images/camaqua.jpg" alt="Camaquã" />
+                        <button class="${styles.button}" onclick="window.open('/produtos/camaqua', '_self')">Camaquã</button>
+                    </div>
+                </div>
+            `,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            onOpen: () => {
+                const buttons = document.querySelectorAll(`.${styles.button}`);
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        Swal.close();
+                    });
+                });
+            },
+            customClass: {
+                popup: styles.customSwalPopup,
+                container: styles.customSwalContainer,
+            }
+        });
+    };
+
+    useEffect(() => {
+        openStoreSelectionModal(); // Chama o modal ao carregar a página
+    }, []);
+
     const openInfoModal = (product) => {
         setSelectedProduct(product);
         setShowInfoModal(true);
@@ -71,7 +108,7 @@ const ProductPage = () => {
 
     const openCartModal = (product) => {
         setSelectedProduct(product);
-        setShowCartModal(true); // Abrir o modal do carrinho
+        setShowCartModal(true);
     };
 
     const toggleFilters = () => {
