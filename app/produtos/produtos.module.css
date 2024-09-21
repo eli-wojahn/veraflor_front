@@ -12,6 +12,15 @@
     margin-bottom: 20px;
 }
 
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: rgb(107, 106, 106);
+    display: flex; 
+    align-items: center; 
+}
+
 .filterButton {
     background-color: #79972B;
     color: #fff;
@@ -22,6 +31,18 @@
     border-radius: 15px;
     cursor: pointer;
     margin-left: 20px;
+}
+
+.filterButtonRosa {
+    background-color: #DE2C62;
+    color: #fff;
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-left: 10px; 
 }
 
 .filterMenu {
@@ -214,10 +235,10 @@
 }
 
 .title {
-    font-size: 25px;
+    font-size: 22px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: black;
+    color: rgb(107, 106, 106);
 }
 
 .paginationContainer {

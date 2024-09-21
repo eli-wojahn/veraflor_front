@@ -1,7 +1,8 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import styles from './produtos.module.css';
 import { BsSliders } from 'react-icons/bs';
+import { GoArrowSwitch } from "react-icons/go";
 import ProductCard from './ProdutoCard';
 import FilterMenu from './FilterMenu';
 import InfoModal from './InfoModal';
@@ -25,11 +26,11 @@ const ProductPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
-    const [showCartModal, setShowCartModal] = useState(false); 
+    const [showCartModal, setShowCartModal] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
     const itemsPerPage = 15;
+    const [selectedStore, setSelectedStore] = useState('Pelotas'); // Armazenar loja selecionada
 
     useEffect(() => {
         const fetchAndFilterProducts = async () => {
@@ -40,7 +41,7 @@ const ProductPage = () => {
                     page,
                     limit: itemsPerPage,
                 });
-                const url = `https://veraflor.onrender.com/produtos/filtro?${query.toString()}`;
+                const url = `https://veraflor.onrender.com/produtos/${selectedStore}/filtro?${query.toString()}`;
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
@@ -58,7 +59,7 @@ const ProductPage = () => {
         };
 
         fetchAndFilterProducts();
-    }, [filters, page]);
+    }, [filters, page, selectedStore]); // Adicionar selectedStore às dependências
 
     const openStoreSelectionModal = () => {
         Swal.fire({
@@ -67,28 +68,37 @@ const ProductPage = () => {
                 <div class="${styles.cardsContainer}">
                     <div class="${styles.cardCidade}">
                         <img src="/images/pelotas.png" alt="Pelotas" />
-                        <button class="${styles.button}" onclick="window.open('/produtos/', '_self')">Pelotas</button>
+                        <button class="${styles.button}" id="pelotas">Pelotas</button>
                     </div>
                     <div class="${styles.cardCidade}">
                         <img src="/images/camaqua.jpg" alt="Camaquã" />
-                        <button class="${styles.button}" onclick="window.open('/produtos/camaqua', '_self')">Camaquã</button>
+                        <button class="${styles.button}" id="camaqua">Camaquã</button>
                     </div>
                 </div>
             `,
             showConfirmButton: false,
             allowOutsideClick: false,
-            onOpen: () => {
-                const buttons = document.querySelectorAll(`.${styles.button}`);
-                buttons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        Swal.close();
-                    });
-                });
-            },
             customClass: {
                 popup: styles.customSwalPopup,
                 container: styles.customSwalContainer,
             }
+        }).then(() => {
+            const pelotasButton = document.getElementById('pelotas');
+            const camaquaButton = document.getElementById('camaqua');
+
+            pelotasButton.onclick = () => {
+                if (selectedStore !== 'Pelotas') {
+                    setSelectedStore('Pelotas');
+                }
+                Swal.close();
+            };
+
+            camaquaButton.onclick = () => {
+                if (selectedStore !== 'Camaquã') {
+                    setSelectedStore('Camaquã');
+                }
+                Swal.close();
+            };
         });
     };
 
@@ -114,6 +124,10 @@ const ProductPage = () => {
     const toggleFilters = () => {
         setShowFilters(!showFilters);
     };
+
+    const toggleStore = () => {
+        setSelectedStore(prevStore => (prevStore === 'Pelotas' ? 'Camaquã' : 'Pelotas'));
+    }
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
@@ -150,8 +164,15 @@ const ProductPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>Produtos</div>
-                <button className={styles.filterButton} onClick={toggleFilters}>Filtrar <BsSliders /></button>
+                <div className={styles.title}>
+                    Você está acessando produtos da loja {selectedStore}
+                    <button className={styles.filterButtonRosa} onClick={toggleStore}>
+                        <GoArrowSwitch />
+                    </button>
+                </div>
+                <button className={styles.filterButton} onClick={toggleFilters}>
+                    Filtrar <BsSliders />
+                </button>
             </div>
             {showFilters && (
                 <FilterMenu filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
@@ -163,7 +184,7 @@ const ProductPage = () => {
                         product={product}
                         openPriceModal={openProductModal}
                         openInfoModal={openInfoModal}
-                        openCartModal={openCartModal} 
+                        openCartModal={openCartModal}
                     />
                 ))}
             </div>
@@ -174,14 +195,14 @@ const ProductPage = () => {
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
             )}
             {showCartModal && selectedProduct && (
-                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} /> 
+                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} />
             )}
             <div className={styles.paginationContainer}>
                 {totalPages > 1 && (
-                    <Pagination 
-                        count={totalPages} 
-                        page={page} 
-                        onChange={handlePageChange} 
+                    <Pagination
+                        count={totalPages}
+                        page={page}
+                        onChange={handlePageChange}
                     />
                 )}
             </div>
