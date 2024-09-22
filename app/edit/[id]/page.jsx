@@ -18,7 +18,7 @@ const EditProductPage = ({ params }) => {
         destaque: '1',
         tipo: 'Selecione',
         tamanho: 'Selecione',
-        loja: 'Selecione', 
+        loja: 'Selecione',
         imagem: null,
         imagemPreview: null
     };
@@ -27,15 +27,28 @@ const EditProductPage = ({ params }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`https://veraflor.onrender.com/produtos/${id}`)
-            .then(response => response.json())
+        fetch(`https://veraflor.onrender.com/produtos/lista/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao obter produto');
+                }
+                return response.json();
+            })
             .then(data => {
-                setProduto({
-                    ...data,
-                    destaque: data.destaque.toString(),
+                console.log(data); // Verifique o que está sendo retornado
+                setProduto(prevState => ({
+                    ...prevState,
+                    codigo: data.codigo || '',
+                    descricao: data.descricao || '',
+                    preco: data.preco || '',
+                    categoria: data.categoria || 'Selecione',
+                    ambiente: data.ambiente || 'Selecione',
+                    destaque: data.destaque !== undefined ? data.destaque.toString() : '1',
+                    tipo: data.tipo || 'Selecione',
+                    tamanho: data.tamanho || 'Selecione',
+                    loja: data.loja || 'Selecione',
                     imagemPreview: data.imagem ? `https://veraflor.onrender.com/public/upload/${data.imagem}` : null,
-                    loja: data.loja 
-                });
+                }));
                 setLoading(false);
             })
             .catch(error => {
@@ -69,11 +82,6 @@ const EditProductPage = ({ params }) => {
         }
     };
 
-    const handleClear = () => {
-        setProduto(initialProductState);
-        document.getElementById('imagem').value = null;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -90,8 +98,6 @@ const EditProductPage = ({ params }) => {
 
         if (produto.imagem) {
             formData.append('imagem', produto.imagem);
-        } else {
-            formData.append('imagem', produto.imagemPreview.split('/').pop());
         }
 
         try {

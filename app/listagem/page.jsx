@@ -10,6 +10,7 @@ import { BsTrash3 } from 'react-icons/bs';
 import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
 import { IoBulbOutline } from "react-icons/io5";
 import { BiPlusMedical } from "react-icons/bi";
+import { GoArrowSwitch } from "react-icons/go";
 
 const ProductListPage = () => {
     const [productList, setProductList] = useState([]);
@@ -17,11 +18,13 @@ const ProductListPage = () => {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
+    const [selectedStore, setSelectedStore] = useState('Pelotas');
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true);
             try {
-                const response = await fetch('https://veraflor.onrender.com/produtos');
+                const response = await fetch(`https://veraflor.onrender.com/produtos/${selectedStore}`);
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
                 }
@@ -35,7 +38,7 @@ const ProductListPage = () => {
         };
 
         fetchProducts();
-    }, []);
+    }, [selectedStore]);
 
     const handleChangePage = (event, value) => {
         setPage(value);
@@ -43,29 +46,12 @@ const ProductListPage = () => {
 
     const currentPageItems = productList.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-    async function destaque(id, status_atual) {
-        try {
-            const response = await fetch(`https://veraflor.onrender.com/produtos/destaque/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify({ destaque: !status_atual })
-            });
+    const toggleStore = () => {
+        const newStore = selectedStore === 'Pelotas' ? 'Camaquã' : 'Pelotas';
+        setSelectedStore(newStore);
+    };
 
-            if (response.ok) {
-                setProductList(prevList =>
-                    prevList.map(product =>
-                        product.id === id ? { ...product, destaque: !status_atual } : product
-                    )
-                );
-            } else {
-                Swal.fire('Erro!', `Erro ao atualizar destaque do produto. Status: ${response.status}`, 'error');
-            }
-        } catch (error) {
-            Swal.fire('Erro!', `Erro ao fazer requisição: ${error}`, 'error');
-        }
-    }
-
-    const handleDelete = (productId) => {
+    const handleDelete = (id) => {
         Swal.fire({
             title: 'Tem certeza?',
             text: 'Você não poderá desfazer essa ação!',
@@ -77,60 +63,45 @@ const ProductListPage = () => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://veraflor.onrender.com/produtos/${productId}`, {
+                fetch(`https://veraflor.onrender.com/produtos/${id}`, {
                     method: 'DELETE'
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            setProductList(prevList => prevList.filter(product => product.id !== productId));
-                            Swal.fire(
-                                'Removido!',
-                                'O produto foi removido com sucesso.',
-                                'success'
-                            );
-                        } else {
-                            Swal.fire(
-                                'Erro!',
-                                `Erro ao remover produto. Status: ${response.status}`,
-                                'error'
-                            );
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire(
-                            'Erro!',
-                            `Erro ao fazer requisição: ${error}`,
-                            'error'
-                        );
-                    });
+                .then(response => {
+                    if (response.ok) {
+                        setProductList(prevList => prevList.filter(product => product.id !== id));
+                        Swal.fire('Removido!', 'O produto foi removido com sucesso.', 'success');
+                    } else {
+                        Swal.fire('Erro!', 'Erro ao remover produto.', 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Erro!', `Erro ao fazer requisição: ${error}`, 'error');
+                });
             }
         });
     };
 
-    const handleEditDica = async (productId) => {
+    const destaque = async (id, currentDestaque) => {
+        const newDestaque = !currentDestaque;
         try {
-            const response = await fetch(`https://veraflor.onrender.com/dicas/produto/${productId}`);
-            if (!response.ok) {
-                throw new Error('Erro ao verificar dicas');
-            }
-            const data = await response.json();
-            if (data.length > 0) {
-                window.location.href = `/edit-dica/${productId}`;
-            } else {
-                Swal.fire({
-                    title: '',
-                    text: 'Esse produto não tem dicas.',
-                    icon: 'info',
-                    confirmButtonText: 'OK'
-                });
-            }
-        } catch (error) {
-            Swal.fire({
-                title: 'Erro!',
-                text: 'Erro ao verificar dicas.',
-                icon: 'error',
-                confirmButtonText: 'OK' 
+            const response = await fetch(`https://veraflor.onrender.com/produtos/destaque/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ destaque: newDestaque })
             });
+
+            if (!response.ok) {
+                throw new Error('Erro ao atualizar destaque');
+            }
+
+            setProductList(prevList => 
+                prevList.map(product =>
+                    product.id === id ? { ...product, destaque: newDestaque } : product
+                )
+            );
+            Swal.fire('Sucesso!', 'O destaque foi atualizado.', 'success');
+        } catch (error) {
+            Swal.fire('Erro!', error.message, 'error');
         }
     };
 
@@ -140,9 +111,14 @@ const ProductListPage = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>Gerenciamento de Produtos</div>
+                <div className={styles.title}>
+                    Gerenciamento de Produtos - Loja: {selectedStore}
+                    <button className={styles.filterButtonRosa} onClick={toggleStore}>
+                        <GoArrowSwitch />
+                    </button>
+                </div>
                 <Link href="/cadastro" passHref>
-                    <button className={styles.newProductButton}><BiPlusMedical/> Novo produto </button>
+                    <button className={styles.newProductButton}><BiPlusMedical /> Novo produto </button>
                 </Link>
             </div>
             <div className={styles.productListContainer}>

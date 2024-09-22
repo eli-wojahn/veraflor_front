@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie'; // Importar a biblioteca de cookies
 import styles from './destaques.module.css';
 import ProductCard from '../produtos/ProdutoCard';
 import InfoModal from '../produtos/InfoModal';
@@ -21,7 +22,13 @@ const DestaquesPage = () => {
                     throw new Error('Erro ao obter produtos');
                 }
                 const data = await response.json();
-                setProductList(data || []);
+                
+                // Obter a loja selecionada do cookie
+                const selectedStore = Cookies.get('selected_store');
+                
+                // Filtrar produtos pela loja selecionada
+                const filteredProducts = data.filter(product => product.loja === selectedStore);
+                setProductList(filteredProducts || []);
             } catch (error) {
                 setError(error.message);
                 setProductList([]); 
@@ -46,10 +53,13 @@ const DestaquesPage = () => {
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
+    // Obter a loja selecionada do cookie para o título
+    const selectedStore = Cookies.get('selected_store') || 'Loja';
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>Destaques do mês</div>
+                <div className={styles.title}>Destaques do mês - {selectedStore}</div>
             </div>
             <div className={styles.cardContainer}>
                 {Array.isArray(productList) && productList.length > 0 ? (

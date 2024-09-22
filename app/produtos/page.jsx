@@ -10,6 +10,7 @@ import ProductModal from './ProductModal';
 import CartModal from './CartModal';
 import Pagination from '@mui/material/Pagination';
 import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
 
 const ProductPage = () => {
     const [productList, setProductList] = useState([]);
@@ -31,6 +32,15 @@ const ProductPage = () => {
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 15;
     const [selectedStore, setSelectedStore] = useState('Pelotas'); // Armazenar loja selecionada
+
+    useEffect(() => {
+        const storedStore = Cookies.get('selected_store');
+        if (storedStore) {
+            setSelectedStore(storedStore);
+        } else {
+            openStoreSelectionModal(); // Chama o modal ao carregar a página se não houver loja selecionada
+        }
+    }, []);
 
     useEffect(() => {
         const fetchAndFilterProducts = async () => {
@@ -85,24 +95,27 @@ const ProductPage = () => {
             didOpen: () => {
                 const pelotasButton = document.getElementById('pelotas');
                 const camaquaButton = document.getElementById('camaqua');
-    
+
                 pelotasButton.onclick = () => {
                     setSelectedStore('Pelotas');
+                    Cookies.set('selected_store', 'Pelotas', { expires: 7 }); // Salva no cookie
                     Swal.close();
                 };
-    
+
                 camaquaButton.onclick = () => {
                     setSelectedStore('Camaquã');
+                    Cookies.set('selected_store', 'Camaquã', { expires: 7 }); // Salva no cookie
                     Swal.close();
                 };
             }
         });
     };
-    
 
-    useEffect(() => {
-        openStoreSelectionModal(); // Chama o modal ao carregar a página
-    }, []);
+    const toggleStore = () => {
+        const newStore = selectedStore === 'Pelotas' ? 'Camaquã' : 'Pelotas';
+        setSelectedStore(newStore);
+        Cookies.set('selected_store', newStore, { expires: 7 }); // Atualiza o cookie
+    };
 
     const openInfoModal = (product) => {
         setSelectedProduct(product);
@@ -122,10 +135,6 @@ const ProductPage = () => {
     const toggleFilters = () => {
         setShowFilters(!showFilters);
     };
-
-    const toggleStore = () => {
-        setSelectedStore(prevStore => (prevStore === 'Pelotas' ? 'Camaquã' : 'Pelotas'));
-    }
 
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
@@ -161,17 +170,17 @@ const ProductPage = () => {
 
     return (
         <div className={styles.container}>
-<div className={styles.header}>
-    <div className={styles.title}>
-        Você está acessando produtos da loja {selectedStore}
-        <button className={styles.filterButtonRosa} onClick={toggleStore}>
-            <GoArrowSwitch />
-        </button>
-    </div>
-    <button className={styles.filterButton} onClick={toggleFilters}>
-        Filtrar <BsSliders />
-    </button>
-</div>
+            <div className={styles.header}>
+                <div className={styles.title}>
+                    Você está acessando produtos da loja {selectedStore}
+                    <button className={styles.filterButtonRosa} onClick={toggleStore}>
+                        <GoArrowSwitch />
+                    </button>
+                </div>
+                <button className={styles.filterButton} onClick={toggleFilters}>
+                    Filtrar <BsSliders />
+                </button>
+            </div>
             {showFilters && (
                 <FilterMenu filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
             )}
