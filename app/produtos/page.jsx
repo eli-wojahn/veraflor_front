@@ -68,11 +68,11 @@ const ProductPage = () => {
                 <div class="${styles.cardsContainer}">
                     <div class="${styles.cardCidade}">
                         <img src="/images/pelotas.png" alt="Pelotas" />
-                        <button id="pelotas">Pelotas</button>
+                        <button class="${styles.button}" id="pelotas">Pelotas</button>
                     </div>
                     <div class="${styles.cardCidade}">
                         <img src="/images/camaqua.jpg" alt="Camaquã" />
-                        <button id="camaqua">Camaquã</button>
+                        <button class="${styles.button}" id="camaqua">Camaquã</button>
                     </div>
                 </div>
             `,
