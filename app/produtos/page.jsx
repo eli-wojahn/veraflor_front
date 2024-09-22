@@ -68,11 +68,11 @@ const ProductPage = () => {
                 <div class="${styles.cardsContainer}">
                     <div class="${styles.cardCidade}">
                         <img src="/images/pelotas.png" alt="Pelotas" />
-                        <button class="${styles.button}" id="pelotas">Pelotas</button>
+                        <button id="pelotas">Pelotas</button>
                     </div>
                     <div class="${styles.cardCidade}">
                         <img src="/images/camaqua.jpg" alt="Camaquã" />
-                        <button class="${styles.button}" id="camaqua">Camaquã</button>
+                        <button id="camaqua">Camaquã</button>
                     </div>
                 </div>
             `,
@@ -81,26 +81,24 @@ const ProductPage = () => {
             customClass: {
                 popup: styles.customSwalPopup,
                 container: styles.customSwalContainer,
-            }
-        }).then(() => {
-            const pelotasButton = document.getElementById('pelotas');
-            const camaquaButton = document.getElementById('camaqua');
-
-            pelotasButton.onclick = () => {
-                if (selectedStore !== 'Pelotas') {
+            },
+            didOpen: () => {
+                const pelotasButton = document.getElementById('pelotas');
+                const camaquaButton = document.getElementById('camaqua');
+    
+                pelotasButton.onclick = () => {
                     setSelectedStore('Pelotas');
-                }
-                Swal.close();
-            };
-
-            camaquaButton.onclick = () => {
-                if (selectedStore !== 'Camaquã') {
+                    Swal.close();
+                };
+    
+                camaquaButton.onclick = () => {
                     setSelectedStore('Camaquã');
-                }
-                Swal.close();
-            };
+                    Swal.close();
+                };
+            }
         });
     };
+    
 
     useEffect(() => {
         openStoreSelectionModal(); // Chama o modal ao carregar a página
@@ -163,17 +161,17 @@ const ProductPage = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <div className={styles.title}>
-                    Você está acessando produtos da loja {selectedStore}
-                    <button className={styles.filterButtonRosa} onClick={toggleStore}>
-                        <GoArrowSwitch />
-                    </button>
-                </div>
-                <button className={styles.filterButton} onClick={toggleFilters}>
-                    Filtrar <BsSliders />
-                </button>
-            </div>
+<div className={styles.header}>
+    <div className={styles.title}>
+        Você está acessando produtos da loja {selectedStore}
+        <button className={styles.filterButtonRosa} onClick={toggleStore}>
+            <GoArrowSwitch />
+        </button>
+    </div>
+    <button className={styles.filterButton} onClick={toggleFilters}>
+        Filtrar <BsSliders />
+    </button>
+</div>
             {showFilters && (
                 <FilterMenu filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
             )}
