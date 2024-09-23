@@ -43,7 +43,7 @@ const EditProductPage = ({ params }) => {
                     preco: data.preco || '',
                     categoria: data.categoria || 'Selecione',
                     ambiente: data.ambiente || 'Selecione',
-                    destaque: data.destaque !== undefined ? data.destaque.toString() : '1',
+                    destaque: data.destaque !== undefined ? (data.destaque ? '1' : '0') : '1', // Correção
                     tipo: data.tipo || 'Selecione',
                     tamanho: data.tamanho || 'Selecione',
                     loja: data.loja || 'Selecione',
@@ -207,14 +207,14 @@ const EditProductPage = ({ params }) => {
                                     <option value="Camaquã">Camaquã</option>
                                 </select>
                             </div>
-                            <div className={styles.formGroup}>
-                                <label>Colocar em destaque</label>
-                                <div className={styles.radioGroup}>
-                                    <input type="radio" id="destaqueSim" name="destaque" value="1" checked={produto.destaque === '1'} onChange={handleChange} />
-                                    <label htmlFor="destaqueSim">Sim&nbsp;&nbsp;&nbsp;</label>
-                                    <input type="radio" id="destaqueNao" name="destaque" value="0" checked={produto.destaque === '0'} onChange={handleChange} />
-                                    <label htmlFor="destaqueNao">Não</label>
-                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Colocar em destaque</label>
+                                    <div className={styles.radioGroup}>
+                                        <input type="radio" id="destaqueSim" name="destaque" value="1" checked={produto.destaque === '1'} onChange={handleChange} />
+                                        <label htmlFor="destaqueSim">Sim&nbsp;&nbsp;&nbsp;</label>
+                                        <input type="radio" id="destaqueNao" name="destaque" value="0" checked={produto.destaque === '0'} onChange={handleChange} />
+                                        <label htmlFor="destaqueNao">Não</label>
+                                    </div>
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="imagem">Imagem</label>

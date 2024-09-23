@@ -35,6 +35,24 @@
       "static/chunks/main-app.js",
       "static/css/app/credenciamento/page.css",
       "static/chunks/app/credenciamento/page.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/login/page.css",
+      "static/chunks/app/login/page.js"
+    ],
+    "/listagem/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/listagem/page.css",
+      "static/chunks/app/listagem/page.js"
+    ],
+    "/edit/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/edit/[id]/page.css",
+      "static/chunks/app/edit/[id]/page.js"
     ]
   }
 }
