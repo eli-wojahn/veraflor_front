@@ -44,16 +44,20 @@ const CartPage = () => {
 
     const buscarDetalhesProdutos = async (produtosIds) => {
         try {
-            const response = await fetch(`https://veraflor.onrender.com/produtos?ids=${produtosIds.join(',')}`);
-            if (!response.ok) throw new Error('Erro ao buscar detalhes dos produtos');
-            const data = await response.json();
-            return data;
+            const detalhesPromises = produtosIds.map(id => 
+                fetch(`https://veraflor.onrender.com/produtos/lista/${id}`).then(response => {
+                    if (!response.ok) throw new Error('Erro ao buscar detalhes do produto');
+                    return response.json();
+                })
+            );
+            const produtosDetalhes = await Promise.all(detalhesPromises);
+            console.log('Detalhes dos produtos:', produtosDetalhes);
+            return produtosDetalhes;
         } catch (error) {
             setError(error.message);
             return [];
         }
     };
-
     const combinarCarrinhoComProdutos = (itens, produtos) => {
         return itens.map(item => {
             const produto = produtos.find(prod => prod.id === item.produto_id);
