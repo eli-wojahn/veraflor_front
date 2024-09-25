@@ -9,7 +9,9 @@ const Credenciamento = () => {
         email: '',
         cpf: '',
         dataNasc: '',
-        senha: ''
+        senha: '',
+        ddd: '',
+        celular: ''
     };
 
     const [cliente, setCliente] = useState(initialClientState);
@@ -51,7 +53,7 @@ const Credenciamento = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!cliente.nome || !cliente.email || !cliente.cpf || !cliente.dataNasc || !cliente.senha || !senhaRepetida) {
+        if (!cliente.nome || !cliente.email || !cliente.cpf || !cliente.dataNasc || !cliente.ddd || !cliente.celular || !cliente.senha || !senhaRepetida) {
             Swal.fire({
                 title: 'Erro!',
                 text: 'Por favor, preencha todos os campos.',
@@ -76,6 +78,8 @@ const Credenciamento = () => {
         formData.append('email', cliente.email);
         formData.append('cpf', cliente.cpf);
         formData.append('dataNasc', cliente.dataNasc);
+        formData.append('area', cliente.ddd); // 'area' corresponde a 'ddd' no back-end
+        formData.append('celular', cliente.celular);
         formData.append('senha', cliente.senha);
 
         try {
@@ -117,62 +121,85 @@ const Credenciamento = () => {
             <form onSubmit={handleSubmit} className={styles.form}>
                 <label className={styles.label}>
                     Nome completo
-                    <input 
-                        type="text" 
-                        name="nome" 
-                        value={cliente.nome} 
-                        onChange={handleChange} 
-                        className={styles.input} 
+                    <input
+                        type="text"
+                        name="nome"
+                        value={cliente.nome}
+                        onChange={handleChange}
+                        className={styles.input}
                     />
                 </label>
                 <label className={styles.label}>
                     E-mail
-                    <input 
-                        type="email" 
-                        name="email" 
-                        value={cliente.email} 
-                        onChange={handleChange} 
-                        className={styles.input} 
+                    <input
+                        type="email"
+                        name="email"
+                        value={cliente.email}
+                        onChange={handleChange}
+                        className={styles.input}
                     />
                 </label>
                 <label className={styles.label}>
                     CPF
-                    <input 
-                        type="text" 
-                        name="cpf" 
-                        value={cliente.cpf} 
-                        onChange={handleChange} 
-                        className={styles.input} 
+                    <input
+                        type="text"
+                        name="cpf"
+                        value={cliente.cpf}
+                        onChange={handleChange}
+                        className={styles.input}
                     />
                 </label>
+
+                <div className={styles.phoneGroup}>
+                    <label className={styles.label}>
+                        DDD
+                        <input
+                            type="text"
+                            name="ddd"
+                            value={cliente.ddd}
+                            onChange={handleChange}
+                            className={styles.input}
+                        />
+                    </label>
+                    <label className={styles.label}>
+                        Telefone celular
+                        <input
+                            type="text"
+                            name="celular"
+                            value={cliente.celular}
+                            onChange={handleChange}
+                            className={styles.input}
+                        />
+                    </label>
+                </div>
                 <label className={styles.label}>
                     Data de nascimento
-                    <input 
-                        type="date" 
-                        name="dataNasc" 
-                        value={cliente.dataNasc} 
-                        onChange={handleChange} 
-                        className={styles.input} 
+                    <input
+                        type="date"
+                        name="dataNasc"
+                        value={cliente.dataNasc}
+                        onChange={handleChange}
+                        className={styles.input}
                     />
                 </label>
                 <label className={styles.label}>
                     Senha
-                    <input 
-                        type="password" 
-                        name="senha" 
-                        value={cliente.senha} 
-                        onChange={handleChange} 
-                        className={styles.input} 
+                    <input
+                        type="password"
+                        name="senha"
+                        value={cliente.senha}
+                        onChange={handleChange}
+                        className={styles.input}
                     />
                 </label>
                 <label className={styles.label}>
                     Repita a senha
-                    <input 
-                        type="password" 
-                        name="senhaRepetida" 
-                        value={senhaRepetida} 
-                        onChange={handleSenhaRepetidaChange} 
-                        className={styles.input} 
+                    <input
+                        type="password"
+                        name="senhaRepetida"
+                        value={senhaRepetida}
+                        onChange={handleSenhaRepetidaChange}
+                        className={styles.input}
                     />
                 </label>
                 <div className={styles.buttonGroup}>

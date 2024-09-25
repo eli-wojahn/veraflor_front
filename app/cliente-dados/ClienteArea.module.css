@@ -90,3 +90,12 @@
     color: #d9534f; 
     background-color: #f2dede; 
 }
+
+.phoneGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.phoneGroup .label {
+    flex: 1;
+}

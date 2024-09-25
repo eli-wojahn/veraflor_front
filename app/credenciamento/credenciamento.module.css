@@ -45,3 +45,12 @@
 .button:hover {
     background-color: #6a8a2a; /* Ajuste a cor no hover se desejar */
 }
+
+.phoneGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.phoneGroup .label {
+    flex: 1;
+}

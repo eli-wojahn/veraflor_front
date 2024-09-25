@@ -18,6 +18,8 @@ const ClienteArea = () => {
         cpf: '',
         dataNasc: '',
         senha: '',
+        ddd: '',
+        celular: '',
     });
     const [enderecos, setEnderecos] = useState([]);
     const [activeSection, setActiveSection] = useState('meus-dados');
@@ -33,7 +35,10 @@ const ClienteArea = () => {
                     const data = await response.json();
                     const clienteAtual = data.find(cliente => cliente.id === clienteId);
                     if (clienteAtual) {
-                        setCliente(clienteAtual);
+                        setCliente({
+                            ...clienteAtual,
+                            ddd: clienteAtual.area, // Mapeia 'area' para 'ddd'
+                        });
                     } else {
                         throw new Error('Cliente não encontrado');
                     }
@@ -87,10 +92,16 @@ const ClienteArea = () => {
     const handleSubmitCliente = async (event) => {
         event.preventDefault();
         try {
+            const clienteData = {
+                ...cliente,
+                area: cliente.ddd, // Mapeia 'ddd' para 'area'
+            };
+            delete clienteData.ddd; // Remove 'ddd' pois o backend espera 'area'
+
             const response = await fetch(`https://veraflor.onrender.com/clientes/altera/${clienteId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(cliente)
+                body: JSON.stringify(clienteData)
             });
 
             if (!response.ok) {
@@ -154,7 +165,7 @@ const ClienteArea = () => {
                 return (
                     <ClienteForm 
                         cliente={cliente} 
-                        setCliente={setCliente} 
+                        setCliente={setCliente}
                         onSubmit={handleSubmitCliente} 
                     />
                 );
@@ -167,7 +178,7 @@ const ClienteArea = () => {
                                 key={endereco.id} 
                                 endereco={endereco} 
                                 onChange={(e) => handleEnderecoChange(index, e)} 
-                                onSubmit={() => handleSubmitEndereco(index)}
+                                onSubmit={(e) => { e.preventDefault(); handleSubmitEndereco(index); }}
                             />
                         ))}
                     </div>
