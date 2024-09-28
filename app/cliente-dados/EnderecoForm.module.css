@@ -1,0 +1,82 @@
+/* EnderecoForm.module.css */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.label {
+    font-weight: bold;
+    display: block;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #79972B;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button:hover {
+    background-color: #6a8b2b;
+}
+
+/* Estilos específicos do EnderecoForm */
+.addressGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.addressGroup .label {
+    display: flex;
+    flex-direction: column;
+}
+
+.addressGroup .label:first-child {
+    flex: 1; /* Campo Endereço ocupa o espaço restante */
+}
+
+.numeroLabel {
+    flex: 0 0 100px; /* Largura fixa para o campo Número */
+}
+
+.numeroInput {
+    width: 100%;
+}
+
+.cityStateGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.cityStateGroup .label {
+    display: flex;
+    flex-direction: column;
+}
+
+.cityStateGroup .label:first-child {
+    flex: 1; /* Campo Cidade ocupa o espaço restante */
+}
+
+.estadoLabel {
+    flex: 0 0 100px; /* Largura fixa para o campo Estado */
+}
+
+.estadoInput {
+    width: 100%;
+}

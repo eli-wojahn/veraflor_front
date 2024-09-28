@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import styles from './credenciamento.module.css'; // Atualize para o novo CSS
+import styles from './credenciamento.module.css';
 
 const Credenciamento = () => {
     const initialClientState = {
@@ -78,7 +78,7 @@ const Credenciamento = () => {
         formData.append('email', cliente.email);
         formData.append('cpf', cliente.cpf);
         formData.append('dataNasc', cliente.dataNasc);
-        formData.append('area', cliente.ddd); // 'area' corresponde a 'ddd' no back-end
+        formData.append('area', cliente.ddd);
         formData.append('celular', cliente.celular);
         formData.append('senha', cliente.senha);
 
@@ -147,31 +147,39 @@ const Credenciamento = () => {
                         value={cliente.cpf}
                         onChange={handleChange}
                         className={styles.input}
+                        maxLength="14"
                     />
                 </label>
 
                 <div className={styles.phoneGroup}>
-                    <label className={styles.label}>
+                    <label className={`${styles.label} ${styles.dddLabel}`}>
                         DDD
                         <input
                             type="text"
                             name="ddd"
                             value={cliente.ddd}
                             onChange={handleChange}
-                            className={styles.input}
+                            className={`${styles.input} ${styles.dddInput}`}
+                            maxLength="2"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                         />
                     </label>
-                    <label className={styles.label}>
+                    <label className={`${styles.label} ${styles.celularLabel}`}>
                         Telefone celular
                         <input
                             type="text"
                             name="celular"
                             value={cliente.celular}
                             onChange={handleChange}
-                            className={styles.input}
+                            className={`${styles.input} ${styles.celularInput}`}
+                            maxLength="9"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                         />
                     </label>
                 </div>
+
                 <label className={styles.label}>
                     Data de nascimento
                     <input
@@ -204,7 +212,7 @@ const Credenciamento = () => {
                 </label>
                 <div className={styles.buttonGroup}>
                     <button type="submit" className={styles.button}>Enviar</button>
-                    <button type="button" className={styles.button} onClick={handleClear}>Limpar</button>
+                    <button type="button" className={styles.buttonRosa} onClick={handleClear}>Limpar</button>
                 </div>
             </form>
         </div>

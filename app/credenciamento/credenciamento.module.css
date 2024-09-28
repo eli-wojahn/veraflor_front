@@ -4,6 +4,7 @@
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 8px;
+    margin-bottom: 30px;
 }
 
 .form {
@@ -42,6 +43,18 @@
     flex: 1; /* Faz com que os botões ocupem a mesma largura */
 }
 
+.buttonRosa {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #DE2C62; 
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    flex: 1; /* Faz com que os botões ocupem a mesma largura */
+}
+
+
 .button:hover {
     background-color: #6a8a2a; /* Ajuste a cor no hover se desejar */
 }
@@ -52,5 +65,23 @@
 }
 
 .phoneGroup .label {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
+
+.dddLabel {
+    flex: 0 0 60px; /* Largura fixa para o campo DDD */
+}
+
+.celularLabel {
+    flex: 1; /* O campo Telefone celular ocupa o restante do espaço */
+}
+
+.dddInput {
+    width: 100%;
+}
+
+.celularInput {
+    width: 100%;
+}
+

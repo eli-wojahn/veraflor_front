@@ -2,18 +2,18 @@
 
 .wrapper {
     display: flex;
-    max-width: 1200px; /* Ajuste a largura máxima conforme necessário */
-    margin: 0 auto; /* Centraliza a wrapper na página */
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
 .sidebar {
     width: 250px;
-    background-color: white; /* Alterado para fundo branco */
+    background-color: white;
     padding: 10px;
-    margin-right: 20px; /* Espaço entre o menu lateral e o conteúdo principal */
-    border: 1px solid #ddd; /* Adiciona borda ao menu lateral */
-    border-radius: 8px; /* Adiciona borda arredondada ao menu lateral */
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .sidebar ul {
@@ -25,10 +25,10 @@
 .sidebar li {
     padding: 10px;
     cursor: pointer;
-    border: 1px solid #ddd; /* Adiciona borda aos itens do menu */
-    border-radius: 4px; /* Adiciona borda arredondada aos itens do menu */
-    margin-bottom: 5px; /* Espaçamento entre itens */
-    transition: background 0.3s ease; /* Transição suave para o fundo */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background 0.3s ease;
 }
 
 .sidebar li.active, .sidebar li:hover {
@@ -38,7 +38,7 @@
 
 .contentContainer {
     flex: 1;
-    background-color: #f4f4f4; /* Adiciona uma cor de fundo opcional */
+    background-color: #f4f4f4;
 }
 
 .mainContent {
@@ -47,55 +47,3 @@
     border-radius: 8px;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 25px;
-}
-
-.label {
-    font-weight: bold;
-    display: block;
-}
-
-.input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #79972B;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.button:hover {
-    background-color: #6a8b2b;
-}
-
-.statusMessage {
-    margin: 20px 0;
-    padding: 10px;
-    border-radius: 5px;
-    color: #d9534f; 
-    background-color: #f2dede; 
-}
-
-.phoneGroup {
-    display: flex;
-    gap: 10px;
-}
-
-.phoneGroup .label {
-    flex: 1;
-}

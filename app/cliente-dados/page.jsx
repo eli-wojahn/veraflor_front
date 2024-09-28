@@ -35,9 +35,12 @@ const ClienteArea = () => {
                     const data = await response.json();
                     const clienteAtual = data.find(cliente => cliente.id === clienteId);
                     if (clienteAtual) {
+                        // Formata a data de nascimento para o formato YYYY-MM-DD
+                        const formattedDataNasc = formatDateForInput(clienteAtual.dataNasc);
                         setCliente({
                             ...clienteAtual,
                             ddd: clienteAtual.area, // Mapeia 'area' para 'ddd'
+                            dataNasc: formattedDataNasc, // Usa a data formatada
                         });
                     } else {
                         throw new Error('Cliente não encontrado');
@@ -75,6 +78,41 @@ const ClienteArea = () => {
         }
     }, [clienteId]);
 
+    // Função para formatar a data no formato YYYY-MM-DD para o input
+    function formatDateForInput(dateStr) {
+        if (!dateStr) return '';
+        // Verifica se a string é uma data válida
+        const dateParts = dateStr.split('/');
+        if (dateParts.length === 3) {
+            // Se estiver no formato DD/MM/YYYY
+            const [day, month, year] = dateParts;
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        } else {
+            // Tenta criar um objeto Date com o valor fornecido
+            const date = new Date(dateStr);
+            if (!isNaN(date.getTime())) {
+                // Se for uma data válida, formata para YYYY-MM-DD
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            } else {
+                return '';
+            }
+        }
+    }
+
+    // Função para formatar a data no formato DD/MM/YYYY para o backend
+    function formatDateForBackend(dateStr) {
+        if (!dateStr) return '';
+        const dateParts = dateStr.split('-');
+        if (dateParts.length === 3) {
+            const [year, month, day] = dateParts;
+            return `${day}/${month}/${year}`;
+        }
+        return dateStr; // Retorna a data original se não puder formatar
+    }
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setCliente(prev => ({ ...prev, [name]: value }));
@@ -95,6 +133,7 @@ const ClienteArea = () => {
             const clienteData = {
                 ...cliente,
                 area: cliente.ddd, // Mapeia 'ddd' para 'area'
+                dataNasc: formatDateForBackend(cliente.dataNasc), // Converte a data para o formato esperado pelo backend
             };
             delete clienteData.ddd; // Remove 'ddd' pois o backend espera 'area'
 

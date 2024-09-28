@@ -1,0 +1,61 @@
+/* ClienteForm.module.css */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.label {
+    font-weight: bold;
+    display: block;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #79972B;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button:hover {
+    background-color: #6a8b2b;
+}
+
+/* Estilos específicos do ClienteForm */
+.phoneGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.phoneGroup .label {
+    display: flex;
+    flex-direction: column;
+}
+
+.dddLabel {
+    flex: 0 0 60px; /* Largura fixa para o campo DDD */
+}
+
+.celularLabel {
+    flex: 1; /* O campo Telefone Celular ocupa o restante do espaço */
+}
+
+.dddInput,
+.celularInput {
+    width: 100%;
+}

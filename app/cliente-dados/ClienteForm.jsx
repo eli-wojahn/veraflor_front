@@ -1,6 +1,5 @@
-// ClienteForm.js
 import React from 'react';
-import styles from './ClienteArea.module.css';
+import styles from './ClienteForm.module.css';
 
 const ClienteForm = ({ cliente, setCliente, onSubmit }) => {
     const handleInputChange = (event) => {
@@ -57,24 +56,30 @@ const ClienteForm = ({ cliente, setCliente, onSubmit }) => {
                 </label>
 
                 <div className={styles.phoneGroup}>
-                    <label className={styles.label}>
+                    <label className={`${styles.label} ${styles.dddLabel}`}>
                         DDD
                         <input 
                             type="text" 
                             name="ddd" 
                             value={cliente.ddd || ''} 
                             onChange={handleInputChange} 
-                            className={styles.input} 
+                            className={`${styles.input} ${styles.dddInput}`} 
+                            maxLength="2"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                         />
                     </label>
-                    <label className={styles.label}>
+                    <label className={`${styles.label} ${styles.celularLabel}`}>
                         Telefone Celular
                         <input 
                             type="text" 
                             name="celular" 
                             value={cliente.celular || ''} 
                             onChange={handleInputChange} 
-                            className={styles.input} 
+                            className={`${styles.input} ${styles.celularInput}`} 
+                            maxLength="9"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                         />
                     </label>
                 </div>
