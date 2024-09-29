@@ -47,6 +47,12 @@
       "static/chunks/main-app.js",
       "static/css/app/carrinho/page.css",
       "static/chunks/app/carrinho/page.js"
+    ],
+    "/checkout/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/checkout/page.css",
+      "static/chunks/app/checkout/page.js"
     ]
   }
 }

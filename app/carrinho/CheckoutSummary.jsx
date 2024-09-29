@@ -1,6 +1,6 @@
-// components/CheckoutSummary.js
 import React, { useState } from 'react';
 import styles from './CheckoutSummary.module.css';
+import Link from 'next/link';
 
 const CheckoutSummary = ({ totalProdutos, totalValor }) => {
     const [deliveryOption, setDeliveryOption] = useState('entrega');
@@ -64,7 +64,9 @@ const CheckoutSummary = ({ totalProdutos, totalValor }) => {
                 <span>Total a Pagar:</span>
                 <span>R$ {finalTotal.toFixed(2)}</span>
             </div>
+            <Link href="/checkout" passHref>
             <button className={styles.finalizeButton}>Finalizar Compra</button>
+            </Link>
         </div>
     );
 };
