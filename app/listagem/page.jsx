@@ -11,6 +11,7 @@ import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
 import { IoBulbOutline } from "react-icons/io5";
 import { BiPlusMedical } from "react-icons/bi";
 import { GoArrowSwitch } from "react-icons/go";
+import { useRouter } from 'next/navigation'; 
 
 const ProductListPage = () => {
     const [productList, setProductList] = useState([]);
@@ -19,6 +20,7 @@ const ProductListPage = () => {
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
     const [selectedStore, setSelectedStore] = useState('Pelotas');
+    const router = useRouter(); 
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -103,6 +105,11 @@ const ProductListPage = () => {
         } catch (error) {
             Swal.fire('Erro!', error.message, 'error');
         }
+    };
+
+    // Definição da função handleEditDica
+    const handleEditDica = (id) => {
+        router.push(`/edit-dica/${id}`);
     };
 
     if (loading) return <p>Carregando...</p>;

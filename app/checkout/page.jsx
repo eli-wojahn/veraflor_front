@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ClienteContext } from '@/contexts/client';
 import styles from './CheckoutPage.module.css';
 import CheckoutSummary from '../carrinho/CheckoutSummary';
+import Link from 'next/link';
 
 const CheckoutPage = () => {
     const { clienteId } = useContext(ClienteContext);
@@ -17,6 +18,7 @@ const CheckoutPage = () => {
     const [totalValor, setTotalValor] = useState(0);
     const [totalProdutos, setTotalProdutos] = useState(0);
     const [carrinhoId, setCarrinhoId] = useState(null);
+    const [enderecos, setEnderecos] = useState([]);
 
     useEffect(() => {
         // Fetch cart items and calculate totals
@@ -33,7 +35,7 @@ const CheckoutPage = () => {
 
                         // Fetch product details
                         const produtosIds = itens.map(item => item.produto_id);
-                        const detalhesPromises = produtosIds.map(id => 
+                        const detalhesPromises = produtosIds.map(id =>
                             fetch(`https://veraflor.onrender.com/produtos/lista/${id}`).then(res => res.json())
                         );
                         const produtosDetalhes = await Promise.all(detalhesPromises);
@@ -61,7 +63,25 @@ const CheckoutPage = () => {
                 }
             }
         };
+
+        // Fetch customer addresses
+        const fetchEnderecos = async () => {
+            if (clienteId) {
+                try {
+                    const response = await fetch(`https://veraflor.onrender.com/endereco/${clienteId}`);
+                    if (!response.ok) {
+                        throw new Error('Erro ao buscar endereços');
+                    }
+                    const data = await response.json();
+                    setEnderecos(data);
+                } catch (error) {
+                    console.error('Erro ao carregar endereços:', error);
+                }
+            }
+        };
+
         fetchCarrinho();
+        fetchEnderecos();
     }, [clienteId]);
 
     const handleInputChange = (e) => {
@@ -110,60 +130,77 @@ const CheckoutPage = () => {
                     <form onSubmit={handleSubmit}>
                         <div className={styles.formGroup}>
                             <label>Número do Cartão:</label>
-                            <input 
-                                type="text" 
-                                name="numeroCartao" 
-                                value={paymentData.numeroCartao} 
-                                onChange={handleInputChange} 
+                            <input
+                                type="text"
+                                name="numeroCartao"
+                                value={paymentData.numeroCartao}
+                                onChange={handleInputChange}
                                 required
                             />
                         </div>
                         <div className={styles.formGroupRow}>
                             <div className={styles.formGroup}>
                                 <label>Mês de Expiração:</label>
-                                <input 
-                                    type="text" 
-                                    name="mesExpiracao" 
-                                    value={paymentData.mesExpiracao} 
-                                    onChange={handleInputChange} 
+                                <input
+                                    type="text"
+                                    name="mesExpiracao"
+                                    value={paymentData.mesExpiracao}
+                                    onChange={handleInputChange}
                                     required
                                 />
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Ano de Expiração:</label>
-                                <input 
-                                    type="text" 
-                                    name="anoExpiracao" 
-                                    value={paymentData.anoExpiracao} 
-                                    onChange={handleInputChange} 
+                                <input
+                                    type="text"
+                                    name="anoExpiracao"
+                                    value={paymentData.anoExpiracao}
+                                    onChange={handleInputChange}
                                     required
                                 />
                             </div>
                         </div>
                         <div className={styles.formGroup}>
                             <label>Código de Segurança:</label>
-                            <input 
-                                type="text" 
-                                name="codigoSeguranca" 
-                                value={paymentData.codigoSeguranca} 
-                                onChange={handleInputChange} 
+                            <input
+                                type="text"
+                                name="codigoSeguranca"
+                                value={paymentData.codigoSeguranca}
+                                onChange={handleInputChange}
                                 required
                             />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Nome do Titular:</label>
-                            <input 
-                                type="text" 
-                                name="nomeTitular" 
-                                value={paymentData.nomeTitular} 
-                                onChange={handleInputChange} 
+                            <input
+                                type="text"
+                                name="nomeTitular"
+                                value={paymentData.nomeTitular}
+                                onChange={handleInputChange}
                                 required
                             />
                         </div>
                         <button type="submit" className={styles.submitButton}>Confirmar Pagamento</button>
                     </form>
                 </div>
-                <div className={styles.orderSummary}>
+                <div className={styles.sideContainer}>
+                    <div className={styles.addressBox}>
+                        <h3>Endereço de Entrega</h3>
+                        {enderecos.length > 0 ? (
+                            <div className={styles.addressDetails}>
+                                <p>{enderecos[0].endereco}, Nº {enderecos[0].numero}</p>
+                                {enderecos[0].complemento && <p>Complemento: {enderecos[0].complemento}</p>}
+                                <p>Bairro: {enderecos[0].bairro}</p>
+                                <p>Cidade: {enderecos[0].cidade} - {enderecos[0].estado}</p>
+                                <p>CEP: {enderecos[0].cep}</p>
+                            </div>
+                        ) : (
+                            <p>Carregando endereço...</p>
+                        )}
+                        <Link href="/cliente-dados" passHref>
+                            <button className={styles.changeAddressButton}>Escolher outro endereço</button>
+                        </Link>
+                    </div>
                     <CheckoutSummary totalProdutos={totalProdutos} totalValor={totalValor} />
                 </div>
             </div>

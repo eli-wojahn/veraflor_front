@@ -7,15 +7,17 @@ import styles from './editDica.module.css';
 
 const EditDicaPage = () => {
     const router = useRouter();
-    const { id } = useParams();
+    const { id } = useParams(); 
     const [dica, setDica] = useState({
         descricao: '',
         nr_regas: '',
         exposicao_sol: '',
-        adubagem: ''
+        adubagem: '',
+        produto_id: id 
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isNewDica, setIsNewDica] = useState(false); 
 
     useEffect(() => {
         if (id) {
@@ -26,7 +28,19 @@ const EditDicaPage = () => {
                         throw new Error('Erro ao obter dica');
                     }
                     const data = await response.json();
-                    setDica(data.length > 0 ? data[0] : null);
+                    if (data.length > 0) {
+                        setDica(data[0]);
+                        setIsNewDica(false); 
+                    } else {
+                        setDica({
+                            descricao: '',
+                            nr_regas: '',
+                            exposicao_sol: '',
+                            adubagem: '',
+                            produto_id: id 
+                        });
+                        setIsNewDica(true);
+                    }
                 } catch (error) {
                     setError(error.message);
                 } finally {
@@ -46,28 +60,40 @@ const EditDicaPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://veraflor.onrender.com/dicas/altera/${dica.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dica)
-            });
+            let response;
+            if (isNewDica) {
+                // Criar nova dica
+                response = await fetch(`https://veraflor.onrender.com/dicas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dica)
+                });
+            } else {
+                // Atualizar dica existente
+                response = await fetch(`https://veraflor.onrender.com/dicas/altera/${dica.id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dica)
+                });
+            }
+    
             if (response.ok) {
                 Swal.fire({
                     title: 'Sucesso!',
-                    text: 'Dica atualizada com sucesso!',
+                    text: isNewDica ? 'Dica criada com sucesso!' : 'Dica atualizada com sucesso!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
                     router.push('/listagem');
                 });
             } else {
-                throw new Error('Erro ao atualizar dica');
+                throw new Error(isNewDica ? 'Erro ao criar dica' : 'Erro ao atualizar dica');
             }
         } catch (error) {
             setError(error.message);
             Swal.fire({
                 title: 'Erro!',
-                text: 'Erro ao atualizar dica.',
+                text: error.message,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -76,12 +102,11 @@ const EditDicaPage = () => {
 
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
-    if (!dica) return <p>Nenhuma dica encontrada para este produto.</p>;
 
     return (
         <div className={styles.container}>
             <div className={styles.formArea}>
-                <h2 className={styles.title}>Editar Dica</h2>
+                <h2 className={styles.title}>{isNewDica ? 'Criar Dica' : 'Editar Dica'}</h2>
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <div className={styles.formRow}>
                         <div className={styles.formColumn}>

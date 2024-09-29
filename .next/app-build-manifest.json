@@ -18,41 +18,29 @@
       "static/css/app/loginCliente/page.css",
       "static/chunks/app/loginCliente/page.js"
     ],
-    "/credenciamento/page": [
+    "/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/credenciamento/page.css",
-      "static/chunks/app/credenciamento/page.js"
+      "static/css/app/login/page.css",
+      "static/chunks/app/login/page.js"
     ],
-    "/cliente-dados/page": [
+    "/listagem/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/cliente-dados/page.css",
-      "static/chunks/app/cliente-dados/page.js"
+      "static/css/app/listagem/page.css",
+      "static/chunks/app/listagem/page.js"
     ],
-    "/produtos/page": [
+    "/edit/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/produtos/page.css",
-      "static/chunks/app/produtos/page.js"
+      "static/css/app/edit/[id]/page.css",
+      "static/chunks/app/edit/[id]/page.js"
     ],
-    "/pelotas/page": [
+    "/edit-dica/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/pelotas/page.css",
-      "static/chunks/app/pelotas/page.js"
-    ],
-    "/carrinho/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/carrinho/page.css",
-      "static/chunks/app/carrinho/page.js"
-    ],
-    "/checkout/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/checkout/page.css",
-      "static/chunks/app/checkout/page.js"
+      "static/css/app/edit-dica/[id]/page.css",
+      "static/chunks/app/edit-dica/[id]/page.js"
     ]
   }
 }
