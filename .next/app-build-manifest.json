@@ -41,6 +41,12 @@
       "static/chunks/main-app.js",
       "static/css/app/pelotas/page.css",
       "static/chunks/app/pelotas/page.js"
+    ],
+    "/carrinho/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/carrinho/page.css",
+      "static/chunks/app/carrinho/page.js"
     ]
   }
 }

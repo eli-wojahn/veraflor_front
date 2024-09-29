@@ -1,3 +1,4 @@
+/* components/CheckoutSummary.module.css */
 .summary {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -18,6 +19,33 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+
+.separator {
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    margin: 15px 0;
+}
+
+.deliveryOptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.deliveryOptionContainer label {
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.freeShippingWarning {
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .total {
