@@ -12,12 +12,19 @@
     margin-top: 20px;
 }
 
+.paymentFormsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1; 
+}
+
 .paymentForm {
-    flex: 1;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    background-color: #fff;
+    background-color: #f0f0f0; 
+    width: 100%;
 }
 
 .paymentForm h3 {
@@ -62,7 +69,7 @@
 }
 
 .sideContainer {
-    width: 300px;
+    width: 300px; 
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -72,7 +79,8 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    background-color: #fff;
+    background-color: #f0f0f0; 
+    width: 100%; 
 }
 
 .addressBox h3 {
@@ -96,4 +104,18 @@
 
 .changeAddressButton:hover {
     background-color: #687f24;
+}
+
+.pixInfo {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.pixInstructions {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.pixInstructions li {
+    margin-bottom: 10px;
 }
