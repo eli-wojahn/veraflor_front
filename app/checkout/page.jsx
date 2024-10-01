@@ -98,7 +98,7 @@ const CheckoutPage = () => {
         };
 
         try {
-            const response = await fetch('https://veraflor.onrender.com/pedidos', {
+            const response = await fetch('https://veraflor.onrender.com/criarPedido', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dadosParaEnviar)

@@ -73,20 +73,25 @@ const Credenciamento = () => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('nome', cliente.nome);
-        formData.append('email', cliente.email);
-        formData.append('cpf', cliente.cpf);
-        formData.append('dataNasc', cliente.dataNasc);
-        formData.append('area', cliente.ddd);
-        formData.append('celular', cliente.celular);
-        formData.append('senha', cliente.senha);
+        const requestBody = {
+            nome: cliente.nome,
+            email: cliente.email,
+            cpf: cliente.cpf,
+            dataNasc: cliente.dataNasc,
+            area: cliente.ddd,
+            celular: cliente.celular,
+            senha: cliente.senha
+        };
 
         try {
             const response = await fetch('https://veraflor.onrender.com/clientes/cadastro', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody)
             });
+
             if (response.ok) {
                 Swal.fire({
                     title: 'Sucesso!',
@@ -96,9 +101,10 @@ const Credenciamento = () => {
                 });
                 handleClear();
             } else {
+                const errorData = await response.json();
                 Swal.fire({
                     title: 'Erro!',
-                    text: 'Erro ao efetuar o cadastro.',
+                    text: errorData.msg || 'Erro ao efetuar o cadastro.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
@@ -217,6 +223,6 @@ const Credenciamento = () => {
             </form>
         </div>
     );
-}
+};
 
 export default Credenciamento;

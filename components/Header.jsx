@@ -20,10 +20,10 @@ const MySwal = withReactContent(Swal);
 const Header = () => {
     const pathname = usePathname();
     const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
-    const { clienteId, clienteNome, logout: clienteLogout } = useContext(ClienteContext); // Usando contexto do cliente
+    const { clienteId, clienteNome, logout: clienteLogout } = useContext(ClienteContext); 
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [tooltipOpen, setTooltipOpen] = useState(false); // Gerenciando a tooltip
+    const [tooltipOpen, setTooltipOpen] = useState(false); 
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
@@ -61,7 +61,7 @@ const Header = () => {
 
     const handleClickOutside = (event) => {
         if (!event.target.closest(`.${styles.userContainer}`)) {
-            setTooltipOpen(false); // Fecha a tooltip se clicar fora
+            setTooltipOpen(false); 
         }
     };
 
