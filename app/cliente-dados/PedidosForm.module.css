@@ -1,0 +1,42 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.pedidosList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+.pedidoItem {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    line-height: 2.5; 
+}
+
+.pedidoItem p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.pedidoTotal {
+    font-weight: bold;
+    font-size: 18px;
+    color: #00796b;
+}
+
+.statusPago {
+    font-weight: bold;
+    color: #388e3c;
+}
+
+.statusCancelado {
+    font-weight: bold;
+    color: #d32f2f;
+}

@@ -1,0 +1,69 @@
+.checkoutPixContainer {
+    text-align: center;
+    padding: 20px;
+}
+
+.qrCodeContainer {
+    margin-top: 20px;
+}
+
+.qrCodeImage {
+    width: 300px;
+    height: 300px;
+}
+
+.copyContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.pixCode {
+    width: 52%;
+    height: 70px;
+    padding: 10px;
+    font-size: 13px;
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    resize: none; 
+}
+
+.copyButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.copyButton:hover {
+    color: #79972B; 
+}
+
+.finishButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #79972B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.finishButton:hover {
+    background-color: #698329;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    padding: 20px;
+}

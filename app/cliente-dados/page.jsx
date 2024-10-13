@@ -3,14 +3,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2'; 
 import { ClienteContext } from '@/contexts/client';
 import styles from './ClienteArea.module.css';
-import { IoHomeOutline } from "react-icons/io5";
-import { TbTruckDelivery } from "react-icons/tb";
-import { RxAvatar } from "react-icons/rx";
 import ClienteForm from './ClienteForm';
 import EnderecoForm from './EnderecoForm';
+import PedidosForm from './PedidosForm'; 
 
 const ClienteArea = () => {
-    const { clienteId } = useContext(ClienteContext);
+    const { clienteId } = useContext(ClienteContext); 
     const [cliente, setCliente] = useState({
         nome: '',
         email: '',
@@ -20,10 +18,11 @@ const ClienteArea = () => {
         ddd: '',
         celular: '',
     });
-    const [enderecos, setEnderecos] = useState([{}]); // Inicializa com um objeto vazio
-    const [activeSection, setActiveSection] = useState('meus-dados');
+    const [enderecos, setEnderecos] = useState([{}]);
+    const [pedidos, setPedidos] = useState([]); 
+    const [activeSection, setActiveSection] = useState('meus-dados'); 
 
-    // Função para buscar dados do cliente
+
     const buscarCliente = async () => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/clientes`);
@@ -52,7 +51,6 @@ const ClienteArea = () => {
         }
     };
 
-    // Função para buscar endereços
     const buscarEnderecos = async () => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/endereco/${clienteId}`);
@@ -60,7 +58,7 @@ const ClienteArea = () => {
                 throw new Error('Erro ao buscar endereços');
             }
             const data = await response.json();
-            setEnderecos(data.length ? data : [{}]); // Se não houver endereços, inicializa com um objeto vazio
+            setEnderecos(data.length ? data : [{}]);
         } catch (error) {
             console.error(error);
             Swal.fire({
@@ -71,54 +69,22 @@ const ClienteArea = () => {
         }
     };
 
-    useEffect(() => {
-        if (clienteId) {
-            buscarCliente();
-            buscarEnderecos();
-        }
-    }, [clienteId]);
-
-    function formatDateForInput(dateStr) {
-        if (!dateStr) return '';
-        const dateParts = dateStr.split('/');
-        if (dateParts.length === 3) {
-            const [day, month, year] = dateParts;
-            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-        } else {
-            const date = new Date(dateStr);
-            if (!isNaN(date.getTime())) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            } else {
-                return '';
+    const buscarPedidos = async () => {
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/pedidos/${clienteId}`);
+            if (!response.ok) {
+                throw new Error('Erro ao buscar pedidos');
             }
+            const data = await response.json();
+            setPedidos(data);
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao carregar pedidos.',
+            });
         }
-    }
-
-    function formatDateForBackend(dateStr) {
-        if (!dateStr) return '';
-        const dateParts = dateStr.split('-');
-        if (dateParts.length === 3) {
-            const [year, month, day] = dateParts;
-            return `${day}/${month}/${year}`;
-        }
-        return dateStr;
-    }
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setCliente(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleEnderecoChange = (index, event) => {
-        const { name, value } = event.target;
-        setEnderecos(prev => {
-            const updatedEnderecos = [...prev];
-            updatedEnderecos[index] = { ...updatedEnderecos[index], [name]: value };
-            return updatedEnderecos;
-        });
     };
 
     const handleSubmitCliente = async (event) => {
@@ -160,48 +126,43 @@ const ClienteArea = () => {
         }
     };
 
-    const handleSubmitEndereco = async (index) => {
-        const endereco = enderecos[index];
-        const method = endereco.id ? 'PUT' : 'POST';
-        const url = endereco.id 
-            ? `https://veraflor.onrender.com/endereco/altera/${endereco.id}` 
-            : 'https://veraflor.onrender.com/endereco/cadastro';
-    
-        try {
-            const response = await fetch(url, {
-                method: method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ...endereco,
-                    cliente_id: clienteId
-                })
-            });
-    
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Erro do servidor:', errorData);
-                throw new Error(errorData.msg || 'Erro ao salvar endereço');
+    const formatDateForInput = (dateStr) => {
+        if (!dateStr) return '';
+        const dateParts = dateStr.split('/');
+        if (dateParts.length === 3) {
+            const [day, month, year] = dateParts;
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        } else {
+            const date = new Date(dateStr);
+            if (!isNaN(date.getTime())) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            } else {
+                return '';
             }
-    
-            const data = await response.json();
-            console.log('Endereço salvo:', data);
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso',
-                text: 'Endereço salvo com sucesso!',
-            });
-    
-            // Recarregar endereços após a operação
-            buscarEnderecos();
-        } catch (error) {
-            console.error('Erro ao salvar endereço:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Erro',
-                text: 'Erro ao salvar endereço. Tente novamente.',
-            });
         }
     };
+
+    const formatDateForBackend = (dateStr) => {
+        if (!dateStr) return '';
+        const dateParts = dateStr.split('-');
+        if (dateParts.length === 3) {
+            const [year, month, day] = dateParts;
+            return `${day}/${month}/${year}`;
+        }
+        return dateStr;
+    };
+
+    useEffect(() => {
+        if (clienteId) {
+            buscarCliente();
+            buscarEnderecos();
+            buscarPedidos(); 
+        }
+    }, [clienteId]); 
+
 
     const renderContent = () => {
         switch (activeSection) {
@@ -210,8 +171,8 @@ const ClienteArea = () => {
                     <ClienteForm 
                         cliente={cliente} 
                         setCliente={setCliente}
-                        onSubmit={handleSubmitCliente}
-                        handleInputChange={handleInputChange}
+                        onSubmit={handleSubmitCliente} 
+                        handleInputChange={(e) => setCliente({ ...cliente, [e.target.name]: e.target.value })}
                     />
                 );
             case 'enderecos':
@@ -229,7 +190,7 @@ const ClienteArea = () => {
                     </div>
                 );
             case 'pedidos':
-                return <div>Pedidos</div>;
+                return <PedidosForm pedidos={pedidos} />; 
             default:
                 return null;
         }
@@ -239,20 +200,29 @@ const ClienteArea = () => {
         <div className={styles.wrapper}>
             <aside className={styles.sidebar}>
                 <ul>
-                    <li onClick={() => setActiveSection('meus-dados')} className={activeSection === 'meus-dados' ? styles.active : ''}>
-                        <RxAvatar /> Meus dados
+                    <li 
+                        onClick={() => setActiveSection('meus-dados')} 
+                        className={activeSection === 'meus-dados' ? styles.active : ''}
+                    >
+                        Meus dados
                     </li>
-                    <li onClick={() => setActiveSection('pedidos')} className={activeSection === 'pedidos' ? styles.active : ''}>
-                        <TbTruckDelivery /> Pedidos
+                    <li 
+                        onClick={() => setActiveSection('pedidos')} 
+                        className={activeSection === 'pedidos' ? styles.active : ''}
+                    >
+                        Pedidos
                     </li>
-                    <li onClick={() => setActiveSection('enderecos')} className={activeSection === 'enderecos' ? styles.active : ''}>
-                        <IoHomeOutline /> Endereços
+                    <li 
+                        onClick={() => setActiveSection('enderecos')} 
+                        className={activeSection === 'enderecos' ? styles.active : ''}
+                    >
+                        Endereços
                     </li>
                 </ul>
             </aside>
             <div className={styles.contentContainer}>
                 <main className={styles.mainContent}>
-                    {renderContent()}
+                    {renderContent()} {}
                 </main>
             </div>
         </div>

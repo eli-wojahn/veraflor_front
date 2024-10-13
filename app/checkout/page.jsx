@@ -1,9 +1,11 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useContext } from 'react';
 import { ClienteContext } from '@/contexts/client';
 import styles from './CheckoutPage.module.css';
 import CheckoutSummary from '../carrinho/CheckoutSummary';
 import Link from 'next/link';
+import Swal from 'sweetalert2'; 
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const CheckoutPage = () => {
     const { clienteId } = useContext(ClienteContext);
@@ -19,6 +21,7 @@ const CheckoutPage = () => {
     const [totalProdutos, setTotalProdutos] = useState(0);
     const [carrinhoId, setCarrinhoId] = useState(null);
     const [enderecos, setEnderecos] = useState([]);
+    const [erroMensagem, setErroMensagem] = useState('');
 
     useEffect(() => {
         const fetchCarrinho = async () => {
@@ -29,6 +32,7 @@ const CheckoutPage = () => {
                     if (carrinho.length > 0) {
                         const carrinhoAtivo = carrinho[0];
                         setCarrinhoId(carrinhoAtivo.id);
+
                         const itensResponse = await fetch(`https://veraflor.onrender.com/itens/${carrinhoAtivo.id}`);
                         const itens = await itensResponse.json();
 
@@ -90,7 +94,44 @@ const CheckoutPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErroMensagem('');
 
+        if (!paymentData.numeroCartao || paymentData.numeroCartao.length < 16) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Número do cartão inválido',
+                text: 'Esse número não é de um cartão válido.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        if (!paymentData.mesExpiracao || !paymentData.anoExpiracao) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Data de expiração inválida',
+                text: 'Essa não é uma data de expiração válida.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        if (!paymentData.codigoSeguranca || paymentData.codigoSeguranca.length < 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Código de segurança inválido',
+                text: 'Esse não é um código de segurança válido.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        if (!paymentData.nomeTitular) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Nome do titular do cartão é obrigatório',
+                text: 'É obrigatório preencher nome do titular.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         const dadosParaEnviar = {
             clienteId: clienteId,
             carrinhoId: carrinhoId,
@@ -105,18 +146,42 @@ const CheckoutPage = () => {
             });
 
             if (response.ok) {
-                console.log('Pedido realizado com sucesso!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pagamento efetuado com sucesso!',
+                    text: 'Seu pedido foi processado com sucesso.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = '/checkout-status'; 
+                });
             } else {
-                console.error('Erro ao processar o pedido');
+                const erroData = await response.json();
+                setErroMensagem(`Erro ao processar o pedido: ${erroData.message || 'Erro desconhecido'}`);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro ao processar o pagamento',
+                    text: erroData.message || 'Ocorreu um erro desconhecido. Tente novamente.',
+                    confirmButtonText: 'OK'
+                });
             }
         } catch (error) {
+            setErroMensagem('Erro ao enviar o pedido. Tente novamente.');
             console.error('Erro ao enviar o pedido:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro de Conexão',
+                text: 'Houve um erro ao tentar enviar o pedido. Tente novamente.',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
     return (
         <div className={styles.checkoutContainer}>
             <h2>Finalizar Pedido</h2>
+            {erroMensagem && <div className={styles.error}>{erroMensagem}</div>}
             <div className={styles.checkoutContent}>
                 <div className={styles.paymentFormsContainer}>
                     <div className={styles.paymentForm}>
@@ -174,7 +239,7 @@ const CheckoutPage = () => {
                                     required
                                 />
                             </div>
-                            <button type="submit" className={styles.submitButton}>Confirmar Pagamento</button>
+                            <button type="submit" className={styles.submitButton}>Pagar com cartão</button>
                         </form>
                     </div>
 
@@ -183,11 +248,13 @@ const CheckoutPage = () => {
                         <div className={styles.pixInfo}>
                             <p>Aprovação em minutos</p>
                             <ol className={styles.pixInstructions}>
-                                <li>Após a finalização do pedido, abra o app ou banco de sua preferência. Escolha a opção pagar com código Pix “copia e cola”, ou código QR. O código tem validade de 2 horas.</li>
+                                <li>Após a finalização do pedido, abra o app ou banco de sua preferência. Escolha a opção pagar com código Pix “copia e cola”, ou código QR.</li>
                                 <li>Copie e cole o código, ou escaneie o código QR com a câmera do seu celular. Confira todas as informações e autorize o pagamento.</li>
-                                <li>Você vai receber a confirmação de pagamento no seu e-mail e através dos nossos canais. E pronto!</li>
+                                <li>Você vai receber a confirmação de pagamento no seu e-mail e através dos nossos canais.</li>
                             </ol>
-                            <button className={styles.submitButton}>Finalizar pedido com Pix</button>
+                            <Link href="/checkout-pix" passHref>
+                            <button className={styles.submitButton}>Pagar com Pix</button>
+                            </Link>
                         </div>
                     </div>
                 </div>

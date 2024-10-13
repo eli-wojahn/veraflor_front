@@ -22,7 +22,7 @@ const CartModalContent = ({ product, clienteId, onClose }) => {
     const response = await fetch(`https://veraflor.onrender.com/carrinho`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'ativo', cliente_id: clienteId }),
+      body: JSON.stringify({ status: 'Ativo', cliente_id: clienteId }),
     });
     return await response.json();
   };
@@ -80,7 +80,7 @@ const CartModalContent = ({ product, clienteId, onClose }) => {
     const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
     if (carrinhoAtivo) {
       await adicionarItemAoCarrinho(product, quantity, carrinhoAtivo.id);
-      onClose(); // Close the modal after the success message is closed
+      onClose();
     }
   };
 
