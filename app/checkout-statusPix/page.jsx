@@ -2,17 +2,18 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import { ClienteContext } from '@/contexts/client';
-import styles from './CheckoutStatus.module.css';
+import styles from './CheckoutStatusPix.module.css';
 import { useRouter } from 'next/navigation';
-import Modal from './Modal';
+import ModalPix from './ModalPix';
 
-const CheckoutStatus = () => {
+const CheckoutStatusPix = () => {
   const { clienteId } = useContext(ClienteContext);
   const router = useRouter();
   const [pedido, setPedido] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [mostrarDetalhes, setMostrarDetalhes] = useState(false);
   const [statusAtualizado, setStatusAtualizado] = useState(false); 
+
   useEffect(() => {
     const buscarPedidos = async () => {
       if (clienteId) {
@@ -49,7 +50,7 @@ const CheckoutStatus = () => {
     if (pedido && pedido.pagseguro_order_id) {
       try {
         const response = await fetch(
-          `https://veraflor.onrender.com/atualizaStatus/${pedido.pagseguro_order_id}`,
+          `https://veraflor.onrender.com/atualizaPix/${pedido.pagseguro_order_id}`,
           {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -100,12 +101,12 @@ const CheckoutStatus = () => {
   return (
     <div className={styles.container}>
       {!statusAtualizado && (
-        <Modal>
+        <ModalPix>
           <h2>Pedido Concluído!</h2>
           <button className={styles.statusButton} onClick={handleAtualizarStatus}>
             Acompanhar Pedido
           </button>
-        </Modal>
+        </ModalPix>
       )}
       {mostrarDetalhes && (
         <div className={styles.statusContainer}>
@@ -126,4 +127,4 @@ const CheckoutStatus = () => {
   );
 };
 
-export default CheckoutStatus;
+export default CheckoutStatusPix;

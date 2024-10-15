@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ClienteContext } from '@/contexts/client';
 import styles from './CheckoutPage.module.css';
-import CheckoutSummary from '../carrinho/CheckoutSummary';
+import SummaryCheckout from './SummaryCheckout';
 import Link from 'next/link';
 import Swal from 'sweetalert2'; 
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -22,6 +22,7 @@ const CheckoutPage = () => {
     const [carrinhoId, setCarrinhoId] = useState(null);
     const [enderecos, setEnderecos] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
+    const [deliveryOption, setDeliveryOption] = useState('entrega'); // Estado para a opção de entrega
 
     useEffect(() => {
         const fetchCarrinho = async () => {
@@ -132,10 +133,12 @@ const CheckoutPage = () => {
             });
             return;
         }
+
         const dadosParaEnviar = {
             clienteId: clienteId,
             carrinhoId: carrinhoId,
-            dadosPagamento: paymentData
+            dadosPagamento: paymentData,
+            deliveryOption: deliveryOption // Adiciona a opção de entrega
         };
 
         try {
@@ -148,7 +151,7 @@ const CheckoutPage = () => {
             if (response.ok) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Pagamento efetuado com sucesso!',
+                    title: 'Pedido efetuado com sucesso!',
                     text: 'Seu pedido foi processado com sucesso.',
                     confirmButtonText: 'OK'
                 }).then(() => {
@@ -253,12 +256,12 @@ const CheckoutPage = () => {
                                 <li>Você vai receber a confirmação de pagamento no seu e-mail e através dos nossos canais.</li>
                             </ol>
                             <Link href="/checkout-pix" passHref>
-                            <button className={styles.submitButton}>Pagar com Pix</button>
+                                <button className={styles.submitButton}>Pagar com Pix</button>
                             </Link>
                         </div>
                     </div>
                 </div>
-                
+
                 <div className={styles.sideContainer}>
                     <div className={styles.addressBox}>
                         <h3>Endereço de Entrega</h3>
@@ -273,11 +276,9 @@ const CheckoutPage = () => {
                         ) : (
                             <p>Carregando endereço...</p>
                         )}
-                        <Link href="/cliente-dados" passHref>
-                            <button className={styles.changeAddressButton}>Escolher outro endereço</button>
-                        </Link>
                     </div>
-                    <CheckoutSummary totalProdutos={totalProdutos} totalValor={totalValor} />
+
+                    <SummaryCheckout totalProdutos={totalProdutos} totalValor={totalValor} />
                 </div>
             </div>
         </div>

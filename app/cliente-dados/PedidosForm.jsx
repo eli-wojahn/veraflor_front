@@ -13,10 +13,10 @@ const PedidosForm = ({ pedidos }) => {
                         <div key={pedido.id} className={styles.pedidoItem}>
                             <p><strong>Nº do Pedido:</strong> {pedido.id}</p>
                             <p><strong>Data:</strong> {new Date(pedido.createdAt).toLocaleDateString()}</p>
+                            <p><strong>Forma de Pagamento:</strong> {pedido.forma_pagamento}</p>
                             <p className={pedido.status.toLowerCase() === 'pago' ? styles.statusPago : styles.statusCancelado}>
-                                <strong>Status:</strong> {pedido.status}
-                            </p>
-                            <p className={styles.pedidoTotal}><strong>Total:</strong> R$ {pedido.total}</p>
+                                <strong>Status:</strong> {pedido.status}</p>
+                            <p><strong>Total:</strong> R$ {pedido.total}</p>
                         </div>
                     ))}
                 </div>

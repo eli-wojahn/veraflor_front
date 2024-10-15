@@ -42,17 +42,17 @@
       "static/css/app/checkout/page.css",
       "static/chunks/app/checkout/page.js"
     ],
-    "/checkout-status/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/checkout-status/page.css",
-      "static/chunks/app/checkout-status/page.js"
-    ],
     "/checkout-pix/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/checkout-pix/page.css",
       "static/chunks/app/checkout-pix/page.js"
+    ],
+    "/checkout-statusPix/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/checkout-statusPix/page.css",
+      "static/chunks/app/checkout-statusPix/page.js"
     ]
   }
 }

@@ -83,7 +83,7 @@ const CheckoutPixPage = () => {
     };
 
     const handleFinishPurchase = () => {
-        window.location.href = '/checkout-status';
+        window.location.href = '/checkout-statusPix';
     };
 
     if (loading) {

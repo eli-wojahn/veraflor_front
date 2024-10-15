@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import styles from './CheckoutSummary.module.css';
+import styles from './SummaryCheckout.module.css';
 import Link from 'next/link';
 
-const CheckoutSummary = ({ totalProdutos, totalValor }) => {
+const SummaryCheckout = ({ totalProdutos, totalValor }) => {
     const [deliveryOption, setDeliveryOption] = useState('entrega');
 
     const deliveryFee = totalValor >= 200 ? 0 : 20;
     const finalTotal = deliveryOption === 'entrega' ? totalValor + deliveryFee : totalValor;
-    const finalSemFrete = finalTotal - 20
 
     const amountToFreeShipping = 200 - totalValor;
     const showFreeShippingWarning = deliveryOption === 'entrega' && totalValor < 200;
@@ -16,11 +15,11 @@ const CheckoutSummary = ({ totalProdutos, totalValor }) => {
         <div className={styles.summary}>
             <h2>Resumo da compra</h2>
             <div>
-                <span>Total de Itens:</span>
+                <span><strong>Total de Itens:</strong></span>
                 <span>{totalProdutos}</span>
             </div>
             <div>
-                <span>Subtotal:</span>
+                <span><strong>Subtotal:</strong></span>
                 <span>R$ {totalValor.toFixed(2)}</span>
             </div>
 
@@ -29,20 +28,33 @@ const CheckoutSummary = ({ totalProdutos, totalValor }) => {
                     Faltam R$ {amountToFreeShipping.toFixed(2)} para alcançar entrega grátis
                 </div>
             )}
-            <div className={styles.total}>
-                <span>Valor com retirada:</span>
-                <span>R$ {finalSemFrete.toFixed(2)}</span>
+            <div className={styles.deliveryOptionContainer}>
+                <h3>Opção de Entrega:</h3>
+                <label>
+                    <input
+                        type="radio"
+                        value="entrega"
+                        checked={deliveryOption === 'entrega'}
+                        onChange={() => setDeliveryOption('entrega')}
+                    />
+                    Entrega
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        value="retirada"
+                        checked={deliveryOption === 'retirada'}
+                        onChange={() => setDeliveryOption('retirada')}
+                    />
+                    Retirada
+                </label>
             </div>
-
             <div className={styles.total}>
-                <span>Valor com frete:</span>
+                <span>Total a Pagar:</span>
                 <span>R$ {finalTotal.toFixed(2)}</span>
             </div>
-            <Link href="/checkout" passHref>
-            <button className={styles.finalizeButton}>Avançar para pagamento</button>
-            </Link>
         </div>
     );
 };
 
-export default CheckoutSummary;
+export default SummaryCheckout;
