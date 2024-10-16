@@ -1,10 +1,9 @@
 'use client';
-import React, { Suspense, useState, useRef, useEffect } from 'react';
+import React, { Suspense, useState, useRef, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './Header.module.css';
 import Image from 'next/image';
-import { useContext } from 'react';
 import { AdministradorContext } from '@/contexts/administrator';
 import { ClienteContext } from '@/contexts/client';
 import { CiSearch } from 'react-icons/ci';
@@ -20,14 +19,55 @@ const MySwal = withReactContent(Swal);
 const Header = () => {
     const pathname = usePathname();
     const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
-    const { clienteId, clienteNome, logout: clienteLogout } = useContext(ClienteContext); 
+    const { clienteId, clienteNome, cartItemCount, logout: clienteLogout, atualizarCartItemCount } = useContext(ClienteContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [tooltipOpen, setTooltipOpen] = useState(false); 
+    const [tooltipOpen, setTooltipOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
     const dropdownRef = useRef(null);
+
+    const buscarCarrinhoAtivo = async (clienteId) => {
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/carrinho/listaAtivos/${clienteId}`);
+            const carrinho = await response.json();
+            return carrinho.length > 0 ? carrinho[0] : null;
+        } catch (error) {
+            console.error('Erro ao buscar carrinho ativo:', error);
+            return null;
+        }
+    };
+
+    const buscarItensCarrinho = async (carrinhoId) => {
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/itens/${carrinhoId}`);
+            if (!response.ok) throw new Error('Erro ao buscar itens do carrinho');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Erro ao buscar itens do carrinho:', error);
+            return [];
+        }
+    };
+
+    const fetchCartItemCount = async (clienteId) => {
+        try {
+            const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
+            if (carrinhoAtivo) {
+                const itens = await buscarItensCarrinho(carrinhoAtivo.id);
+                atualizarCartItemCount(itens.length); 
+            }
+        } catch (error) {
+            console.error('Erro ao buscar itens do carrinho:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (clienteId) {
+            fetchCartItemCount(clienteId); 
+        }
+    }, [clienteId, pathname]);
 
     function logoutAdmin() {
         MySwal.fire({
@@ -61,7 +101,7 @@ const Header = () => {
 
     const handleClickOutside = (event) => {
         if (!event.target.closest(`.${styles.userContainer}`)) {
-            setTooltipOpen(false); 
+            setTooltipOpen(false);
         }
     };
 
@@ -179,7 +219,12 @@ const Header = () => {
                 </div>
                 <div className={styles.cartContainer}>
                     <Link href="/carrinho" passHref>
-                        <IoCartOutline className={styles.cartIcon} />
+                        <div className={styles.cartIconWrapper}>
+                            <IoCartOutline className={styles.cartIcon} />
+                            {cartItemCount > 0 && (
+                                <span className={styles.cartItemCount}>{cartItemCount}</span>
+                            )}
+                        </div>
                     </Link>
                 </div>
                 <div className={styles.logoutContainer}>

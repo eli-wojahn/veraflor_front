@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Cookies from 'js-cookie';
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,7 @@ export const ClienteContext = createContext();
 function ClienteProvider({ children }) {
     const [clienteId, setClienteId] = useState(null);
     const [clienteNome, setClienteNome] = useState("");
+    const [cartItemCount, setCartItemCount] = useState(0); 
     const router = useRouter();
 
     useEffect(() => {
@@ -18,6 +19,10 @@ function ClienteProvider({ children }) {
             setClienteNome(cliente.nome);
         }
     }, []);
+
+    function atualizarCartItemCount(count) {
+        setCartItemCount(count);
+    }
 
     function mudaIdCliente(id) {
         setClienteId(id);
@@ -36,12 +41,13 @@ function ClienteProvider({ children }) {
     function logout() {
         setClienteId(null);
         setClienteNome('');
+        setCartItemCount(0); 
         Cookies.remove('cliente_logado');
         router.push('/');
     }
 
     return (
-        <ClienteContext.Provider value={{ clienteId, clienteNome, mudaIdCliente, mudaNomeCliente, logout }}>
+        <ClienteContext.Provider value={{ clienteId, clienteNome, cartItemCount, mudaIdCliente, mudaNomeCliente, logout, atualizarCartItemCount }}>
             {children}
         </ClienteContext.Provider>
     );
