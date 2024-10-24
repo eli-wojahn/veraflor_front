@@ -150,11 +150,13 @@ const CartPage = () => {
                     <div className={styles.cartItems}>
                         {itensCarrinho.map((item) => (
                             <div key={item.id} className={styles.cartItem}>
+                                <div class="cartItem">
                                 <img
                                     src={`https://veraflor.onrender.com/public/upload/${item.produto.imagem}`}
                                     alt={item.produto.descricao}
                                     className={styles.cartItemImage}
                                 />
+                                </div>
                                 <div className={styles.cartItemDetails}>
                                     <div className={styles.itemHeader}>
                                         <h3>{item.produto.descricao}</h3>

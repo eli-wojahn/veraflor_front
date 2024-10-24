@@ -28,8 +28,9 @@
 }
 
 .cartItemImage {
-    width: 150px;
-    height: auto;
+    width: 135px;
+    height: 135px;
+    object-fit: cover;
     border-radius: 8px;
 }
 

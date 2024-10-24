@@ -1,3 +1,5 @@
+// components/Header.js
+
 'use client';
 import React, { Suspense, useState, useRef, useEffect, useContext } from 'react';
 import Link from 'next/link';
@@ -22,11 +24,14 @@ const Header = () => {
     const { clienteId, clienteNome, cartItemCount, logout: clienteLogout, atualizarCartItemCount } = useContext(ClienteContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [gerenciamentoDropdownOpen, setGerenciamentoDropdownOpen] = useState(false); // Novo state
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
     const dropdownRef = useRef(null);
+    const gerenciamentoDropdownRef = useRef(null); // Novo ref
+    const tooltipRef = useRef(null);
 
     const buscarCarrinhoAtivo = async (clienteId) => {
         try {
@@ -56,7 +61,7 @@ const Header = () => {
             const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
             if (carrinhoAtivo) {
                 const itens = await buscarItensCarrinho(carrinhoAtivo.id);
-                atualizarCartItemCount(itens.length); 
+                atualizarCartItemCount(itens.length);
             }
         } catch (error) {
             console.error('Erro ao buscar itens do carrinho:', error);
@@ -65,7 +70,7 @@ const Header = () => {
 
     useEffect(() => {
         if (clienteId) {
-            fetchCartItemCount(clienteId); 
+            fetchCartItemCount(clienteId);
         }
     }, [clienteId, pathname]);
 
@@ -100,8 +105,26 @@ const Header = () => {
     };
 
     const handleClickOutside = (event) => {
-        if (!event.target.closest(`.${styles.userContainer}`)) {
+        if (
+            !event.target.closest(`.${styles.userContainer}`) &&
+            tooltipRef.current &&
+            !tooltipRef.current.contains(event.target)
+        ) {
             setTooltipOpen(false);
+        }
+
+        if (
+            dropdownRef.current &&
+            !dropdownRef.current.contains(event.target)
+        ) {
+            setDropdownOpen(false);
+        }
+
+        if (
+            gerenciamentoDropdownRef.current &&
+            !gerenciamentoDropdownRef.current.contains(event.target)
+        ) {
+            setGerenciamentoDropdownOpen(false);
         }
     };
 
@@ -175,10 +198,24 @@ const Header = () => {
                             </Link>
                         </li>
                         {adminId && (
-                            <li className={pathname === '/listagem' ? styles.active : ''}>
-                                <Link href="/listagem" passHref>
-                                    <div>Gerenciamento</div>
-                                </Link>
+                            <li className={styles.dropdown} ref={gerenciamentoDropdownRef}>
+                                <div className={styles.dropdownTitle} onClick={() => setGerenciamentoDropdownOpen(!gerenciamentoDropdownOpen)}>
+                                    Gerenciamento
+                                </div>
+                                {gerenciamentoDropdownOpen && (
+                                    <ul className={styles.dropdownMenu}>
+                                        <li className={pathname === '/listagem' ? styles.active : ''}>
+                                            <Link href="/listagem" passHref>
+                                                <div>Produtos</div>
+                                            </Link>
+                                        </li>
+                                        <li className={pathname === '/lista-pedidos' ? styles.active : ''}>
+                                            <Link href="/lista-pedidos" passHref>
+                                                <div>Pedidos</div>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                )}
                             </li>
                         )}
                     </ul>
@@ -198,10 +235,10 @@ const Header = () => {
                 </div>
                 <div className={styles.userContainer}>
                     {clienteId ? (
-                        <div onClick={toggleTooltip} className={styles.userIconWrapper}>
+                        <div className={styles.userIconWrapper} ref={tooltipRef} onClick={toggleTooltip}>
                             <FaRegUser className={styles.userIcon} />
                             {tooltipOpen && (
-                                <div className={styles.tooltip}>
+                                <div className={styles.tooltip} ref={tooltipRef}>
                                     <p className={styles.userText}>Olá, {clienteNome}</p>
                                     <br />
                                     <Link href="/cliente-dados" passHref>
