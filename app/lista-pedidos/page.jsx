@@ -4,16 +4,13 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './listaPedidos.module.css';
-import { useRouter } from 'next/navigation';
 import { withAuth } from '@/util/auth';
 import Pagination from '@mui/material/Pagination';
 
 const ListaPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
-    const [clientes, setClientes] = useState([]);
     const [clientesMap, setClientesMap] = useState({});
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
 
@@ -38,7 +35,6 @@ const ListaPedidos = () => {
                     throw new Error('Erro ao buscar clientes');
                 }
                 const data = await response.json();
-                setClientes(data);
                 const map = {};
                 data.forEach(cliente => {
                     map[cliente.id] = cliente.nome;
@@ -62,6 +58,30 @@ const ListaPedidos = () => {
         setPage(value);
     };
 
+    const handleEntregueChange = async (pedidoId) => {
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/pedidos/entregue/${pedidoId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao atualizar status de entrega');
+            }
+
+            // Atualiza o estado localmente
+            setPedidos(prevPedidos =>
+                prevPedidos.map(pedido =>
+                    pedido.id === pedidoId ? { ...pedido, entregue: !pedido.entregue } : pedido
+                )
+            );
+        } catch (error) {
+            console.error('Erro ao atualizar status de entrega:', error);
+        }
+    };
+
     const currentPageItems = pedidos.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     if (loading) {
@@ -81,18 +101,14 @@ const ListaPedidos = () => {
                             <th>Cliente</th>
                             <th>Total</th>
                             <th>Forma de Pagamento</th>
-                            <th>Entregue</th>
                             <th>Forma de Entrega</th>
                             <th>Data de Criação</th>
+                            <th>Entregue</th> {/* Moved to last column */}
                         </tr>
                     </thead>
                     <tbody>
                         {currentPageItems.map((pedido) => (
-                            <tr
-                                key={pedido.id}
-                                onClick={() => router.push(`/pedido/${pedido.id}`)}
-                                className={styles.tableRow}
-                            >
+                            <tr key={pedido.id} className={styles.tableRow}>
                                 <td>{pedido.id}</td>
                                 <td>{clientesMap[pedido.cliente_id] || 'N/A'}</td>
                                 <td>
@@ -102,9 +118,15 @@ const ListaPedidos = () => {
                                     }).format(pedido.total)}
                                 </td>
                                 <td>{pedido.forma_pagamento}</td>
-                                <td>{pedido.entregue ? 'Sim' : 'Não'}</td>
                                 <td>{pedido.forma_entrega}</td>
                                 <td>{new Date(pedido.createdAt).toLocaleDateString('pt-BR')}</td>
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        checked={pedido.entregue}
+                                        onChange={() => handleEntregueChange(pedido.id)}
+                                    />
+                                </td>
                             </tr>
                         ))}
                     </tbody>
