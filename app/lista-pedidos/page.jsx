@@ -14,6 +14,10 @@ const ListaPedidos = () => {
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
 
+    // Estados para ordenação
+    const [sortColumn, setSortColumn] = useState('id');
+    const [sortDirection, setSortDirection] = useState('asc');
+
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
@@ -82,7 +86,62 @@ const ListaPedidos = () => {
         }
     };
 
-    const currentPageItems = pedidos.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+    // Função para lidar com a ordenação
+    const handleSort = (column) => {
+        if (sortColumn === column) {
+            // Alterna a direção da ordenação
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            // Define a nova coluna de ordenação
+            setSortColumn(column);
+            setSortDirection('asc');
+        }
+    };
+
+    // Função para ordenar os dados
+    const sortData = (data) => {
+        return data.sort((a, b) => {
+            let aValue, bValue;
+
+            switch (sortColumn) {
+                case 'cliente':
+                    aValue = clientesMap[a.cliente_id] || '';
+                    bValue = clientesMap[b.cliente_id] || '';
+                    break;
+                case 'total':
+                    aValue = parseFloat(a.total);
+                    bValue = parseFloat(b.total);
+                    break;
+                case 'forma_pagamento':
+                    aValue = a.forma_pagamento;
+                    bValue = b.forma_pagamento;
+                    break;
+                case 'forma_entrega':
+                    aValue = a.forma_entrega;
+                    bValue = b.forma_entrega;
+                    break;
+                case 'createdAt':
+                    aValue = new Date(a.createdAt);
+                    bValue = new Date(b.createdAt);
+                    break;
+                default:
+                    // Por padrão, ordena por ID
+                    aValue = a.id;
+                    bValue = b.id;
+            }
+
+            if (aValue < bValue) {
+                return sortDirection === 'asc' ? -1 : 1;
+            }
+            if (aValue > bValue) {
+                return sortDirection === 'asc' ? 1 : -1;
+            }
+            return 0;
+        });
+    };
+
+    const sortedData = sortData([...pedidos]); // Cria uma cópia dos pedidos para não mutar o estado original
+    const currentPageItems = sortedData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     if (loading) {
         return <div>Carregando...</div>;
@@ -97,13 +156,25 @@ const ListaPedidos = () => {
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>N° Pedido</th>
-                            <th>Cliente</th>
-                            <th>Total</th>
-                            <th>Forma de Pagamento</th>
-                            <th>Forma de Entrega</th>
-                            <th>Data de Criação</th>
-                            <th>Entregue</th> {/* Moved to last column */}
+                            <th onClick={() => handleSort('id')} className={styles.clickableHeader}>
+                                N° Pedido {sortColumn === 'id' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
+                            <th onClick={() => handleSort('cliente')} className={styles.clickableHeader}>
+                                Cliente {sortColumn === 'cliente' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
+                            <th onClick={() => handleSort('total')} className={styles.clickableHeader}>
+                                Total {sortColumn === 'total' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
+                            <th onClick={() => handleSort('forma_pagamento')} className={styles.clickableHeader}>
+                                Forma de Pagamento {sortColumn === 'forma_pagamento' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
+                            <th onClick={() => handleSort('forma_entrega')} className={styles.clickableHeader}>
+                                Forma de Entrega {sortColumn === 'forma_entrega' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
+                            <th onClick={() => handleSort('createdAt')} className={styles.clickableHeader}>
+                                Data de Criação {sortColumn === 'createdAt' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
+                            <th>Entregue</th>
                         </tr>
                     </thead>
                     <tbody>

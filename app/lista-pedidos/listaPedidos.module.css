@@ -1,3 +1,5 @@
+/* styles/listaPedidos.module.css */
+
 .container {
     display: flex;
     flex-direction: column;
@@ -52,12 +54,25 @@
     background-color: #ffffff;
 }
 
-.tableRow {
-    cursor: pointer;
+/* Manter o efeito hover nas linhas, se desejado */
+.tableRow:hover {
+    background-color: #82a724;;;
 }
 
-.tableRow:hover {
-    background-color: #e0e0e0;
+/* Adicionar cursor: pointer aos cabeçalhos clicáveis */
+.clickableHeader {
+    cursor: pointer;
+    user-select: none;
+}
+
+.clickableHeader:hover {
+    background-color: #82a724;;
+}
+
+/* Manter cursor: pointer no checkbox */
+.table input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
 }
 
 .paginationContainer {
@@ -65,9 +80,4 @@
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-.table input[type="checkbox"] {
-    transform: scale(1.2);
-    cursor: pointer;
 }
