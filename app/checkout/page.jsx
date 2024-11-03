@@ -198,6 +198,7 @@ const CheckoutPage = () => {
                                     value={paymentData.numeroCartao}
                                     onChange={handleInputChange}
                                     required
+                                    className={styles.input}
                                 />
                             </div>
                             <div className={styles.formGroupRow}>
@@ -209,6 +210,7 @@ const CheckoutPage = () => {
                                         value={paymentData.mesExpiracao}
                                         onChange={handleInputChange}
                                         required
+                                        className={styles.input}
                                     />
                                 </div>
                                 <div className={styles.formGroup}>
@@ -219,6 +221,7 @@ const CheckoutPage = () => {
                                         value={paymentData.anoExpiracao}
                                         onChange={handleInputChange}
                                         required
+                                        className={styles.input}
                                     />
                                 </div>
                             </div>
@@ -230,6 +233,7 @@ const CheckoutPage = () => {
                                     value={paymentData.codigoSeguranca}
                                     onChange={handleInputChange}
                                     required
+                                    className={styles.input}
                                 />
                             </div>
                             <div className={styles.formGroup}>
@@ -240,6 +244,7 @@ const CheckoutPage = () => {
                                     value={paymentData.nomeTitular}
                                     onChange={handleInputChange}
                                     required
+                                    className={styles.input}
                                 />
                             </div>
                             <button type="submit" className={styles.submitButton}>Pagar com cartão</button>

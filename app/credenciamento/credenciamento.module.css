@@ -15,8 +15,10 @@
 }
 
 .label {
+    color: black;
     font-weight: bold;
     display: block;
+    margin-bottom: 5px;
 }
 
 .input {
@@ -25,11 +27,22 @@
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: white; 
+    color: black; 
+}
+
+.title{
+color: black; 
+}
+
+.input:focus {
+    outline: none;
+    border-color: #79972B;
 }
 
 .buttonGroup {
     display: flex;
-    gap: 10px; /* Espaço entre os botões */
+    gap: 10px;
 }
 
 .button {
@@ -40,7 +53,7 @@
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;
-    flex: 1; /* Faz com que os botões ocupem a mesma largura */
+    flex: 1; 
 }
 
 .buttonRosa {
