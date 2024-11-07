@@ -41,25 +41,34 @@
     background-color: #82a724;
 }
 
+/* Estilo da tabela de itens */
 .itemsTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.itemsTable th, .itemsTable td {
+.itemsTable th,
+.itemsTable td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
 }
 
+/* Remover o fundo do cabeçalho e alterar a cor do texto */
 .itemsTable th {
-    background-color: #79972B;
-    color: #fff;
+    background-color: transparent; /* Remove o fundo */
+    color: #333; /* Define o texto como cinza escuro */
+    font-weight: bold;
 }
 
+/* Estilos para as linhas da tabela */
 .itemsTable tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+.itemsTable tr:nth-child(odd) {
+    background-color: #fff;
 }
 
 @media (max-width: 600px) {

@@ -77,12 +77,21 @@
     margin-bottom: 20px;
 }
 
+/* Estilos para as classes de entrega e retirada */
 .entrega {
     background-color: #d4edda; /* Fundo verde claro */
+    color: #155724; /* Texto verde escuro */
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 .retirada {
     background-color: #f8d7da; /* Fundo vermelho claro */
+    color: #721c24; /* Texto vermelho escuro */
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 .printerIcon {

@@ -21,10 +21,10 @@ const ListaPedidos = () => {
 
     const getEntregaClass = (formaEntrega) => {
         if (formaEntrega === 'Entrega') {
-            return styles.entrega; // classe para fundo verde
+            return styles.entrega; // classe para estilo da entrega
         }
         if (formaEntrega === 'Retirada') {
-            return styles.retirada; // classe para fundo vermelho
+            return styles.retirada; // classe para estilo da retirada
         }
         return ''; // nenhuma classe para outros casos
     };
@@ -197,8 +197,10 @@ const ListaPedidos = () => {
                                 <td>
                                     {pedido.forma_pagamento}
                                 </td>
-                                <td className={getEntregaClass(pedido.forma_entrega)}>
-                                    {pedido.forma_entrega}
+                                <td>
+                                    <span className={getEntregaClass(pedido.forma_entrega)}>
+                                        {pedido.forma_entrega}
+                                    </span>
                                 </td>
                                 <td>{new Date(pedido.createdAt).toLocaleDateString('pt-BR')}</td>
                                 <td>
