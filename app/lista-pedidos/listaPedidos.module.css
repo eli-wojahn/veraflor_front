@@ -1,5 +1,3 @@
-/* styles/listaPedidos.module.css */
-
 .container {
     display: flex;
     flex-direction: column;
@@ -54,22 +52,19 @@
     background-color: #ffffff;
 }
 
-/* Manter o efeito hover nas linhas, se desejado */
 .tableRow:hover {
-    background-color: #82a724;;;
+    background-color: #82a724;
 }
 
-/* Adicionar cursor: pointer aos cabeçalhos clicáveis */
 .clickableHeader {
     cursor: pointer;
     user-select: none;
 }
 
 .clickableHeader:hover {
-    background-color: #82a724;;
+    background-color: #82a724;
 }
 
-/* Manter cursor: pointer no checkbox */
 .table input[type="checkbox"] {
     transform: scale(1.2);
     cursor: pointer;
@@ -80,4 +75,22 @@
     justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.entrega {
+    background-color: #d4edda; /* Fundo verde claro */
+}
+
+.retirada {
+    background-color: #f8d7da; /* Fundo vermelho claro */
+}
+
+.printerIcon {
+    cursor: pointer;
+    color: #79972B;
+    font-size: 24px;
+}
+
+.printerIcon:hover {
+    color: #82a724;
 }

@@ -1,11 +1,11 @@
-// app/lista-pedidos/ListaPedidos.jsx
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import styles from './listaPedidos.module.css';
 import { withAuth } from '@/util/auth';
 import Pagination from '@mui/material/Pagination';
+import { LuPrinter } from 'react-icons/lu';
+import { useRouter } from 'next/navigation';
 
 const ListaPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -14,9 +14,20 @@ const ListaPedidos = () => {
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
 
-    // Estados para ordenação
     const [sortColumn, setSortColumn] = useState('id');
     const [sortDirection, setSortDirection] = useState('asc');
+
+    const router = useRouter();
+
+    const getEntregaClass = (formaEntrega) => {
+        if (formaEntrega === 'Entrega') {
+            return styles.entrega; // classe para fundo verde
+        }
+        if (formaEntrega === 'Retirada') {
+            return styles.retirada; // classe para fundo vermelho
+        }
+        return ''; // nenhuma classe para outros casos
+    };
 
     useEffect(() => {
         const fetchPedidos = async () => {
@@ -75,7 +86,6 @@ const ListaPedidos = () => {
                 throw new Error('Erro ao atualizar status de entrega');
             }
 
-            // Atualiza o estado localmente
             setPedidos(prevPedidos =>
                 prevPedidos.map(pedido =>
                     pedido.id === pedidoId ? { ...pedido, entregue: !pedido.entregue } : pedido
@@ -86,19 +96,15 @@ const ListaPedidos = () => {
         }
     };
 
-    // Função para lidar com a ordenação
     const handleSort = (column) => {
         if (sortColumn === column) {
-            // Alterna a direção da ordenação
             setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
         } else {
-            // Define a nova coluna de ordenação
             setSortColumn(column);
             setSortDirection('asc');
         }
     };
 
-    // Função para ordenar os dados
     const sortData = (data) => {
         return data.sort((a, b) => {
             let aValue, bValue;
@@ -125,7 +131,6 @@ const ListaPedidos = () => {
                     bValue = new Date(b.createdAt);
                     break;
                 default:
-                    // Por padrão, ordena por ID
                     aValue = a.id;
                     bValue = b.id;
             }
@@ -140,7 +145,7 @@ const ListaPedidos = () => {
         });
     };
 
-    const sortedData = sortData([...pedidos]); // Cria uma cópia dos pedidos para não mutar o estado original
+    const sortedData = sortData([...pedidos]);
     const currentPageItems = sortedData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     if (loading) {
@@ -175,6 +180,7 @@ const ListaPedidos = () => {
                                 Data de Criação {sortColumn === 'createdAt' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
                             <th>Entregue</th>
+                            <th>Imprimir</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -188,14 +194,24 @@ const ListaPedidos = () => {
                                         currency: 'BRL',
                                     }).format(pedido.total)}
                                 </td>
-                                <td>{pedido.forma_pagamento}</td>
-                                <td>{pedido.forma_entrega}</td>
+                                <td>
+                                    {pedido.forma_pagamento}
+                                </td>
+                                <td className={getEntregaClass(pedido.forma_entrega)}>
+                                    {pedido.forma_entrega}
+                                </td>
                                 <td>{new Date(pedido.createdAt).toLocaleDateString('pt-BR')}</td>
                                 <td>
                                     <input
                                         type="checkbox"
                                         checked={pedido.entregue}
                                         onChange={() => handleEntregueChange(pedido.id)}
+                                    />
+                                </td>
+                                <td>
+                                    <LuPrinter
+                                        className={styles.printerIcon}
+                                        onClick={() => router.push(`/pedidos/${pedido.id}`)}
                                     />
                                 </td>
                             </tr>
