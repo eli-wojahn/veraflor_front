@@ -4,9 +4,9 @@
     align-items: center;
     height: 100vh;
     background-color: #79972B;
-    padding: 20px; /* Adicionado padding para evitar bordas cortadas */
-    overflow-y: auto; /* Permite rolagem vertical se o conteúdo exceder a altura da tela */
-    box-sizing: border-box; /* Inclui padding e borda no cálculo da altura total */
+    padding: 20px; 
+    overflow-y: auto; 
+    box-sizing: border-box;
 }
 
 .formArea {
@@ -15,8 +15,8 @@
     box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
     padding: 20px;
     width: 65%;
-    max-height: 100%; /* Garante que o formArea não exceda a altura da tela */
-    overflow-y: auto; /* Permite rolagem se o conteúdo do formulário for maior que a área disponível */
+    max-height: 100%; 
+    overflow-y: auto; 
 }
 
 .title {
@@ -37,13 +37,13 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap; /* Permite que os elementos se movam para a próxima linha em telas menores */
+    flex-wrap: wrap; 
 }
 
 .formColumn {
     flex: 1;
     padding: 10px;
-    min-width: 250px; /* Garante que os elementos tenham uma largura mínima */
+    min-width: 250px; 
 }
 
 .formGroup {
@@ -65,7 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap; /* Permite que os botões se movam para a próxima linha em telas menores */
+    flex-wrap: wrap;
 }
 
 .input, .select {
@@ -78,8 +78,8 @@
     font-size: medium;
 }
 
-.submitButton,
-.clearButton {
+
+.submitButton {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -87,7 +87,18 @@
     border-radius: 6px;
     cursor: pointer;
     margin-right: 10px;
-    margin-bottom: 10px; /* Adicionado margem inferior para espaçamento em telas menores */
+    margin-bottom: 10px; 
+}
+
+.clearButton {
+    background-color: #DE2C62;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px; 
 }
 
 .imagemPreview {
@@ -95,7 +106,6 @@
     max-height: 200px;
 }
 
-/* Media query para telas menores que 768px */
 @media (max-width: 768px) {
     .formArea {
         width: 100%;

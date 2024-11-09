@@ -59,6 +59,18 @@
       "static/chunks/main-app.js",
       "static/css/app/produtos/page.css",
       "static/chunks/app/produtos/page.js"
+    ],
+    "/destaques/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/destaques/page.css",
+      "static/chunks/app/destaques/page.js"
+    ],
+    "/loginCliente/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/loginCliente/page.css",
+      "static/chunks/app/loginCliente/page.js"
     ]
   }
 }

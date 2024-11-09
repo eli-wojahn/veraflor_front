@@ -21,12 +21,12 @@ const ListaPedidos = () => {
 
     const getEntregaClass = (formaEntrega) => {
         if (formaEntrega === 'Entrega') {
-            return styles.entrega; // classe para estilo da entrega
+            return styles.entrega; 
         }
         if (formaEntrega === 'Retirada') {
-            return styles.retirada; // classe para estilo da retirada
+            return styles.retirada; 
         }
-        return ''; // nenhuma classe para outros casos
+        return ''; 
     };
 
     useEffect(() => {
@@ -155,7 +155,7 @@ const ListaPedidos = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>Lista de Pedidos</div>
+                <div className={styles.title}>Gerenciamento de Pedidos</div>
             </div>
             <div className={styles.tableContainer}>
                 <table className={styles.table}>

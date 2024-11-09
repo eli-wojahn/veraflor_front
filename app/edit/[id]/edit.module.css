@@ -5,8 +5,8 @@
     height: 100vh;
     background-color: #79972B;
     padding: 20px;
-    overflow-y: auto; /* Adicionado para permitir a rolagem vertical */
-    box-sizing: border-box; /* Inclui o padding e a borda no cálculo da altura total */
+    overflow-y: auto; 
+    box-sizing: border-box; 
 }
 
 .formArea {
@@ -15,8 +15,8 @@
     box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
     padding: 20px;
     width: 65%;
-    max-height: 100%; /* Garante que o formArea não exceda a altura da tela */
-    overflow-y: auto; /* Permite rolagem se o conteúdo do formulário for maior que a área disponível */
+    max-height: 100%; 
+    overflow-y: auto; 
 }
 
 .title {
@@ -90,7 +90,7 @@
 }
 
 .clearButton {
-    background-color: red;
+    background-color: #DE2C62;
     color: white;
     padding: 10px 20px;
     border: none;
