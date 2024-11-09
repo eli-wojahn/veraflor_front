@@ -116,8 +116,7 @@
     border-radius: 4px;
     transition: all linear 160ms;
     outline: none;
-    background-color: #ffff;
-    color: #000000;
+    width: 100%;
 }
 
 .inputContainer:focus-within {
@@ -127,4 +126,28 @@
 .inputLabel {
     font-size: 14px;
     font-weight: 600;
+}
+
+.passwordWrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+.eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ccc;
+    font-size: 18px;
+}
+
+.eyeIcon:hover {
+    color: #DE2C62;
+}
+
+.inputContainer:focus-within {
+    border: 1px solid #DE2C62;
 }
