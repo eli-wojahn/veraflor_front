@@ -107,7 +107,6 @@ const ProductListPage = () => {
         }
     };
 
-    // Definição da função handleEditDica
     const handleEditDica = (id) => {
         router.push(`/edit-dica/${id}`);
     };
@@ -129,43 +128,62 @@ const ProductListPage = () => {
                 </Link>
             </div>
             <div className={styles.productListContainer}>
-                <ul className={styles.productList}>
-                    {currentPageItems.map((product, index) => (
-                        <li key={product.id} className={index % 2 === 0 ? styles.even : styles.odd}>
-                            <span style={product.destaque ? { fontWeight: 'bold' } : {}}>{product.descricao}</span>
-                            <div className={styles.actionButtons}>
-                                <button
-                                    className={styles.iconButton}
-                                    onClick={() => destaque(product.id, product.destaque)}
-                                >
-                                    {product.destaque ? (
-                                        <PiPlantFill className={styles.destaqueIconActive} />
-                                    ) : (
-                                        <PiPlantThin className={styles.destaqueIcon} />
-                                    )}
-                                    <span className={styles.tooltip}>Destacar</span>
-                                </button>
-                                <Link href={`/edit/${product.id}`} passHref>
-                                    <button className={styles.iconButton}>
-                                        <TiPencil className={styles.icon} />
-                                        <span className={styles.tooltip}>Editar</span>
+                <table className={styles.productTable}>
+                    <thead>
+                        <tr>
+                            <th className={`${styles.productHeader} ${styles.leftAlign}`}>Produtos</th>
+                            <th className={styles.actionHeader}>Destaque</th>
+                            <th className={styles.actionHeader}>Editar</th>
+                            <th className={styles.actionHeader}>Dicas</th>
+                            <th className={styles.actionHeader}>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentPageItems.map((product, index) => (
+                            <tr key={product.id} className={index % 2 === 0 ? styles.even : styles.odd}>
+                                <td className={`${styles.productName} ${styles.leftAlign}`} style={product.destaque ? { fontWeight: 'bold' } : {}}>
+                                    {product.descricao}
+                                </td>
+                                <td className={styles.actionCell}>
+                                    <button
+                                        className={styles.iconButton}
+                                        onClick={() => destaque(product.id, product.destaque)}
+                                    >
+                                        {product.destaque ? (
+                                            <PiPlantFill className={styles.destaqueIconActive} />
+                                        ) : (
+                                            <PiPlantThin className={styles.destaqueIcon} />
+                                        )}
+                                        <span className={styles.tooltip}>Destacar</span>
                                     </button>
-                                </Link>
-                                <button
-                                    className={styles.iconButton}
-                                    onClick={() => handleEditDica(product.id)}
-                                >
-                                    <IoBulbOutline className={styles.icon} />
-                                    <span className={styles.tooltip}>Editar Dica</span>
-                                </button>
-                                <button className={styles.iconButton} onClick={() => handleDelete(product.id)}>
-                                    <BsTrash3 className={styles.icon} />
-                                    <span className={styles.tooltip}>Remover</span>
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                                </td>
+                                <td className={styles.actionCell}>
+                                    <Link href={`/edit/${product.id}`} passHref>
+                                        <button className={styles.iconButton}>
+                                            <TiPencil className={styles.icon} />
+                                            <span className={styles.tooltip}>Editar</span>
+                                        </button>
+                                    </Link>
+                                </td>
+                                <td className={styles.actionCell}>
+                                    <button
+                                        className={styles.iconButton}
+                                        onClick={() => handleEditDica(product.id)}
+                                    >
+                                        <IoBulbOutline className={styles.icon} />
+                                        <span className={styles.tooltip}>Editar Dica</span>
+                                    </button>
+                                </td>
+                                <td className={styles.actionCell}>
+                                    <button className={styles.iconButton} onClick={() => handleDelete(product.id)}>
+                                        <BsTrash3 className={styles.icon} />
+                                        <span className={styles.tooltip}>Remover</span>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
             <div className={styles.paginationContainer}>
                 <Pagination

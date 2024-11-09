@@ -36,34 +36,54 @@
     position: relative; 
 }
 
-.productList {
-    list-style-type: none; 
-    padding: 0; 
-    width: 100%; 
+.productTable {
+    width: 100%;
+    border-collapse: collapse;
     color: black;
+    font-size: 16px; 
 }
 
-.productList li {
-    padding: 8px; 
-    display: flex;
-    font-size: medium;
-    justify-content: space-between;
-    align-items: center;
+.productTable th,
+.productTable td {
+    padding: 8px 6px; 
+    text-align: center;
 }
 
-.even {
-    background-color: #f2f2f2; 
+.productTable th {
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: bold;
+    padding-bottom: 15px;  
+    border-bottom: 2px solid #ddd;  
 }
 
-.odd {
-    background-color: #ffffff; 
+.productTable tr:nth-child(even) {
+    background-color: #ffffff;
 }
 
-.actionButtons {
-    display: flex;
-    gap: 50px; 
+.productTable tr:nth-child(odd) {
+    background-color: #f2f2f2;
 }
 
+.leftAlign {
+    text-align: left !important;
+}
+
+.productName {
+    font-size: 16px; 
+}
+
+.actionCell {
+    width: 80px; 
+    text-align: center;
+}
+
+.actionHeader {
+    width: 80px;
+    text-align: center;
+}
+
+/* Botões de ação */
 .iconButton {
     background: transparent; 
     border: none; 
@@ -96,14 +116,12 @@
     font-size: 24px;
 }
 
-.destaqueIcon:hover {
-    font-size: 28px; 
-}
-
+.destaqueIcon:hover,
 .destaqueIconActive:hover {
     font-size: 28px; 
 }
 
+/* Tooltip */
 .tooltip {
     display: none;
     position: absolute;
@@ -119,6 +137,7 @@
     z-index: 1;
 }
 
+/* Paginação */
 .paginationContainer {
     display: flex;
     justify-content: center;
@@ -126,6 +145,7 @@
     margin-bottom: 20px;
 }
 
+/* Botão de alternar loja */
 .filterButtonRosa {
     background-color: #DE2C62;
     color: #fff;
