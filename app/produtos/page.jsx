@@ -31,14 +31,14 @@ const ProductPage = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 15;
-    const [selectedStore, setSelectedStore] = useState('Pelotas'); // Armazenar loja selecionada
+    const [selectedStore, setSelectedStore] = useState('Pelotas'); 
 
     useEffect(() => {
         const storedStore = Cookies.get('selected_store');
         if (storedStore) {
             setSelectedStore(storedStore);
         } else {
-            openStoreSelectionModal(); // Chama o modal ao carregar a página se não houver loja selecionada
+            openStoreSelectionModal(); 
         }
     }, []);
 
@@ -69,7 +69,7 @@ const ProductPage = () => {
         };
 
         fetchAndFilterProducts();
-    }, [filters, page, selectedStore]); // Adicionar selectedStore às dependências
+    }, [filters, page, selectedStore]); 
 
     const openStoreSelectionModal = () => {
         Swal.fire({
@@ -98,13 +98,13 @@ const ProductPage = () => {
 
                 pelotasButton.onclick = () => {
                     setSelectedStore('Pelotas');
-                    Cookies.set('selected_store', 'Pelotas', { expires: 7 }); // Salva no cookie
+                    Cookies.set('selected_store', 'Pelotas', { expires: 7 }); 
                     Swal.close();
                 };
 
                 camaquaButton.onclick = () => {
                     setSelectedStore('Camaquã');
-                    Cookies.set('selected_store', 'Camaquã', { expires: 7 }); // Salva no cookie
+                    Cookies.set('selected_store', 'Camaquã', { expires: 7 }); 
                     Swal.close();
                 };
             }
@@ -114,7 +114,7 @@ const ProductPage = () => {
     const toggleStore = () => {
         const newStore = selectedStore === 'Pelotas' ? 'Camaquã' : 'Pelotas';
         setSelectedStore(newStore);
-        Cookies.set('selected_store', newStore, { expires: 7 }); // Atualiza o cookie
+        Cookies.set('selected_store', newStore, { expires: 7 }); 
     };
 
     const openInfoModal = (product) => {

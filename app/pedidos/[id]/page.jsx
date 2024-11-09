@@ -4,16 +4,18 @@ import React, { useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import styles from './PedidoDetalhes.module.css';
+import { useRouter } from 'next/navigation';
 
 const PedidoDetalhes = ({ params }) => {
     const { id } = params;
     const [pedido, setPedido] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const router = useRouter();
+
     useEffect(() => {
         const fetchPedido = async () => {
             try {
-                // Buscar o pedido completo
                 const response = await fetch(`https://veraflor.onrender.com/pedidos/completo/${id}`);
                 if (!response.ok) {
                     throw new Error('Erro ao buscar pedido completo');
@@ -37,18 +39,16 @@ const PedidoDetalhes = ({ params }) => {
 
         const doc = new jsPDF();
 
-        // Título do documento
-        doc.setFontSize(16);
-        doc.text(`Detalhes do Pedido #${pedido.id}`, 10, 10);
+        doc.setFontSize(15);
+        doc.text(`Pedido N°${pedido.id}`, 10, 10);
 
         let yPosition = 20;
 
-        // Informações do Cliente
-        doc.setFontSize(14);
+        doc.setFontSize(13);
         doc.text('Informações do Cliente', 10, yPosition);
         yPosition += 6;
 
-        doc.setFontSize(12);
+        doc.setFontSize(10);
         doc.text(`Nome: ${pedido.cliente.nome}`, 10, yPosition);
         yPosition += 6;
         doc.text(`CPF: ${pedido.cliente.cpf}`, 10, yPosition);
@@ -56,12 +56,11 @@ const PedidoDetalhes = ({ params }) => {
         doc.text(`Celular: ${pedido.cliente.celular}`, 10, yPosition);
         yPosition += 10;
 
-        // Detalhes do Pedido
-        doc.setFontSize(14);
+        doc.setFontSize(13);
         doc.text('Detalhes do Pedido', 10, yPosition);
         yPosition += 6;
 
-        doc.setFontSize(12);
+        doc.setFontSize(10);
         doc.text(`Total: ${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(pedido.total)}`, 10, yPosition);
         yPosition += 6;
         doc.text(`Forma de Pagamento: ${pedido.forma_pagamento}`, 10, yPosition);
@@ -92,25 +91,24 @@ const PedidoDetalhes = ({ params }) => {
             head: [itemColumns],
             body: itemRows,
             styles: {
-                fillColor: [255, 255, 255], // Fundo branco
-                textColor: [51, 51, 51],    // Texto cinza escuro
-                lineColor: [204, 204, 204], // Bordas cinza claro
+                fillColor: [255, 255, 255], 
+                textColor: [51, 51, 51],    
+                lineColor: [204, 204, 204], 
             },
             headStyles: {
-                fillColor: [255, 255, 255], // Remove o fundo do cabeçalho
-                textColor: [51, 51, 51],    // Texto cinza escuro
+                fillColor: [255, 255, 255], 
+                textColor: [51, 51, 51],    
                 fontStyle: 'bold',
             },
         });
 
         yPosition = doc.lastAutoTable.finalY + 10;
 
-        // Endereço de Entrega
-        doc.setFontSize(14);
+        doc.setFontSize(13);
         doc.text('Endereço de Entrega', 10, yPosition);
         yPosition += 6;
 
-        doc.setFontSize(12);
+        doc.setFontSize(10);
         const endereco = pedido.cliente.endereco;
         doc.text(`Endereço: ${endereco.endereco}, ${endereco.numero}`, 10, yPosition);
         yPosition += 6;
@@ -122,7 +120,7 @@ const PedidoDetalhes = ({ params }) => {
         yPosition += 6;
         doc.text(`CEP: ${endereco.cep}`, 10, yPosition);
 
-        // Salvar o PDF
+
         doc.save(`Pedido_${pedido.id}.pdf`);
     };
 
@@ -139,24 +137,21 @@ const PedidoDetalhes = ({ params }) => {
 
     return (
         <div className={styles.detailsContainer}>
-            <h1>Detalhes do Pedido #{pedido.id}</h1>
+            <h2>Pedido Nº #{pedido.id}</h2>
 
-            {/* Informações do Cliente */}
-            <h2>Informações do Cliente</h2>
+            <h3>Informações do Cliente</h3>
             <p><strong>Nome:</strong> {pedido.cliente.nome}</p>
             <p><strong>CPF:</strong> {pedido.cliente.cpf}</p>
             <p><strong>Celular:</strong> {pedido.cliente.celular}</p>
 
-            {/* Detalhes do Pedido */}
-            <h2>Detalhes do Pedido</h2>
+            <h3>Detalhes do Pedido</h3>
             <p><strong>Total:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(pedido.total)}</p>
             <p><strong>Forma de Pagamento:</strong> {pedido.forma_pagamento}</p>
             <p><strong>Forma de Entrega:</strong> {pedido.forma_entrega}</p>
             <p><strong>Data de Criação:</strong> {new Date(pedido.createdAt).toLocaleDateString('pt-BR')}</p>
             <p><strong>Entregue:</strong> {pedido.entregue ? 'Sim' : 'Não'}</p>
 
-            {/* Itens do Pedido */}
-            <h2>Itens do Pedido</h2>
+            <h3>Itens do Pedido</h3>
             <table className={styles.itemsTable}>
                 <thead>
                     <tr>
@@ -178,17 +173,20 @@ const PedidoDetalhes = ({ params }) => {
                 </tbody>
             </table>
 
-            {/* Endereço de Entrega */}
-            <h2>Endereço de Entrega</h2>
+            <h3>Endereço de Entrega</h3>
             <p><strong>Endereço:</strong> {endereco.endereco}, {endereco.numero}</p>
             <p><strong>Complemento:</strong> {endereco.complemento}</p>
             <p><strong>Bairro:</strong> {endereco.bairro}</p>
             <p><strong>Cidade:</strong> {endereco.cidade} - {endereco.estado}</p>
             <p><strong>CEP:</strong> {endereco.cep}</p>
 
-            {/* Botão para gerar PDF */}
+
             <button onClick={generatePDF} className={styles.pdfButton}>
                 Salvar em PDF
+            </button>
+
+            <button onClick={() => router.push(`/lista-pedidos`)} className={styles.voltarButton}>
+                Voltar
             </button>
         </div>
     );

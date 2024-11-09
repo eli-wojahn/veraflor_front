@@ -10,14 +10,14 @@
     color: #333;
 }
 
-.detailsContainer h2 {
+.detailsContainer h3 {
     margin-top: 30px;
     margin-bottom: 15px;
     color: #555;
 }
 
 .detailsContainer p {
-    font-size: 18px;
+    font-size: 14px;
     margin: 10px 0;
     color: #555;
 }
@@ -41,7 +41,18 @@
     background-color: #82a724;
 }
 
-/* Estilo da tabela de itens */
+.voltarButton {
+    margin-top: 30px;
+    margin-left: 30px;
+    padding: 12px 24px;
+    background-color: #DE2C62;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
 .itemsTable {
     width: 100%;
     border-collapse: collapse;
@@ -53,16 +64,15 @@
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
+    font-size: 14px;
 }
 
-/* Remover o fundo do cabeçalho e alterar a cor do texto */
 .itemsTable th {
-    background-color: transparent; /* Remove o fundo */
-    color: #333; /* Define o texto como cinza escuro */
+    background-color: #f9f9f9; 
+    color: #333; 
     font-weight: bold;
 }
 
-/* Estilos para as linhas da tabela */
 .itemsTable tr:nth-child(even) {
     background-color: #f9f9f9;
 }
