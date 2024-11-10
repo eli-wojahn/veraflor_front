@@ -47,6 +47,13 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
 
+        {/* Meta Tag de Verificação do Google */}
+        <meta
+          name="google-site-verification"
+          content="2VlO80_MRKj3c1DJD6XFEOVHRCsNksk8OjJV-PbHJHQ"
+        />
+
+        {/* Open Graph / Facebook */}
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
         <meta property="og:type" content="website" />
@@ -56,6 +63,7 @@ export default function RootLayout({ children }) {
           content="https://veraflor.vercel.app/images/pelotas.png"
         />
 
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={metadata.title} />
         <meta name="twitter:description" content={metadata.description} />
@@ -64,6 +72,7 @@ export default function RootLayout({ children }) {
           content="https://veraflor.vercel.app/images/pelotas.png"
         />
 
+        {/* Schema.org Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
