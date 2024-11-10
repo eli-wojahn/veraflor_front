@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './SummaryCheckout.module.css';
-import Link from 'next/link';
 
-const SummaryCheckout = ({ totalProdutos, totalValor }) => {
-    const [deliveryOption, setDeliveryOption] = useState('entrega');
-
+const SummaryCheckout = ({ totalProdutos, totalValor, deliveryOption, setDeliveryOption }) => {
     const deliveryFee = totalValor >= 200 ? 0 : 20;
-    const finalTotal = deliveryOption === 'entrega' ? totalValor + deliveryFee : totalValor;
+    const finalTotal = deliveryOption === 'Entrega' ? totalValor + deliveryFee : totalValor;
 
     const amountToFreeShipping = 200 - totalValor;
-    const showFreeShippingWarning = deliveryOption === 'entrega' && totalValor < 200;
+    const showFreeShippingWarning = deliveryOption === 'Entrega' && totalValor < 200;
 
     return (
         <div className={styles.summary}>
@@ -33,22 +30,28 @@ const SummaryCheckout = ({ totalProdutos, totalValor }) => {
                 <label>
                     <input
                         type="radio"
-                        value="entrega"
-                        checked={deliveryOption === 'entrega'}
-                        onChange={() => setDeliveryOption('entrega')}
+                        value="Entrega"
+                        checked={deliveryOption === 'Entrega'}
+                        onChange={() => setDeliveryOption('Entrega')}
                     />
                     Entrega
                 </label>
                 <label>
                     <input
                         type="radio"
-                        value="retirada"
-                        checked={deliveryOption === 'retirada'}
-                        onChange={() => setDeliveryOption('retirada')}
+                        value="Retirada"
+                        checked={deliveryOption === 'Retirada'}
+                        onChange={() => setDeliveryOption('Retirada')}
                     />
                     Retirada
                 </label>
             </div>
+            {deliveryOption === 'Entrega' && (
+                <div>
+                    <span><strong>Frete:</strong></span>
+                    <span>R$ {deliveryFee.toFixed(2)}</span>
+                </div>
+            )}
             <div className={styles.total}>
                 <span>Total a Pagar:</span>
                 <span>R$ {finalTotal.toFixed(2)}</span>

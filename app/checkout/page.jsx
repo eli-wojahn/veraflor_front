@@ -3,12 +3,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ClienteContext } from '@/contexts/client';
 import styles from './CheckoutPage.module.css';
 import SummaryCheckout from './SummaryCheckout';
-import Link from 'next/link';
 import Swal from 'sweetalert2'; 
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { useRouter } from 'next/navigation';
 
 const CheckoutPage = () => {
     const { clienteId } = useContext(ClienteContext);
+    const router = useRouter();
     const [paymentData, setPaymentData] = useState({
         numeroCartao: '',
         mesExpiracao: '',
@@ -22,7 +23,7 @@ const CheckoutPage = () => {
     const [carrinhoId, setCarrinhoId] = useState(null);
     const [enderecos, setEnderecos] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
-    const [deliveryOption, setDeliveryOption] = useState('entrega'); // Estado para a opção de entrega
+    const [deliveryOption, setDeliveryOption] = useState('Entrega'); // Estado para a opção de entrega
 
     useEffect(() => {
         const fetchCarrinho = async () => {
@@ -93,10 +94,11 @@ const CheckoutPage = () => {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleCardPaymentSubmit = async (e) => {
         e.preventDefault();
         setErroMensagem('');
 
+        // Validações do cartão de crédito
         if (!paymentData.numeroCartao || paymentData.numeroCartao.length < 16) {
             Swal.fire({
                 icon: 'error',
@@ -138,8 +140,10 @@ const CheckoutPage = () => {
             clienteId: clienteId,
             carrinhoId: carrinhoId,
             dadosPagamento: paymentData,
-            deliveryOption: deliveryOption // Adiciona a opção de entrega
+            deliveryOption: deliveryOption // Incluindo a opção de entrega
         };
+
+        console.log('Dados para enviar (Cartão):', dadosParaEnviar);
 
         try {
             const response = await fetch('https://veraflor.onrender.com/criarPedido', {
@@ -150,12 +154,12 @@ const CheckoutPage = () => {
 
             if (response.ok) {
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Pedido efetuado com sucesso!',
+                    icon: 'info',
+                    title: 'Pedido conluido, acompanheo status para mais informações!',
                     text: 'Seu pedido foi processado com sucesso.',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    window.location.href = '/checkout-status'; 
+                    router.push('/checkout-status'); // Redireciona para a página de status do pedido
                 });
             } else {
                 const erroData = await response.json();
@@ -181,6 +185,60 @@ const CheckoutPage = () => {
         }
     };
 
+    const handlePixPayment = async () => {
+        setErroMensagem('');
+
+        const dadosParaEnviar = {
+            clienteId: clienteId,
+            carrinhoId: carrinhoId,
+            deliveryOption: deliveryOption // Incluindo a opção de entrega
+        };
+
+        console.log('Dados para enviar (Pix):', dadosParaEnviar);
+
+        try {
+            const response = await fetch('https://veraflor.onrender.com/checkoutPix', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dadosParaEnviar)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                // Armazena os dados do Pix no localStorage
+                localStorage.setItem('pixData', JSON.stringify({
+                    pagseguro_order_id: data.pagseguro_order_id,
+                    qr_code_text: data.qr_codes[0].text,
+                    qr_code_image_url: data.qr_codes[0].links[0].href
+                }));
+
+                // Redireciona para a página do Pix
+                router.push('/checkout-pix');
+            } else {
+                const erroData = await response.json();
+                setErroMensagem(`Erro ao processar o pedido Pix: ${erroData.message || 'Erro desconhecido'}`);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro ao processar o pagamento Pix',
+                    text: erroData.message || 'Ocorreu um erro desconhecido. Tente novamente.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        } catch (error) {
+            setErroMensagem('Erro ao enviar o pedido Pix. Tente novamente.');
+            console.error('Erro ao enviar o pedido Pix:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro de Conexão',
+                text: 'Houve um erro ao tentar enviar o pedido Pix. Tente novamente.',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
+
     return (
         <div className={styles.checkoutContainer}>
             <h2>Finalizar Pedido</h2>
@@ -189,7 +247,7 @@ const CheckoutPage = () => {
                 <div className={styles.paymentFormsContainer}>
                     <div className={styles.paymentForm}>
                         <h3>Pagar com Cartão de Crédito</h3>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleCardPaymentSubmit}>
                             <div className={styles.formGroup}>
                                 <label>Número do Cartão:</label>
                                 <input
@@ -260,9 +318,7 @@ const CheckoutPage = () => {
                                 <li>Copie e cole o código, ou escaneie o código QR com a câmera do seu celular. Confira todas as informações e autorize o pagamento.</li>
                                 <li>Você vai receber a confirmação de pagamento no seu e-mail e através dos nossos canais.</li>
                             </ol>
-                            <Link href="/checkout-pix" passHref>
-                                <button className={styles.submitButton}>Pagar com Pix</button>
-                            </Link>
+                            <button onClick={handlePixPayment} className={styles.submitButton}>Pagar com Pix</button>
                         </div>
                     </div>
                 </div>
@@ -283,7 +339,12 @@ const CheckoutPage = () => {
                         )}
                     </div>
 
-                    <SummaryCheckout totalProdutos={totalProdutos} totalValor={totalValor} />
+                    <SummaryCheckout
+                        totalProdutos={totalProdutos}
+                        totalValor={totalValor}
+                        deliveryOption={deliveryOption}
+                        setDeliveryOption={setDeliveryOption}
+                    />
                 </div>
             </div>
         </div>
