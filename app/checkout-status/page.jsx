@@ -5,14 +5,17 @@ import { ClienteContext } from '@/contexts/client';
 import styles from './CheckoutStatus.module.css';
 import { useRouter } from 'next/navigation';
 import Modal from './Modal';
+import emailjs from 'emailjs-com';
 
 const CheckoutStatus = () => {
-  const { clienteId } = useContext(ClienteContext);
+  const { clienteId, clienteNome, clienteEmail } = useContext(ClienteContext);
   const router = useRouter();
   const [pedido, setPedido] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [mostrarDetalhes, setMostrarDetalhes] = useState(false);
   const [statusAtualizado, setStatusAtualizado] = useState(false); 
+  const [mensagemStatus, setMensagemStatus] = useState('');
+
   useEffect(() => {
     const buscarPedidos = async () => {
       if (clienteId) {
@@ -45,6 +48,24 @@ const CheckoutStatus = () => {
     buscarPedidos();
   }, [clienteId]);
 
+  const enviarEmailConfirmacao = (statusPedido, mensagem, templateId) => {
+    const templateParams = {
+      nome: clienteNome,
+      email: clienteEmail,
+      numero_pedido: pedido.id,
+      status_pedido: statusPedido,
+      total_pedido: parseFloat(pedido.total).toFixed(2),
+      mensagem: mensagem,
+    };
+
+    emailjs.send('service_70wxah2', templateId, templateParams, 'fV6_rIi2IBsbpVQt2')
+      .then((response) => {
+        console.log('E-mail enviado com sucesso!', response.status, response.text);
+      }, (err) => {
+        console.error('Erro ao enviar e-mail:', err);
+      });
+  };
+
   const handleAtualizarStatus = async () => {
     if (pedido && pedido.pagseguro_order_id) {
       try {
@@ -58,9 +79,35 @@ const CheckoutStatus = () => {
 
         if (response.ok) {
           const updatedData = await response.json();
-          setPedido((prev) => ({ ...prev, status: updatedData.statusPedido }));
+          const novoStatus = updatedData.statusPedido;
+
+          // Atualizar o pedido com o novo status
+          const updatedPedido = { ...pedido, status: novoStatus };
+          setPedido(updatedPedido);
           setStatusAtualizado(true); 
           setMostrarDetalhes(true); 
+
+          // Definir a mensagem e o templateId com base no novoStatus
+          let mensagem = '';
+          let templateId = '';
+
+          if (novoStatus === 'Pago') {
+            mensagem = 'Seu pedido foi concluído, entre em contato com a loja para agendar a entrega ou a retirada.';
+            templateId = 'template_ueeh8dp'; // Template para pagamento aprovado
+          } else if (novoStatus === 'Recusado' || novoStatus === 'Cancelado' || novoStatus === 'Não Pago') {
+            mensagem = 'Seu pedido não foi concluído por um problema no pagamento, por favor, verifique os dados do cartão informado, ou entre em contato com a loja para mais informações.';
+            templateId = 'template_26haopq'; // Template para pagamento recusado
+          } else {
+            mensagem = `Status do pedido: ${novoStatus}`;
+            templateId = 'template_ueeh8dp'; // Usar o template padrão
+          }
+
+          // Enviar e-mail de confirmação com o status, mensagem e templateId atualizados
+          enviarEmailConfirmacao(novoStatus, mensagem, templateId);
+
+          // Atualizar o estado da mensagem
+          setMensagemStatus(mensagem);
+
         } else {
           const errorData = await response.json();
           Swal.fire({
@@ -102,6 +149,7 @@ const CheckoutStatus = () => {
       {!statusAtualizado && (
         <Modal>
           <h2>Pedido Concluído!</h2>
+          <p>Obrigado por sua compra.</p>
           <button className={styles.statusButton} onClick={handleAtualizarStatus}>
             Acompanhar Pedido
           </button>
@@ -116,6 +164,7 @@ const CheckoutStatus = () => {
             <p><strong>Nº do Pedido:</strong> {pedido.id}</p>
             <p><strong>Status:</strong> {pedido.status}</p>
             <p><strong>Total:</strong> R$ {parseFloat(pedido.total).toFixed(2)}</p>
+            <p>{mensagemStatus}</p>
           </div>
           <button className={styles.statusButton} onClick={() => router.push('/produtos')}>
             Encontrar mais produtos
