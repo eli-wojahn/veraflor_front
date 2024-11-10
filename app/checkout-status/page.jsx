@@ -81,13 +81,12 @@ const CheckoutStatus = () => {
           const updatedData = await response.json();
           const novoStatus = updatedData.statusPedido;
 
-          // Atualizar o pedido com o novo status
           const updatedPedido = { ...pedido, status: novoStatus };
           setPedido(updatedPedido);
           setStatusAtualizado(true); 
           setMostrarDetalhes(true); 
 
-          // Definir a mensagem e o templateId com base no novoStatus
+
           let mensagem = '';
           let templateId = '';
 
@@ -99,13 +98,11 @@ const CheckoutStatus = () => {
             templateId = 'template_26haopq'; // Template para pagamento recusado
           } else {
             mensagem = `Status do pedido: ${novoStatus}`;
-            templateId = 'template_ueeh8dp'; // Usar o template padrão
+            templateId = 'template_ueeh8dp'; 
           }
 
-          // Enviar e-mail de confirmação com o status, mensagem e templateId atualizados
           enviarEmailConfirmacao(novoStatus, mensagem, templateId);
 
-          // Atualizar o estado da mensagem
           setMensagemStatus(mensagem);
 
         } else {

@@ -8,48 +8,62 @@ import ClienteProvider from "@/contexts/client";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Veraflor Garden - Floricultura e Jardinagem",
-  description: "Explore a variedade de plantas, flores e acessórios de jardinagem da Veraflor Garden.",
+  title: "Veraflor Garden - Floricultura e Jardinagem em Pelotas",
+  description:
+    "Conheça a Veraflor Garden em Pelotas. Oferecemos uma variedade de plantas, flores e acessórios de jardinagem.",
 };
 
 export default function RootLayout({ children }) {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Florist",
-    "name": "Veraflor Garden",
-    "description": "Explore a variedade de plantas, flores e acessórios de jardinagem da Veraflor Garden.",
-    "image": "https://veraflor.vercel.app/images/pelotas.png",
-    "address": {
+    name: "Veraflor Garden",
+    description: metadata.description,
+    image: "https://veraflor.vercel.app/images/pelotas.png",
+    address: {
       "@type": "PostalAddress",
-      "streetAddress": "Av. Dr. Félix Antônio Caputo, 251",
-      "addressLocality": "Pelotas",
-      "addressRegion": "RS",
-      "postalCode": "96070-060",
-      "addressCountry": "BR"
+      streetAddress: "Av. Dr. Félix Antônio Caputo, 251",
+      addressLocality: "Pelotas",
+      addressRegion: "RS",
+      postalCode: "96070-060",
+      addressCountry: "BR",
     },
-    "telephone": "+55(53)99956-1458",
-    "sameAs": [
+    telephone: "+55(53)99956-1458",
+    sameAs: [
       "https://www.facebook.com/veraflorgarden",
-      "https://www.instagram.com/veraflorgarden"
+      "https://www.instagram.com/veraflorgarden",
     ],
-    "url": "https://veraflor.vercel.app"
+    url: "https://veraflor.vercel.app",
   };
 
   return (
     <html lang="pt-br">
       <head>
+        <meta charSet="UTF-8" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="canonical" href="https://veraflor.vercel.app" />
+        <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://veraflor.vercel.app" />
-        <meta property="og:image" content="/images/pelotas.png" />
+        <meta
+          property="og:image"
+          content="https://veraflor.vercel.app/images/pelotas.png"
+        />
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={metadata.title} />
         <meta name="twitter:description" content={metadata.description} />
-        <meta name="twitter:image" content="/images/pelotas.png" />
+        <meta
+          name="twitter:image"
+          content="https://veraflor.vercel.app/images/pelotas.png"
+        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
