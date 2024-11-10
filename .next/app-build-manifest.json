@@ -60,10 +60,11 @@
       "static/css/app/login/page.css",
       "static/chunks/app/login/page.js"
     ],
-    "/_not-found/page": [
+    "/loginCliente/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/css/app/loginCliente/page.css",
+      "static/chunks/app/loginCliente/page.js"
     ]
   }
 }
