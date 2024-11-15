@@ -1,13 +1,7 @@
-/* pages/checkout/CheckoutPage.module.css */
 .checkoutContainer {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    color: black;
-}
-
-.input {
-    background-color: white;
     color: black;
 }
 
@@ -16,6 +10,7 @@
     justify-content: space-between;
     gap: 20px;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .paymentFormsContainer {
@@ -52,6 +47,13 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%;
+}
+
+.input {
+    background-color: white;
+    color: black;
+    width: 100%;
 }
 
 .formGroupRow {
@@ -97,21 +99,6 @@
     margin: 5px 0;
 }
 
-.changeAddressButton {
-    background-color: #79972B;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.changeAddressButton:hover {
-    background-color: #687f24;
-}
-
 .pixInfo {
     margin-top: 15px;
     font-size: 14px;
@@ -124,4 +111,31 @@
 
 .pixInstructions li {
     margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .checkoutContent {
+        flex-direction: column;
+    }
+
+    .sideContainer {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .paymentForm, .addressBox {
+        width: 100%;
+    }
+
+    .formGroupRow {
+        flex-direction: column;
+    }
+
+    .formGroupRow .formGroup {
+        width: 100%;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
 }
