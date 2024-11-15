@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
+import Swal from 'sweetalert2';
 import styles from './Content.module.css';
 import CustomCarousel from './CustomCarousel';
 import Link from 'next/link';
@@ -10,6 +11,28 @@ import image3 from '/public/images/image5.png';
 
 const Content = () => {
   const images = [image1, image2, image3];
+
+  // Disparar o alerta ao carregar a página apenas na primeira visita
+  useEffect(() => {
+    const alertaJaExibido = localStorage.getItem('alertaJaExibido');
+
+    if (!alertaJaExibido) {
+      Swal.fire({
+        title: 'Atenção',
+        html: `
+          Essa é uma página em construção, não realize compras nessa plataforma.<br><br>
+          Para entrar em contato com a Veraflor acesse as redes sociais:<br><br>
+          <a href="https://www.instagram.com/veraflor_garden/" target="_blank">Instagram</a> |
+          <a href="https://www.facebook.com/veraflorgarden" target="_blank">Facebook</a>
+        `,
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#FF9F00',
+      }).then(() => {
+        localStorage.setItem('alertaJaExibido', 'true');
+      });
+    }
+  }, []);
 
   return (
     <div className={styles.content}>
