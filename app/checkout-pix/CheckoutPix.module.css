@@ -67,3 +67,57 @@
     text-align: center;
     padding: 20px;
 }
+    
+@media (max-width: 768px) {
+    .checkoutPixContainer {
+        padding: 15px;
+    }
+
+    .qrCodeImage {
+        width: 250px;
+        height: 250px;
+    }
+
+    .pixCode {
+        width: 80%;
+        height: 60px;
+        font-size: 12px;
+    }
+
+    .finishButton {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkoutPixContainer {
+        padding: 10px;
+    }
+
+    .qrCodeImage {
+        width: 180px;
+        height: 180px;
+    }
+
+    .pixCode {
+        width: 90%;
+        height: 50px;
+        font-size: 11px;
+    }
+
+    .finishButton {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .copyContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .copyButton {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}

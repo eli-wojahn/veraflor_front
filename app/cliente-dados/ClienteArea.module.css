@@ -49,3 +49,22 @@
     color: black;
 }
 
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .contentContainer {
+        width: 100%;
+    }
+
+    .mainContent {
+        padding: 15px;
+    }
+}

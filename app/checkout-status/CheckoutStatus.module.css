@@ -65,5 +65,45 @@
 
 .errorMessage {
   margin-top: 20px;
-  color: #d9534f; /* Cor vermelha para indicar erro */
+  color: #d9534f;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .statusHeader h2 {
+    font-size: 24px;
+  }
+
+  .orderDetails p {
+    font-size: 16px;
+  }
+
+  .statusButton {
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .statusHeader h2 {
+    font-size: 20px;
+  }
+
+  .orderDetails p {
+    font-size: 14px;
+  }
+
+  .statusButton {
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 15px;
+  }
 }

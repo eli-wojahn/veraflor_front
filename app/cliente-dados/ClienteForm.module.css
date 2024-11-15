@@ -63,3 +63,16 @@
 .celularInput {
     width: 100%;
 }
+
+
+@media (max-width: 768px) {
+    .phoneGroup {
+        flex-direction: column;
+    }
+
+    .dddLabel,
+    .celularLabel {
+        flex: none;
+        width: 100%;
+    }
+}
