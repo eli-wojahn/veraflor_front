@@ -1,4 +1,3 @@
-/* components/CheckoutSummary.module.css */
 .summary {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -69,4 +68,12 @@
 
 .finalizeButton:hover {
     background-color: #687f24;
+}
+
+@media (max-width: 768px) {
+    .summary {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
 }

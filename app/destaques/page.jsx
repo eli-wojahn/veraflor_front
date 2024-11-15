@@ -23,8 +23,8 @@ const DestaquesPage = () => {
                 }
                 const data = await response.json();
                 
-                // Obter a loja selecionada do cookie
-                const selectedStore = Cookies.get('selected_store');
+                // Obter a loja selecionada do cookie ou definir Pelotas como padrão
+                const selectedStore = Cookies.get('selected_store') || 'Pelotas';
                 
                 // Filtrar produtos pela loja selecionada
                 const filteredProducts = data.filter(product => product.loja === selectedStore);
@@ -54,7 +54,7 @@ const DestaquesPage = () => {
     if (error) return <p>{error}</p>;
 
     // Obter a loja selecionada do cookie para o título
-    const selectedStore = Cookies.get('selected_store') || 'Loja';
+    const selectedStore = Cookies.get('selected_store') || 'Pelotas';
 
     return (
         <div className={styles.container}>

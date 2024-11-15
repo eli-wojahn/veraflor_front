@@ -19,6 +19,22 @@ const CartPage = () => {
     const adicionarLoading = (itemId) => setLoadingActions(prev => [...prev, itemId]);
     const removerLoading = (itemId) => setLoadingActions(prev => prev.filter(id => id !== itemId));
 
+    const cancelarCarrinhosInativos = async () => {
+        try {
+            const response = await fetch('https://veraflor.onrender.com/carrinho/cancela', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Adicione headers de autenticação se necessário
+                },
+            });
+            const data = await response.json();
+            console.log('Carrinhos cancelados:', data.message);
+        } catch (error) {
+            console.error('Erro ao cancelar carrinhos inativos:', error);
+        }
+    };
+
     const buscarCarrinhoAtivo = async (clienteId) => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/carrinho/listaAtivos/${clienteId}`);
@@ -44,7 +60,7 @@ const CartPage = () => {
 
     const buscarDetalhesProdutos = async (produtosIds) => {
         try {
-            const detalhesPromises = produtosIds.map(id => 
+            const detalhesPromises = produtosIds.map(id =>
                 fetch(`https://veraflor.onrender.com/produtos/lista/${id}`).then(response => {
                     if (!response.ok) throw new Error('Erro ao buscar detalhes do produto');
                     return response.json();
@@ -58,6 +74,7 @@ const CartPage = () => {
             return [];
         }
     };
+
     const combinarCarrinhoComProdutos = (itens, produtos) => {
         return itens.map(item => {
             const produto = produtos.find(prod => prod.id === item.produto_id);
@@ -84,7 +101,7 @@ const CartPage = () => {
         if (novaQuantidade <= 0) return;
         try {
             adicionarLoading(produtoId);
-            setItensCarrinho(prev => prev.map(item => 
+            setItensCarrinho(prev => prev.map(item =>
                 item.produto_id === produtoId ? { ...item, quantidade: novaQuantidade } : item
             ));
             await fetch(`https://veraflor.onrender.com/itens/altera/${clienteId}/${produtoId}`, {
@@ -105,6 +122,10 @@ const CartPage = () => {
             setDataLoaded(false);
             if (clienteId) {
                 try {
+                    // Primeiro, cancelar carrinhos inativos
+                    await cancelarCarrinhosInativos();
+
+                    // Buscar o carrinho ativo do cliente
                     const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
                     if (carrinhoAtivo) {
                         const itens = await buscarItensCarrinho(carrinhoAtivo.id);
@@ -131,7 +152,7 @@ const CartPage = () => {
     const totalValor = itensCarrinho.reduce((acc, item) => {
         return acc + (item.produto && item.produto.preco ? (item.produto.preco * item.quantidade) : 0);
     }, 0);
-    
+
     const totalProdutos = itensCarrinho.reduce((acc, item) => acc + item.quantidade, 0);
 
     const isEmpty = itensCarrinho.length === 0;
@@ -139,23 +160,23 @@ const CartPage = () => {
     return (
         <div className={styles.cartContainer}>
             <h2>Meu Carrinho</h2>
-            <CartStatus 
-                loading={loading && !dataLoaded} 
-                error={error} 
-                isEmpty={isEmpty && dataLoaded && clienteId} 
-                isLoggedIn={!!clienteId} 
+            <CartStatus
+                loading={loading && !dataLoaded}
+                error={error}
+                isEmpty={isEmpty && dataLoaded && clienteId}
+                isLoggedIn={!!clienteId}
             />
             {dataLoaded && clienteId && !loading && !isEmpty && (
                 <div className={styles.cartContent}>
                     <div className={styles.cartItems}>
                         {itensCarrinho.map((item) => (
                             <div key={item.id} className={styles.cartItem}>
-                                <div class="cartItem">
-                                <img
-                                    src={`https://veraflor.onrender.com/public/upload/${item.produto.imagem}`}
-                                    alt={item.produto.descricao}
-                                    className={styles.cartItemImage}
-                                />
+                                <div className={styles.cartItemImageContainer}>
+                                    <img
+                                        src={`https://veraflor.onrender.com/public/upload/${item.produto.imagem}`}
+                                        alt={item.produto.descricao}
+                                        className={styles.cartItemImage}
+                                    />
                                 </div>
                                 <div className={styles.cartItemDetails}>
                                     <div className={styles.itemHeader}>
@@ -167,16 +188,16 @@ const CartPage = () => {
                                         <div className={styles.quantityControl}>
                                             <p><strong>Quantidade:</strong></p>
                                             <div className={styles.quantityButtons}>
-                                                <CiCircleMinus 
-                                                    className={styles.quantityButton} 
-                                                    onClick={() => atualizarQuantidade(item.produto_id, item.quantidade - 1)} 
-                                                    disabled={loadingActions.includes(item.produto_id)} 
+                                                <CiCircleMinus
+                                                    className={styles.quantityButton}
+                                                    onClick={() => atualizarQuantidade(item.produto_id, item.quantidade - 1)}
+                                                    disabled={loadingActions.includes(item.produto_id)}
                                                 />
                                                 <span>{loadingActions.includes(item.produto_id) ? '...' : item.quantidade}</span>
-                                                <CiCirclePlus 
-                                                    className={styles.quantityButton} 
-                                                    onClick={() => atualizarQuantidade(item.produto_id, item.quantidade + 1)} 
-                                                    disabled={loadingActions.includes(item.produto_id)} 
+                                                <CiCirclePlus
+                                                    className={styles.quantityButton}
+                                                    onClick={() => atualizarQuantidade(item.produto_id, item.quantidade + 1)}
+                                                    disabled={loadingActions.includes(item.produto_id)}
                                                 />
                                             </div>
                                         </div>

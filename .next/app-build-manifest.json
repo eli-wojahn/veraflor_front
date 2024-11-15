@@ -1,10 +1,10 @@
 {
   "pages": {
-    "/cliente-dados/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/cliente-dados/page.css",
-      "static/chunks/app/cliente-dados/page.js"
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -12,29 +12,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/loginCliente/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/loginCliente/page.css",
+      "static/chunks/app/loginCliente/page.js"
+    ],
     "/carrinho/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/carrinho/page.css",
       "static/chunks/app/carrinho/page.js"
-    ],
-    "/checkout/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/checkout/page.css",
-      "static/chunks/app/checkout/page.js"
-    ],
-    "/checkout-pix/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/checkout-pix/page.css",
-      "static/chunks/app/checkout-pix/page.js"
-    ],
-    "/checkout-statusPix/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/checkout-statusPix/page.css",
-      "static/chunks/app/checkout-statusPix/page.js"
     ],
     "/produtos/page": [
       "static/chunks/webpack.js",
@@ -42,29 +30,35 @@
       "static/css/app/produtos/page.css",
       "static/chunks/app/produtos/page.js"
     ],
-    "/checkout-status/page": [
+    "/destaques/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/checkout-status/page.css",
-      "static/chunks/app/checkout-status/page.js"
+      "static/css/app/destaques/page.css",
+      "static/chunks/app/destaques/page.js"
     ],
-    "/page": [
+    "/pelotas/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/css/app/pelotas/page.css",
+      "static/chunks/app/pelotas/page.js"
     ],
-    "/login/page": [
+    "/camaqua/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/login/page.css",
-      "static/chunks/app/login/page.js"
+      "static/css/app/camaqua/page.css",
+      "static/chunks/app/camaqua/page.js"
     ],
-    "/loginCliente/page": [
+    "/cliente-dados/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/loginCliente/page.css",
-      "static/chunks/app/loginCliente/page.js"
+      "static/css/app/cliente-dados/page.css",
+      "static/chunks/app/cliente-dados/page.js"
+    ],
+    "/checkout/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/checkout/page.css",
+      "static/chunks/app/checkout/page.js"
     ]
   }
 }

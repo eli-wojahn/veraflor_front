@@ -35,19 +35,16 @@
     background-color: #536426;
 }
 
-/* CartPage.module.css */
+@media (max-width: 768px) {
+    .emptyCart {
+        padding: 20px;
+    }
 
-.loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-size: 24px;
-    color: #666;
+    .emptyCart h2 {
+        font-size: 20px;
+    }
+
+    .emptyCartIcon {
+        font-size: 48px;
+    }
 }
-
-.loadingIcon {
-    margin-right: 10px;
-    font-size: 40px;
-}
-
