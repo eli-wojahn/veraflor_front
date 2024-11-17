@@ -2,14 +2,14 @@ import React, { useEffect, useContext } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import ReactDOM from 'react-dom';
-import { ClienteContext } from '@/contexts/client'; // Import your context
-import CartModalContent from './CartModalContent'; // Import the new component
+import { ClienteContext } from '@/contexts/client'; 
+import CartModalContent from './CartModalContent'; 
 import styles from './CartModal.module.css';
 
 const MySwal = withReactContent(Swal);
 
 const CartModal = ({ product, onClose }) => {
-  const { clienteId } = useContext(ClienteContext); // Access the context here
+  const { clienteId } = useContext(ClienteContext); 
 
   useEffect(() => {
     MySwal.fire({
@@ -26,10 +26,10 @@ const CartModal = ({ product, onClose }) => {
         ReactDOM.render(
           <CartModalContent
             product={product}
-            clienteId={clienteId} // Pass clienteId as a prop
+            clienteId={clienteId} 
             onClose={() => {
-              MySwal.close(); // Close the SweetAlert modal
-              onClose();      // Call any additional onClose logic
+              MySwal.close(); 
+              onClose();     
             }}
           />,
           document.getElementById('cart-modal-root')

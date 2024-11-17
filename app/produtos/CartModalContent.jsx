@@ -6,7 +6,6 @@ import { CiCirclePlus, CiCircleMinus } from 'react-icons/ci';
 const CartModalContent = ({ product, clienteId, onClose }) => {
   const [quantity, setQuantity] = useState(1);
 
-  // Function to fetch or create an active cart
   const buscarCarrinhoAtivo = async (clienteId) => {
     const response = await fetch(`https://veraflor.onrender.com/carrinho/listaAtivos/${clienteId}`);
     const carrinho = await response.json();
@@ -17,7 +16,6 @@ const CartModalContent = ({ product, clienteId, onClose }) => {
     }
   };
 
-  // Function to create a new cart
   const criarCarrinho = async (clienteId) => {
     const response = await fetch(`https://veraflor.onrender.com/carrinho`, {
       method: 'POST',
@@ -47,7 +45,7 @@ const CartModalContent = ({ product, clienteId, onClose }) => {
         icon: 'success',
         title: 'Produto adicionado ao carrinho!',
         showConfirmButton: true,
-        // Remove timer to allow the user to close the modal manually
+
       });
   
       return await response.json();
