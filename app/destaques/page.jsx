@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // Importar a biblioteca de cookies
+import Cookies from 'js-cookie';
 import styles from './destaques.module.css';
 import ProductCard from '../produtos/ProdutoCard';
 import InfoModal from '../produtos/InfoModal';
@@ -23,10 +23,8 @@ const DestaquesPage = () => {
                 }
                 const data = await response.json();
                 
-                // Obter a loja selecionada do cookie ou definir Pelotas como padrão
                 const selectedStore = Cookies.get('selected_store') || 'Pelotas';
                 
-                // Filtrar produtos pela loja selecionada
                 const filteredProducts = data.filter(product => product.loja === selectedStore);
                 setProductList(filteredProducts || []);
             } catch (error) {
@@ -53,7 +51,6 @@ const DestaquesPage = () => {
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
-    // Obter a loja selecionada do cookie para o título
     const selectedStore = Cookies.get('selected_store') || 'Pelotas';
 
     return (

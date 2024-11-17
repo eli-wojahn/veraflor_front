@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import styles from './Content.module.css';
 import CustomCarousel from './CustomCarousel';
@@ -9,8 +9,32 @@ import image1 from '/public/images/image2.jpg';
 import image2 from '/public/images/image3.jpg';
 import image3 from '/public/images/image5.png';
 
+const images = [image1, image2, image3];
+
 const Content = () => {
-  const images = [image1, image2, image3];
+  const [destaques, setDestaques] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://veraflor.onrender.com/produtos/destaque')
+      .then(response => response.json())
+      .then(data => {
+        setDestaques(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar destaques:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const getRandomDestaques = (items, num) => {
+    const shuffled = [...items].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+  };
+
+  const selectedDestaques =
+    destaques.length >= 3 ? getRandomDestaques(destaques, 3) : destaques;
 
   useEffect(() => {
     const alertaJaExibido = localStorage.getItem('alertaJaExibido');
@@ -41,7 +65,7 @@ const Content = () => {
         <div className={styles.card}>
           <img src="/images/pelotas.png" alt="pelotas" />
           <Link href="/pelotas" passHref>
-          <button className={styles.button}>Pelotas</button>
+            <button className={styles.button}>Pelotas</button>
           </Link>
         </div>
         <div className={styles.card}>
@@ -60,9 +84,17 @@ const Content = () => {
           </Link>
         </div>
         <div className={styles.photos}>
-          <img src="/images/image2.jpg" alt="Placeholder" />
-          <img src="/images/image3.jpg" alt="Placeholder" />
-          <img src="/images/image5.png" alt="Placeholder" />
+          {isLoading ? (
+            <p>Carregando...</p>
+          ) : (
+            selectedDestaques.map((item, index) => (
+              <img
+                key={index}
+                src={`https://veraflor.onrender.com/public/upload/${item.imagem}`}
+                alt={item.descricao}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
