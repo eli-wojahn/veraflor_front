@@ -48,8 +48,8 @@ const Footer = () => {
           <h4>OUTRAS INFORMAÇÕES</h4>
           <p><FaClock /> De Segunda à Sábado das 09h às 18h e Domingos das 9h ás 12h e das 14h às 18h</p>
           <p><FaEnvelope /> veraflorgarden@hotmail.com</p>
-          <p><Link href="/como-comprar">Como Comprar</Link></p>
-          <p><Link href="/politica-de-privacidade">Política de Privacidade</Link></p>
+          <p><Link href="/quem-somos">Quem somos</Link></p>
+          <p><Link href="/politica-privacidade">Política de Privacidade</Link></p>
         </div>
       </div>
     </footer>

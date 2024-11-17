@@ -17,6 +17,18 @@
       "static/chunks/main-app.js",
       "static/css/app/produtos/page.css",
       "static/chunks/app/produtos/page.js"
+    ],
+    "/quem-somos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/quem-somos/page.css",
+      "static/chunks/app/quem-somos/page.js"
+    ],
+    "/politica-privacidade/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/politica-privacidade/page.css",
+      "static/chunks/app/politica-privacidade/page.js"
     ]
   }
 }
