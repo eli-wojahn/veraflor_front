@@ -12,7 +12,6 @@ import image3 from '/public/images/image5.png';
 const Content = () => {
   const images = [image1, image2, image3];
 
-  // Disparar o alerta ao carregar a página apenas na primeira visita
   useEffect(() => {
     const alertaJaExibido = localStorage.getItem('alertaJaExibido');
 
@@ -41,11 +40,15 @@ const Content = () => {
       <div className={styles.cardsContainer}>
         <div className={styles.card}>
           <img src="/images/pelotas.png" alt="pelotas" />
+          <Link href="/pelotas" passHref>
           <button className={styles.button}>Pelotas</button>
+          </Link>
         </div>
         <div className={styles.card}>
           <img src="/images/camaqua.jpg" alt="camaqua" />
-          <button className={styles.button}>Camaquã</button>
+          <Link href="/camaqua" passHref>
+            <button className={styles.button}>Camaquã</button>
+          </Link>
         </div>
       </div>
       <div className={styles.section}>
