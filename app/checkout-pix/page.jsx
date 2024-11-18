@@ -12,7 +12,6 @@ const CheckoutPixPage = () => {
         const storedPixData = localStorage.getItem('pixData');
         if (storedPixData) {
             setPixData(JSON.parse(storedPixData));
-            // Remover os dados do localStorage após carregar
             localStorage.removeItem('pixData');
         } else {
             console.error('Dados do Pix não encontrados no localStorage.');

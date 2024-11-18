@@ -302,37 +302,34 @@
 
 @media (max-width: 768px) {
     .customSwalPopup {
-        width: 80%; /* Modal ocupa 80% da largura da tela */
-        max-width: 90%; /* Ajusta para que não ultrapasse 90% da largura da tela */
-        padding: 15px; /* Reduz o padding */
+        width: 80%; 
+        max-width: 90%; 
+        padding: 15px; 
     }
 
-    /* Ajuste no título "Selecione uma loja" */
     .swal2-title {
-        font-size: 1.4rem; /* Ajusta o tamanho da fonte para um valor relativo */
-        text-align: center; /* Centraliza o título */
+        font-size: 1.4rem; 
+        text-align: center; 
     }
 
-    /* Ajuste nos botões dentro do modal */
     .cardCidade .button {
-        font-size: 1rem; /* Reduz o tamanho da fonte do botão */
-        padding: 8px 20px; /* Ajusta o padding */
+        font-size: 1rem; 
+        padding: 8px 20px; 
     }
 
     .cardCidade img {
-        width: 100%; /* Imagens ocupam 100% da largura disponível */
+        width: 100%; 
         max-width: 100%;
         height: auto;
     }
 
-    /* Ajusta o layout da imagem e do conteúdo no modal */
     .modalContent {
-        flex-direction: column; /* Empilha o conteúdo verticalmente */
+        flex-direction: column; 
         align-items: center;
     }
 
     .modalImage {
-        width: 100px; /* Ajusta a largura da imagem para telas menores */
+        width: 100px; 
         height: auto;
     }
 
@@ -355,20 +352,20 @@
     }
 }
 
-/* Para telas muito pequenas, como dispositivos móveis */
+
 @media (max-width: 480px) {
     .customSwalPopup {
-        width: 95%; /* Modal ocupa 95% da largura da tela */
-        padding: 10px; /* Reduz o padding */
+        width: 95%; 
+        padding: 10px; 
     }
 
     .swal2-title {
-        font-size: 1.2rem; /* Menor tamanho para telas muito pequenas */
+        font-size: 1.2rem; 
     }
 
     .cardCidade .button {
-        font-size: 0.6rem; /* Ajusta o tamanho da fonte nos botões */
-        padding: 6px 18px; /* Reduz o padding */
+        font-size: 0.6rem;
+        padding: 6px 18px; 
     }
 
     .modalContent {

@@ -12,65 +12,11 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/produtos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/produtos/page.css",
-      "static/chunks/app/produtos/page.js"
-    ],
-    "/quem-somos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/quem-somos/page.css",
-      "static/chunks/app/quem-somos/page.js"
-    ],
-    "/politica-privacidade/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/politica-privacidade/page.css",
-      "static/chunks/app/politica-privacidade/page.js"
-    ],
-    "/destaques/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/destaques/page.css",
-      "static/chunks/app/destaques/page.js"
-    ],
-    "/camaqua/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/camaqua/page.css",
-      "static/chunks/app/camaqua/page.js"
-    ],
     "/loginCliente/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/loginCliente/page.css",
       "static/chunks/app/loginCliente/page.js"
-    ],
-    "/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/login/page.css",
-      "static/chunks/app/login/page.js"
-    ],
-    "/listagem/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/listagem/page.css",
-      "static/chunks/app/listagem/page.js"
-    ],
-    "/edit/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/edit/[id]/page.css",
-      "static/chunks/app/edit/[id]/page.js"
-    ],
-    "/cadastro/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/cadastro/page.css",
-      "static/chunks/app/cadastro/page.js"
     ]
   }
 }

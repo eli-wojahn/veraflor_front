@@ -10,7 +10,7 @@
     gap: 20px;
     margin-top: 20px;
     color: black;
-    flex-wrap: wrap; /* Permite quebra de linha */
+    flex-wrap: wrap; 
 }
 
 .cartItems {
@@ -27,7 +27,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
-    flex-wrap: wrap; /* Permite quebra de linha */
+    flex-wrap: wrap; 
 }
 
 .cartItemImage {
@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(100% - 155px); /* Considera a largura da imagem e do gap */
+    width: calc(100% - 155px); 
     position: relative;
 }
 

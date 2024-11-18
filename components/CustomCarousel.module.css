@@ -1,8 +1,8 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: 80vh; /* Ajuste a altura conforme necessário */
-  margin: 0 auto; /* Centraliza horizontalmente */
+  height: 80vh; 
+  margin: 0 auto; 
   overflow: hidden;
   margin-bottom: 60px;
 }
@@ -16,7 +16,7 @@
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ajusta a imagem para cobrir o contêiner */
+  object-fit: cover; 
 }
 
 .prevButton,
@@ -30,7 +30,7 @@
   padding: 10px;
   font-size: 50px;
   cursor: pointer;
-  z-index: 2; /* Garante que as setas fiquem sobre a imagem */
+  z-index: 2; 
 }
 
 .prevButton {
@@ -43,12 +43,12 @@
 
 @media (max-width: 768px) {
   .carousel {
-    height: 50vh; /* Ajuste a altura para telas menores */
+    height: 50vh; 
   }
 
   .prevButton,
   .nextButton {
-    font-size: 20px; /* Ajusta o tamanho da fonte para telas menores */
+    font-size: 20px; 
   }
 }
 

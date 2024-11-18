@@ -132,7 +132,6 @@ const PedidoDetalhes = ({ params }) => {
         return <div>Pedido não encontrado</div>;
     }
 
-    // Renderizar os detalhes
     const endereco = pedido.cliente.endereco;
 
     return (

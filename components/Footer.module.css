@@ -46,7 +46,6 @@
   margin-bottom: 5px;
 }
 
-/* Responsiveness */
 @media (max-width: 1024px) {
   .infoSection {
     grid-template-columns: repeat(2, 1fr);

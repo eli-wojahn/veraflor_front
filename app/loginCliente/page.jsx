@@ -53,7 +53,7 @@ export default function Login() {
                     <label htmlFor="senha">Senha de Acesso:</label>
                     <div className={styles.passwordWrapper}>
                         <input 
-                            type={showPassword ? 'text' : 'password'} // Alterna entre mostrar e esconder
+                            type={showPassword ? 'text' : 'password'} 
                             id="senha" 
                             placeholder="Senha" 
                             required 
@@ -62,7 +62,7 @@ export default function Login() {
                         />
                         <span 
                             className={styles.eyeIcon} 
-                            onClick={togglePasswordVisibility} // Alterna a visibilidade ao clicar
+                            onClick={togglePasswordVisibility} 
                         >
                             {showPassword ? <VscEyeClosed /> : <VscEye />}
                         </span>

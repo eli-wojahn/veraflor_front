@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import Cookies from 'js-cookie';  // Vamos usar js-cookie para ler o cookie
-import { withAuth } from '@/util/auth';  // Mantemos o withAuth
+import Cookies from 'js-cookie'; 
+import { withAuth } from '@/util/auth';  
 import styles from './cadastro.module.css';
 import Swal from 'sweetalert2';
 
@@ -23,12 +23,12 @@ const Cadastro = () => {
     const [produto, setProduto] = useState(initialProductState);
 
     function getAdminId() {
-        const adminLogado = Cookies.get('admin_logado');  // Obtém o cookie com os dados do admin
+        const adminLogado = Cookies.get('admin_logado');  
         if (adminLogado) {
-            const parsedAdmin = JSON.parse(adminLogado);  // Faz o parse do cookie para um objeto
-            return parsedAdmin.id;  // Retorna o ID do admin
+            const parsedAdmin = JSON.parse(adminLogado);  
+            return parsedAdmin.id;  
         }
-        return null;  // Se não encontrar o cookie, retorna null
+        return null;  
     }
 
     const handleChange = (e) => {
@@ -87,10 +87,9 @@ const Cadastro = () => {
             return;
         }
 
-        // Aqui pegamos o ID do admin a partir do cookie
-        const adminId = getAdminId(); // Função para pegar o admin ID do cookie
+       
+        const adminId = getAdminId(); 
 
-        // Verificar se o adminId foi encontrado
         if (!adminId) {
             Swal.fire({
                 title: 'Erro!',
@@ -101,7 +100,6 @@ const Cadastro = () => {
             return;
         }
 
-        // Criação do FormData para enviar os dados
         const formData = new FormData();
         formData.append('codigo', produto.codigo);
         formData.append('descricao', produto.descricao);
@@ -113,15 +111,15 @@ const Cadastro = () => {
         formData.append('tamanho', produto.tamanho);
         formData.append('loja', produto.loja);
         formData.append('imagem', produto.imagem);
-        formData.append('adminId', adminId);  // Enviando o adminId junto com os dados do produto
+        formData.append('adminId', adminId);  
 
         try {
             const response = await fetch('https://veraflor.onrender.com/produtos', {
                 method: 'POST',
-                body: formData // Aqui não precisamos de um token JWT, apenas o adminId
+                body: formData 
             });
 
-            // Checando a resposta da requisição
+
             if (response.ok) {
                 Swal.fire({
                     title: 'Sucesso!',
@@ -131,7 +129,7 @@ const Cadastro = () => {
                 });
                 handleClear();
             } else {
-                // Em caso de erro, mostramos o código de status para análise
+
                 Swal.fire({
                     title: 'Erro!',
                     text: `Erro ao cadastrar produto. Status: ${response.status}`,
@@ -254,4 +252,4 @@ const Cadastro = () => {
     );
 }
 
-export default withAuth(Cadastro);  // Mantemos o withAuth
+export default withAuth(Cadastro); 

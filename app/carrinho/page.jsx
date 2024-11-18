@@ -25,7 +25,6 @@ const CartPage = () => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Adicione headers de autenticação se necessário
                 },
             });
             const data = await response.json();
@@ -122,10 +121,8 @@ const CartPage = () => {
             setDataLoaded(false);
             if (clienteId) {
                 try {
-                    // Primeiro, cancelar carrinhos inativos
                     await cancelarCarrinhosInativos();
 
-                    // Buscar o carrinho ativo do cliente
                     const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
                     if (carrinhoAtivo) {
                         const itens = await buscarItensCarrinho(carrinhoAtivo.id);

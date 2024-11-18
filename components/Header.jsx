@@ -1,5 +1,3 @@
-// components/Header.js
-
 'use client';
 import React, { Suspense, useState, useRef, useEffect, useContext } from 'react';
 import Link from 'next/link';
@@ -24,13 +22,13 @@ const Header = () => {
     const { clienteId, clienteNome, cartItemCount, logout: clienteLogout, atualizarCartItemCount } = useContext(ClienteContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [gerenciamentoDropdownOpen, setGerenciamentoDropdownOpen] = useState(false); // Novo state
+    const [gerenciamentoDropdownOpen, setGerenciamentoDropdownOpen] = useState(false); 
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
     const dropdownRef = useRef(null);
-    const gerenciamentoDropdownRef = useRef(null); // Novo ref
+    const gerenciamentoDropdownRef = useRef(null); 
     const tooltipRef = useRef(null);
 
     const buscarCarrinhoAtivo = async (clienteId) => {

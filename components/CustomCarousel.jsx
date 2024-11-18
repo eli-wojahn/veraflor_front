@@ -5,25 +5,22 @@ import Image from 'next/image';
 const CustomCarousel = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Função para avançar para a próxima imagem
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  // Função para voltar para a imagem anterior
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
-  // Função para alternar automaticamente as imagens a cada 5 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000); // Intervalo de 5 segundos
+    }, 5000); 
     return () => clearInterval(interval);
   }, [currentIndex]);
 

@@ -1,4 +1,3 @@
-/* components/Header.module.css */
 .navbar {
   background-color: #ffffff;
   color: #79972B;
@@ -11,7 +10,7 @@
 
 .logo {
   font-size: 24px;
-  margin-bottom: 20px; /* Ajusta o espaçamento em telas menores */
+  margin-bottom: 20px; 
 }
 
 .menuIcon {
@@ -47,11 +46,11 @@
 
 .dropdown {
   position: relative;
-  cursor: pointer; /* Add cursor pointer to dropdown */
+  cursor: pointer; 
 }
 
 .dropdownTitle {
-  cursor: pointer; /* Add cursor pointer to dropdown title */
+  cursor: pointer; 
 }
 
 .dropdownMenu {
@@ -72,7 +71,7 @@
 
 .dropdownMenu li div {
   padding: 10px 20px;
-  cursor: pointer; /* Add cursor pointer to dropdown menu items */
+  cursor: pointer;
 }
 
 .dropdownMenu li div:hover {
@@ -88,7 +87,7 @@
   padding: 5px;
   margin-left: auto;
   border: 1px solid rgb(73, 68, 68);
-  width: 300px; /* Aumenta a largura da barra de busca */
+  width: 300px; 
 }
 
 .searchInput {
@@ -101,8 +100,8 @@
 
 .searchIcon {
   padding: 0 10px;
-  order: -1; /* Muda a ordem do ícone para o início da flexbox */
-  cursor: pointer; /* Add cursor pointer to search icon */
+  order: -1; 
+  cursor: pointer; 
 }
 
 .searchIcon svg {
@@ -127,7 +126,7 @@
   font-size: 30px;
   margin-left: 10px;
   transition: font-size 0.3s;
-  cursor: pointer; /* Add cursor pointer to logout icon */
+  cursor: pointer; 
 }
 
 .logoutIcon:hover {
@@ -141,7 +140,7 @@
 .logoutTooltip {
   display: none;
   position: absolute;
-  top: -25px; /* Ajusta a posição da tooltip */
+  top: -25px; 
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;

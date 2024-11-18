@@ -5,17 +5,15 @@ import Swal from 'sweetalert2';
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AdministradorContext } from '@/contexts/administrator';
-import { VscEye, VscEyeClosed } from 'react-icons/vsc';  // Importe os novos ícones
+import { VscEye, VscEyeClosed } from 'react-icons/vsc'; 
 
 export default function Login() {
     const { register, handleSubmit } = useForm()
     const { mudaId, mudaNome } = useContext(AdministradorContext)
     const router = useRouter()
 
-    // Estado para controlar a visibilidade da senha
     const [showPassword, setShowPassword] = useState(false)
 
-    // Função para alternar entre mostrar/esconder a senha
     const togglePasswordVisibility = () => {
         setShowPassword(prevState => !prevState)
     }
@@ -51,7 +49,7 @@ export default function Login() {
                     <label htmlFor="senha">Senha de Acesso:</label>
                     <div className={styles.passwordWrapper}>
                         <input 
-                            type={showPassword ? 'text' : 'password'} // Alterna entre mostrar e esconder
+                            type={showPassword ? 'text' : 'password'} 
                             id="senha" 
                             placeholder="Senha" 
                             required 
@@ -60,7 +58,7 @@ export default function Login() {
                         />
                         <span 
                             className={styles.eyeIcon} 
-                            onClick={togglePasswordVisibility} // Alterna a visibilidade ao clicar
+                            onClick={togglePasswordVisibility} 
                         >
                             {showPassword ? <VscEyeClosed /> : <VscEye />}
                         </span>

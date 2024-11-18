@@ -35,7 +35,7 @@ const EditProductPage = ({ params }) => {
                 return response.json();
             })
             .then(data => {
-                console.log(data); // Verifique o que está sendo retornado
+                console.log(data); 
                 setProduto(prevState => ({
                     ...prevState,
                     codigo: data.codigo || '',
@@ -43,7 +43,7 @@ const EditProductPage = ({ params }) => {
                     preco: data.preco || '',
                     categoria: data.categoria || 'Selecione',
                     ambiente: data.ambiente || 'Selecione',
-                    destaque: data.destaque !== undefined ? (data.destaque ? '1' : '0') : '1', // Correção
+                    destaque: data.destaque !== undefined ? (data.destaque ? '1' : '0') : '1', 
                     tipo: data.tipo || 'Selecione',
                     tamanho: data.tamanho || 'Selecione',
                     loja: data.loja || 'Selecione',

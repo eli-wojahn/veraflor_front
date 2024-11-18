@@ -1,4 +1,3 @@
-// components/ProductModal.js
 'use client'
 import React, { useEffect } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';

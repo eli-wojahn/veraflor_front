@@ -92,10 +92,10 @@ const CheckoutStatus = () => {
 
           if (novoStatus === 'Pago') {
             mensagem = 'Seu pedido foi concluído, entre em contato com a loja para agendar a entrega ou a retirada.';
-            templateId = 'template_ueeh8dp'; // Template para pagamento aprovado
+            templateId = 'template_ueeh8dp'; 
           } else if (novoStatus === 'Recusado' || novoStatus === 'Cancelado' || novoStatus === 'Não Pago') {
             mensagem = 'Seu pedido não foi concluído por um problema no pagamento, por favor, verifique os dados do cartão informado, ou entre em contato com a loja para mais informações.';
-            templateId = 'template_26haopq'; // Template para pagamento recusado
+            templateId = 'template_26haopq'; 
           } else {
             mensagem = `Status do pedido: ${novoStatus}`;
             templateId = 'template_ueeh8dp'; 

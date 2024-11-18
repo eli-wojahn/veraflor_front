@@ -64,12 +64,12 @@ color: black;
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;
-    flex: 1; /* Faz com que os botões ocupem a mesma largura */
+    flex: 1; 
 }
 
 
 .button:hover {
-    background-color: #6a8a2a; /* Ajuste a cor no hover se desejar */
+    background-color: #6a8a2a; 
 }
 
 .phoneGroup {
@@ -83,11 +83,11 @@ color: black;
 }
 
 .dddLabel {
-    flex: 0 0 60px; /* Largura fixa para o campo DDD */
+    flex: 0 0 60px; 
 }
 
 .celularLabel {
-    flex: 1; /* O campo Telefone celular ocupa o restante do espaço */
+    flex: 1; 
 }
 
 .dddInput {

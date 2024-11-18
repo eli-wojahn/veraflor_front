@@ -23,7 +23,7 @@ const CheckoutPage = () => {
     const [carrinhoId, setCarrinhoId] = useState(null);
     const [enderecos, setEnderecos] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
-    const [deliveryOption, setDeliveryOption] = useState('Entrega'); // Estado para a opção de entrega
+    const [deliveryOption, setDeliveryOption] = useState('Entrega'); 
 
     useEffect(() => {
         const fetchCarrinho = async () => {
@@ -140,7 +140,7 @@ const CheckoutPage = () => {
             clienteId: clienteId,
             carrinhoId: carrinhoId,
             dadosPagamento: paymentData,
-            deliveryOption: deliveryOption // Incluindo a opção de entrega
+            deliveryOption: deliveryOption 
         };
 
         console.log('Dados para enviar (Cartão):', dadosParaEnviar);
@@ -159,7 +159,7 @@ const CheckoutPage = () => {
                     text: 'Seu pedido foi processado com sucesso.',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    router.push('/checkout-status'); // Redireciona para a página de status do pedido
+                    router.push('/checkout-status'); 
                 });
             } else {
                 const erroData = await response.json();

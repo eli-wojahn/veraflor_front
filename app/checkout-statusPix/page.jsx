@@ -20,7 +20,6 @@ const CheckoutStatusPix = () => {
     const buscarPedidos = async () => {
       if (clienteId) {
         try {
-          // Buscar pedidos do cliente
           const responsePedidos = await fetch(`https://veraflor.onrender.com/pedidos/${clienteId}`);
           if (!responsePedidos.ok) {
             throw new Error('Erro ao buscar pedidos');
@@ -82,13 +81,11 @@ const CheckoutStatusPix = () => {
           const updatedData = await response.json();
           const novoStatus = updatedData.statusPedido;
 
-          // Atualizar o pedido com o novo status
           const updatedPedido = { ...pedido, status: novoStatus };
           setPedido(updatedPedido);
           setStatusAtualizado(true); 
           setMostrarDetalhes(true); 
 
-          // Definir a mensagem de status como variável local
           let mensagem = '';
           if (novoStatus === 'Pago') {
             mensagem = 'Seu pedido foi concluído, entre em contato com a loja para agendar a entrega ou a retirada.';
@@ -100,10 +97,8 @@ const CheckoutStatusPix = () => {
             mensagem = `Status do pedido: ${novoStatus}`;
           }
 
-          // Enviar e-mail de confirmação com o status e a mensagem atualizados
           enviarEmailConfirmacao(novoStatus, mensagem);
 
-          // Atualizar o estado da mensagem, se necessário
           setMensagemStatus(mensagem);
 
         } else {
