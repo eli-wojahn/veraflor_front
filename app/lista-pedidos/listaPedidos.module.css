@@ -104,6 +104,21 @@
     color: #82a724;
 }
 
+.cancelButton {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.cancelButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 
 @media (max-width: 768px) {
     .header,
@@ -160,3 +175,5 @@
         align-items: center;
     }
 }
+
+

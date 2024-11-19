@@ -6,6 +6,7 @@ import { withAuth } from '@/util/auth';
 import Pagination from '@mui/material/Pagination';
 import { LuPrinter } from 'react-icons/lu';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2'; // Importando o SweetAlert2
 
 const ListaPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -21,12 +22,12 @@ const ListaPedidos = () => {
 
     const getEntregaClass = (formaEntrega) => {
         if (formaEntrega === 'Entrega') {
-            return styles.entrega; 
+            return styles.entrega;
         }
         if (formaEntrega === 'Retirada') {
-            return styles.retirada; 
+            return styles.retirada;
         }
-        return ''; 
+        return '';
     };
 
     useEffect(() => {
@@ -96,6 +97,54 @@ const ListaPedidos = () => {
         }
     };
 
+    const handleCancelPedido = async (pedidoId) => {
+        // Exibe o modal de confirmação antes de cancelar o pedido
+        const result = await Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Você tem certeza que deseja cancelar este pedido?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, cancelar!',
+            cancelButtonText: 'Não, voltar',
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch(`https://veraflor.onrender.com/pedidos/${pedidoId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao cancelar pedido');
+                }
+
+                setPedidos(prevPedidos =>
+                    prevPedidos.map(pedido =>
+                        pedido.id === pedidoId ? { ...pedido, status: 'Cancelado' } : pedido
+                    )
+                );
+
+                Swal.fire({
+                    title: 'Pedido Cancelado',
+                    text: 'O pedido foi cancelado com sucesso.',
+                    icon: 'success',
+                    confirmButtonText: 'Fechar',
+                });
+            } catch (error) {
+                console.error('Erro ao cancelar pedido:', error);
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Não foi possível cancelar o pedido. Tente novamente mais tarde.',
+                    icon: 'error',
+                    confirmButtonText: 'Fechar',
+                });
+            }
+        }
+    };
+
     const handleSort = (column) => {
         if (sortColumn === column) {
             setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -120,7 +169,7 @@ const ListaPedidos = () => {
                     break;
                 case 'forma_pagamento':
                     aValue = a.forma_pagamento;
-                    bValue = b.forma_pagamento;
+                    bValue = a.forma_pagamento;
                     break;
                 case 'forma_entrega':
                     aValue = a.forma_entrega;
@@ -181,6 +230,7 @@ const ListaPedidos = () => {
                             </th>
                             <th>Entregue</th>
                             <th>Imprimir</th>
+                            <th>Cancelar Pedido</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -215,6 +265,15 @@ const ListaPedidos = () => {
                                         className={styles.printerIcon}
                                         onClick={() => router.push(`/pedidos/${pedido.id}`)}
                                     />
+                                </td>
+                                <td>
+                                    <button
+                                        className={styles.cancelButton}
+                                        onClick={() => handleCancelPedido(pedido.id)}
+                                        disabled={pedido.status === 'Cancelado'}
+                                    >
+                                        Cancelar
+                                    </button>
                                 </td>
                             </tr>
                         ))}
