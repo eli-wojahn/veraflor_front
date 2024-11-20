@@ -9,8 +9,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 80%; 
-    margin-bottom: 30px; 
+    width: 80%;
+    margin-bottom: 30px;
 }
 
 .title {
@@ -79,16 +79,16 @@
 }
 
 .entrega {
-    background-color: #88da9b; 
-    color: black; 
+    background-color: #88da9b;
+    color: black;
     padding: 4px 8px;
     border-radius: 4px;
     display: inline-block;
 }
 
 .retirada {
-    background-color: rgb(243, 184, 75); 
-    color: black; 
+    background-color: rgb(243, 184, 75);
+    color: black;
     padding: 4px 8px;
     border-radius: 4px;
     display: inline-block;
@@ -121,6 +121,7 @@
 
 
 @media (max-width: 768px) {
+
     .header,
     .tableContainer {
         width: 100%;
@@ -176,4 +177,10 @@
     }
 }
 
-
+.canceladoStatus {
+    color: red;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: bold;
+}

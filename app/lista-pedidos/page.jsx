@@ -1,12 +1,11 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import styles from './listaPedidos.module.css';
 import { withAuth } from '@/util/auth';
 import Pagination from '@mui/material/Pagination';
 import { LuPrinter } from 'react-icons/lu';
 import { useRouter } from 'next/navigation';
-import Swal from 'sweetalert2'; // Importando o SweetAlert2
+import Swal from 'sweetalert2';
 
 const ListaPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -98,7 +97,6 @@ const ListaPedidos = () => {
     };
 
     const handleCancelPedido = async (pedidoId) => {
-        // Exibe o modal de confirmação antes de cancelar o pedido
         const result = await Swal.fire({
             title: 'Tem certeza?',
             text: 'Você tem certeza que deseja cancelar este pedido?',
@@ -167,6 +165,10 @@ const ListaPedidos = () => {
                     aValue = parseFloat(a.total);
                     bValue = parseFloat(b.total);
                     break;
+                case 'status':
+                    aValue = a.status || '';
+                    bValue = b.status || '';
+                    break;
                 case 'forma_pagamento':
                     aValue = a.forma_pagamento;
                     bValue = a.forma_pagamento;
@@ -216,6 +218,9 @@ const ListaPedidos = () => {
                             <th onClick={() => handleSort('cliente')} className={styles.clickableHeader}>
                                 Cliente {sortColumn === 'cliente' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
+                            <th onClick={() => handleSort('status')} className={styles.clickableHeader}>
+                                Status {sortColumn === 'status' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
                             <th onClick={() => handleSort('total')} className={styles.clickableHeader}>
                                 Total {sortColumn === 'total' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
@@ -230,29 +235,37 @@ const ListaPedidos = () => {
                             </th>
                             <th>Entregue</th>
                             <th>Imprimir</th>
-                            <th>Cancelar Pedido</th> 
+                            <th>Cancelar Pedido</th>
                         </tr>
                     </thead>
                     <tbody>
                         {currentPageItems.map((pedido) => (
-                            <tr key={pedido.id} className={styles.tableRow}>
+                            <tr
+                                key={pedido.id}
+                                className={`${styles.tableRow} ${pedido.status === 'Cancelado' ? styles.cancelado : ''}`}
+                            >
                                 <td>{pedido.id}</td>
                                 <td>{clientesMap[pedido.cliente_id] || 'N/A'}</td>
+                                <td>
+                                    {pedido.status === 'Cancelado' ? (
+                                        <span className={styles.canceladoStatus}>{pedido.status}</span>
+                                    ) : (
+                                        pedido.status
+                                    )}
+                                </td>
                                 <td>
                                     {new Intl.NumberFormat('pt-BR', {
                                         style: 'currency',
                                         currency: 'BRL',
                                     }).format(pedido.total)}
                                 </td>
-                                <td>
-                                    {pedido.forma_pagamento}
-                                </td>
+                                <td>{pedido.forma_pagamento}</td>
                                 <td>
                                     <span className={getEntregaClass(pedido.forma_entrega)}>
                                         {pedido.forma_entrega}
                                     </span>
                                 </td>
-                                <td>{new Date(pedido.createdAt).toLocaleDateString('pt-BR')}</td>
+                                <td>{new Date(pedido.createdAt).toLocaleDateString()}</td>
                                 <td>
                                     <input
                                         type="checkbox"
@@ -261,10 +274,7 @@ const ListaPedidos = () => {
                                     />
                                 </td>
                                 <td>
-                                    <LuPrinter
-                                        className={styles.printerIcon}
-                                        onClick={() => router.push(`/pedidos/${pedido.id}`)}
-                                    />
+                                    <LuPrinter size={24} onClick={() => console.log('Imprimir', pedido.id)} />
                                 </td>
                                 <td>
                                     <button
@@ -280,15 +290,15 @@ const ListaPedidos = () => {
                     </tbody>
                 </table>
             </div>
-            <div className={styles.paginationContainer}>
-                <Pagination
-                    count={Math.ceil(pedidos.length / itemsPerPage)}
-                    page={page}
-                    onChange={handleChangePage}
-                />
-            </div>
+            <Pagination
+                count={Math.ceil(pedidos.length / itemsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+            />
         </div>
     );
 };
 
 export default withAuth(ListaPedidos);
+
+
