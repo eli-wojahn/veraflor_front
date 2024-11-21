@@ -25,20 +25,18 @@ const ProductPage = () => {
         maxPreco: 600
     });
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [showInfoModal, setShowInfoModal] = useState(false);
-    const [showProductModal, setShowProductModal] = useState(false);
-    const [showCartModal, setShowCartModal] = useState(false);
+    const [activeModal, setActiveModal] = useState(null); // "info", "cart", "price" ou null
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 15;
-    const [selectedStore, setSelectedStore] = useState('Pelotas'); 
+    const [selectedStore, setSelectedStore] = useState('Pelotas');
 
     useEffect(() => {
         const storedStore = Cookies.get('selected_store');
         if (storedStore) {
             setSelectedStore(storedStore);
         } else {
-            openStoreSelectionModal(); 
+            openStoreSelectionModal();
         }
     }, []);
 
@@ -69,7 +67,7 @@ const ProductPage = () => {
         };
 
         fetchAndFilterProducts();
-    }, [filters, page, selectedStore]); 
+    }, [filters, page, selectedStore]);
 
     const openStoreSelectionModal = () => {
         Swal.fire({
@@ -98,13 +96,13 @@ const ProductPage = () => {
 
                 pelotasButton.onclick = () => {
                     setSelectedStore('Pelotas');
-                    Cookies.set('selected_store', 'Pelotas', { expires: 7 }); 
+                    Cookies.set('selected_store', 'Pelotas', { expires: 7 });
                     Swal.close();
                 };
 
                 camaquaButton.onclick = () => {
                     setSelectedStore('Camaquã');
-                    Cookies.set('selected_store', 'Camaquã', { expires: 7 }); 
+                    Cookies.set('selected_store', 'Camaquã', { expires: 7 });
                     Swal.close();
                 };
             }
@@ -114,22 +112,26 @@ const ProductPage = () => {
     const toggleStore = () => {
         const newStore = selectedStore === 'Pelotas' ? 'Camaquã' : 'Pelotas';
         setSelectedStore(newStore);
-        Cookies.set('selected_store', newStore, { expires: 7 }); 
+        Cookies.set('selected_store', newStore, { expires: 7 });
     };
 
     const openInfoModal = (product) => {
         setSelectedProduct(product);
-        setShowInfoModal(true);
-    };
-
-    const openProductModal = (product) => {
-        setSelectedProduct(product);
-        setShowProductModal(true);
+        setActiveModal('info');
     };
 
     const openCartModal = (product) => {
         setSelectedProduct(product);
-        setShowCartModal(true);
+        setActiveModal('cart');
+    };
+
+    const openPriceModal = (product) => {
+        setSelectedProduct(product);
+        setActiveModal('price');
+    };
+
+    const closeModal = () => {
+        setActiveModal(null);
     };
 
     const toggleFilters = () => {
@@ -189,20 +191,20 @@ const ProductPage = () => {
                     <ProductCard
                         key={index}
                         product={product}
-                        openPriceModal={openProductModal}
+                        openPriceModal={openPriceModal}
                         openInfoModal={openInfoModal}
                         openCartModal={openCartModal}
                     />
                 ))}
             </div>
-            {showInfoModal && selectedProduct && (
-                <InfoModal product={selectedProduct} onClose={() => setShowInfoModal(false)} />
+            {activeModal === 'info' && selectedProduct && (
+                <InfoModal product={selectedProduct} onClose={closeModal} />
             )}
-            {showProductModal && selectedProduct && (
-                <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
+            {activeModal === 'cart' && selectedProduct && (
+                <CartModal product={selectedProduct} onClose={closeModal} />
             )}
-            {showCartModal && selectedProduct && (
-                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} />
+            {activeModal === 'price' && selectedProduct && (
+                <ProductModal product={selectedProduct} onClose={closeModal} />
             )}
             <div className={styles.paginationContainer}>
                 {totalPages > 1 && (
