@@ -12,17 +12,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/loginCliente/page": [
+    "/busca/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/loginCliente/page.css",
-      "static/chunks/app/loginCliente/page.js"
+      "static/css/app/busca/page.css",
+      "static/chunks/app/busca/page.js"
     ],
-    "/carrinho/page": [
+    "/destaques/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/carrinho/page.css",
-      "static/chunks/app/carrinho/page.js"
+      "static/css/app/destaques/page.css",
+      "static/chunks/app/destaques/page.js"
     ],
     "/produtos/page": [
       "static/chunks/webpack.js",

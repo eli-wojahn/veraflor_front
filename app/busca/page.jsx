@@ -5,6 +5,7 @@ import styles from './busca.module.css';
 import ProductCard from '../produtos/ProdutoCard';
 import InfoModal from '../produtos/InfoModal';
 import ProductModal from '../produtos/ProductModal';
+import CartModal from '../produtos/CartModal'; // Importe o CartModal
 
 const BuscaContent = () => {
     const searchParams = useSearchParams();
@@ -16,6 +17,7 @@ const BuscaContent = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
+    const [showCartModal, setShowCartModal] = useState(false);  // Estado para o carrinho
 
     useEffect(() => {
         console.log('Keyword:', keyword);
@@ -54,6 +56,11 @@ const BuscaContent = () => {
         setShowProductModal(true);
     };
 
+    const openCartModal = (product) => {
+        setSelectedProduct(product);
+        setShowCartModal(true);  // Lógica para abrir o modal do carrinho
+    };
+
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
@@ -70,6 +77,7 @@ const BuscaContent = () => {
                             product={product}
                             openPriceModal={openProductModal}
                             openInfoModal={openInfoModal}
+                            openCartModal={openCartModal}  // Passe a função aqui
                         />
                     ))
                 ) : (
@@ -85,6 +93,9 @@ const BuscaContent = () => {
             )}
             {showProductModal && selectedProduct && (
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
+            )}
+            {showCartModal && selectedProduct && (
+                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} />  // Modal de carrinho
             )}
         </div>
     );

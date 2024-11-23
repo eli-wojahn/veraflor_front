@@ -5,6 +5,7 @@ import styles from './destaques.module.css';
 import ProductCard from '../produtos/ProdutoCard';
 import InfoModal from '../produtos/InfoModal';
 import ProductModal from '../produtos/ProductModal';
+import CartModal from '../produtos/CartModal'; 
 
 const DestaquesPage = () => {
     const [productList, setProductList] = useState([]);
@@ -13,6 +14,7 @@ const DestaquesPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
+    const [showCartModal, setShowCartModal] = useState(false);  
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -48,6 +50,11 @@ const DestaquesPage = () => {
         setShowProductModal(true);
     };
 
+    const openCartModal = (product) => {
+        setSelectedProduct(product);
+        setShowCartModal(true);  
+    };
+
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>{error}</p>;
 
@@ -66,6 +73,7 @@ const DestaquesPage = () => {
                             product={product}
                             openPriceModal={openProductModal}
                             openInfoModal={openInfoModal}
+                            openCartModal={openCartModal}  
                         />
                     ))
                 ) : (
@@ -77,6 +85,9 @@ const DestaquesPage = () => {
             )}
             {showProductModal && selectedProduct && (
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
+            )}
+            {showCartModal && selectedProduct && (
+                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} />  
             )}
         </div>
     );
