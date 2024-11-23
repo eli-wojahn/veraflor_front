@@ -25,7 +25,7 @@ const ProductPage = () => {
         maxPreco: 600
     });
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [activeModal, setActiveModal] = useState(null); // "info", "cart", "price" ou null
+    const [activeModal, setActiveModal] = useState(null); 
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 15;

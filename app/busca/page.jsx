@@ -1,11 +1,12 @@
 'use client';
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Cookies from 'js-cookie'; 
 import styles from './busca.module.css';
 import ProductCard from '../produtos/ProdutoCard';
 import InfoModal from '../produtos/InfoModal';
 import ProductModal from '../produtos/ProductModal';
-import CartModal from '../produtos/CartModal'; // Importe o CartModal
+import CartModal from '../produtos/CartModal'; 
 
 const BuscaContent = () => {
     const searchParams = useSearchParams();
@@ -17,7 +18,9 @@ const BuscaContent = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showProductModal, setShowProductModal] = useState(false);
-    const [showCartModal, setShowCartModal] = useState(false);  // Estado para o carrinho
+    const [showCartModal, setShowCartModal] = useState(false);  
+
+    const selectedStore = Cookies.get('selected_store') || 'Pelotas'; 
 
     useEffect(() => {
         console.log('Keyword:', keyword);
@@ -34,7 +37,9 @@ const BuscaContent = () => {
                 }
                 const data = await response.json();
                 console.log('Data:', data);
-                setProductList(data);
+
+                const filteredProducts = data.filter(product => product.loja === selectedStore);
+                setProductList(filteredProducts);
             } catch (error) {
                 console.error('Error:', error);
                 setError(error.message);
@@ -44,7 +49,7 @@ const BuscaContent = () => {
         };
 
         fetchProducts();
-    }, [keyword]);
+    }, [keyword, selectedStore]); 
 
     const openInfoModal = (product) => {
         setSelectedProduct(product);
@@ -58,7 +63,7 @@ const BuscaContent = () => {
 
     const openCartModal = (product) => {
         setSelectedProduct(product);
-        setShowCartModal(true);  // Lógica para abrir o modal do carrinho
+        setShowCartModal(true);  
     };
 
     if (loading) return <p>Carregando...</p>;
@@ -77,7 +82,7 @@ const BuscaContent = () => {
                             product={product}
                             openPriceModal={openProductModal}
                             openInfoModal={openInfoModal}
-                            openCartModal={openCartModal}  // Passe a função aqui
+                            openCartModal={openCartModal}  
                         />
                     ))
                 ) : (
@@ -95,7 +100,7 @@ const BuscaContent = () => {
                 <ProductModal product={selectedProduct} onClose={() => setShowProductModal(false)} />
             )}
             {showCartModal && selectedProduct && (
-                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} />  // Modal de carrinho
+                <CartModal product={selectedProduct} onClose={() => setShowCartModal(false)} /> 
             )}
         </div>
     );
