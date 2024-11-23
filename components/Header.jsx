@@ -67,8 +67,26 @@ const Header = () => {
     };
 
     useEffect(() => {
+        const fetchCartItemCount = async () => {
+            try {
+                const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
+                if (carrinhoAtivo) {
+                    const itens = await buscarItensCarrinho(carrinhoAtivo.id);
+                    atualizarCartItemCount(itens.length);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar itens do carrinho:', error);
+            }
+        };
+    
         if (clienteId) {
             fetchCartItemCount(clienteId);
+    
+            const intervalId = setInterval(() => {
+                fetchCartItemCount(clienteId);
+            }, 3000); 
+    
+            return () => clearInterval(intervalId);
         }
     }, [clienteId, pathname]);
 
