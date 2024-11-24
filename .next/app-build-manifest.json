@@ -41,6 +41,12 @@
       "static/chunks/main-app.js",
       "static/css/app/carrinho/page.css",
       "static/chunks/app/carrinho/page.js"
+    ],
+    "/admin/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/admin/login/page.css",
+      "static/chunks/app/admin/login/page.js"
     ]
   }
 }
