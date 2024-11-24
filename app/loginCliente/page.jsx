@@ -19,7 +19,12 @@ export default function Login() {
 
     useEffect(() => {
         if (session) {
-            router.push('/credenciamento-social');
+            const profileComplete = localStorage.getItem('profileComplete');
+            if (profileComplete) {
+                router.push('/');
+            } else {
+                router.push('/credenciamento-social');
+            }
         }
     }, [session]);
 

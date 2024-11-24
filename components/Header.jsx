@@ -1,5 +1,7 @@
+// components/Header.jsx
+
 'use client';
-import React, { Suspense, useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './Header.module.css';
@@ -13,23 +15,24 @@ import HeaderSmall from './HeaderSmall';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Cookies from 'js-cookie';
-import { useSession, signOut } from 'next-auth/react';  
+import { useSession, signOut } from 'next-auth/react';
+
 const MySwal = withReactContent(Swal);
 
 const Header = () => {
-    const { data: session } = useSession(); 
+    const { data: session } = useSession();
     const pathname = usePathname();
+    const router = useRouter();
     const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
-    const { clienteId, cartItemCount, atualizarCartItemCount } = useContext(ClienteContext);
+    const { clienteId, clienteNome, logout, cartItemCount, atualizarCartItemCount } = useContext(ClienteContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [gerenciamentoDropdownOpen, setGerenciamentoDropdownOpen] = useState(false); 
+    const [gerenciamentoDropdownOpen, setGerenciamentoDropdownOpen] = useState(false);
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const router = useRouter();
     const dropdownRef = useRef(null);
-    const gerenciamentoDropdownRef = useRef(null); 
+    const gerenciamentoDropdownRef = useRef(null);
     const tooltipRef = useRef(null);
 
     const buscarCarrinhoAtivo = async (clienteId) => {
@@ -95,9 +98,12 @@ const Header = () => {
 
     const handleLogout = async () => {
         await signOut({
-            redirect: false, 
-            callbackUrl: '/', 
+            redirect: false,
+            callbackUrl: '/',
         });
+        // Limpa o ClienteContext e os cookies
+        logout();
+        localStorage.removeItem('profileComplete'); // Remove a flag do perfil completo ao sair
     };
 
     const handleSearch = (event) => {
@@ -240,17 +246,17 @@ const Header = () => {
                     />
                 </div>
                 <div className={styles.userContainer}>
-                    {session ? (
+                    {clienteId ? (
                         <div className={styles.userIconWrapper} ref={tooltipRef} onClick={toggleTooltip}>
                             <FaRegUser className={styles.userIcon} />
                             {tooltipOpen && (
                                 <div className={styles.tooltip} ref={tooltipRef}>
-                                    <p className={styles.userText}>Olá, {session.user.name}</p>
+                                    <p className={styles.userText}>Olá, {clienteNome}</p>
                                     <br />
                                     <Link href="/cliente-dados" passHref>
                                         <div>Meus dados</div>
                                     </Link>
-                                    <div className={styles.logoutLink} onClick={handleLogout}>Sair</div> 
+                                    <div className={styles.logoutLink} onClick={handleLogout}>Sair</div>
                                 </div>
                             )}
                         </div>
@@ -284,12 +290,4 @@ const Header = () => {
     );
 };
 
-const SearchPage = () => {
-    return (
-        <Suspense fallback={<div>Carregando...</div>}>
-            <Header />
-        </Suspense>
-    );
-};
-
-export default SearchPage;
+export default Header;

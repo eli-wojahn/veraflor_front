@@ -23,6 +23,24 @@
       "static/chunks/main-app.js",
       "static/css/app/credenciamento-social/page.css",
       "static/chunks/app/credenciamento-social/page.js"
+    ],
+    "/cliente-dados/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/cliente-dados/page.css",
+      "static/chunks/app/cliente-dados/page.js"
+    ],
+    "/produtos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/produtos/page.css",
+      "static/chunks/app/produtos/page.js"
+    ],
+    "/carrinho/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/carrinho/page.css",
+      "static/chunks/app/carrinho/page.js"
     ]
   }
 }
