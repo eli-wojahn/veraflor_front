@@ -13,13 +13,14 @@ import HeaderSmall from './HeaderSmall';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Cookies from 'js-cookie';
-
+import { useSession, signOut } from 'next-auth/react';  
 const MySwal = withReactContent(Swal);
 
 const Header = () => {
+    const { data: session } = useSession(); 
     const pathname = usePathname();
     const { adminId, adminNome, mudaId, mudaNome } = useContext(AdministradorContext);
-    const { clienteId, clienteNome, cartItemCount, logout: clienteLogout, atualizarCartItemCount } = useContext(ClienteContext);
+    const { clienteId, cartItemCount, atualizarCartItemCount } = useContext(ClienteContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [gerenciamentoDropdownOpen, setGerenciamentoDropdownOpen] = useState(false); 
@@ -67,26 +68,8 @@ const Header = () => {
     };
 
     useEffect(() => {
-        const fetchCartItemCount = async () => {
-            try {
-                const carrinhoAtivo = await buscarCarrinhoAtivo(clienteId);
-                if (carrinhoAtivo) {
-                    const itens = await buscarItensCarrinho(carrinhoAtivo.id);
-                    atualizarCartItemCount(itens.length);
-                }
-            } catch (error) {
-                console.error('Erro ao buscar itens do carrinho:', error);
-            }
-        };
-    
         if (clienteId) {
             fetchCartItemCount(clienteId);
-    
-            const intervalId = setInterval(() => {
-                fetchCartItemCount(clienteId);
-            }, 3000); 
-    
-            return () => clearInterval(intervalId);
         }
     }, [clienteId, pathname]);
 
@@ -109,6 +92,13 @@ const Header = () => {
             }
         });
     }
+
+    const handleLogout = async () => {
+        await signOut({
+            redirect: false, 
+            callbackUrl: '/', 
+        });
+    };
 
     const handleSearch = (event) => {
         if (event.key === 'Enter') {
@@ -250,17 +240,17 @@ const Header = () => {
                     />
                 </div>
                 <div className={styles.userContainer}>
-                    {clienteId ? (
+                    {session ? (
                         <div className={styles.userIconWrapper} ref={tooltipRef} onClick={toggleTooltip}>
                             <FaRegUser className={styles.userIcon} />
                             {tooltipOpen && (
                                 <div className={styles.tooltip} ref={tooltipRef}>
-                                    <p className={styles.userText}>Olá, {clienteNome}</p>
+                                    <p className={styles.userText}>Olá, {session.user.name}</p>
                                     <br />
                                     <Link href="/cliente-dados" passHref>
                                         <div>Meus dados</div>
                                     </Link>
-                                    <div className={styles.logoutLink} onClick={clienteLogout}>Sair</div>
+                                    <div className={styles.logoutLink} onClick={handleLogout}>Sair</div> 
                                 </div>
                             )}
                         </div>

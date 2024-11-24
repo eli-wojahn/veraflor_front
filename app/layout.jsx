@@ -4,6 +4,7 @@ import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import AdministradorProvider from "@/contexts/administrator";
 import ClienteProvider from "@/contexts/client";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -79,6 +80,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${inter.className} layout`}>
+        <Providers>
         <AdministradorProvider>
           <ClienteProvider>
             <Header />
@@ -88,6 +90,7 @@ export default function RootLayout({ children }) {
             <Footer />
           </ClienteProvider>
         </AdministradorProvider>
+        </Providers>
       </body>
     </html>
   );

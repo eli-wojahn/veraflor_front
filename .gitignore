@@ -7,3 +7,4 @@ node_modules/
 .next/trace
 public/videos
 .next
+.env.local

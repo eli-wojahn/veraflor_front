@@ -1,34 +1,28 @@
 {
   "pages": {
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
-    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/busca/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/busca/page.css",
-      "static/chunks/app/busca/page.js"
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ],
-    "/destaques/page": [
+    "/loginCliente/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/destaques/page.css",
-      "static/chunks/app/destaques/page.js"
+      "static/css/app/loginCliente/page.css",
+      "static/chunks/app/loginCliente/page.js"
     ],
-    "/produtos/page": [
+    "/credenciamento-social/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/produtos/page.css",
-      "static/chunks/app/produtos/page.js"
+      "static/css/app/credenciamento-social/page.css",
+      "static/chunks/app/credenciamento-social/page.js"
     ]
   }
 }
