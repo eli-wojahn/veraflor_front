@@ -11,7 +11,7 @@ import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
 import { IoBulbOutline } from "react-icons/io5";
 import { BiPlusMedical } from "react-icons/bi";
 import { GoArrowSwitch } from "react-icons/go";
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 
 const ProductListPage = () => {
     const [productList, setProductList] = useState([]);
@@ -23,6 +23,17 @@ const ProductListPage = () => {
     const router = useRouter(); 
 
     useEffect(() => {
+        const savedStore = localStorage.getItem('selectedStore');
+        const savedPage = localStorage.getItem('page');
+
+        if (savedStore) {
+            setSelectedStore(savedStore);
+        }
+
+        if (savedPage) {
+            setPage(Number(savedPage));
+        }
+        
         const fetchProducts = async () => {
             setLoading(true);
             try {
@@ -40,10 +51,11 @@ const ProductListPage = () => {
         };
 
         fetchProducts();
-    }, [selectedStore]);
+    }, [selectedStore, page]); 
 
     const handleChangePage = (event, value) => {
         setPage(value);
+        localStorage.setItem('page', value);
     };
 
     const currentPageItems = productList.slice((page - 1) * itemsPerPage, page * itemsPerPage);
@@ -51,6 +63,7 @@ const ProductListPage = () => {
     const toggleStore = () => {
         const newStore = selectedStore === 'Pelotas' ? 'Camaquã' : 'Pelotas';
         setSelectedStore(newStore);
+        localStorage.setItem('selectedStore', newStore);
     };
 
     const handleDelete = (id) => {
