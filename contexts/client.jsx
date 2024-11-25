@@ -1,5 +1,3 @@
-// contexts/client.js
-
 'use client';
 import Cookies from 'js-cookie';
 import { createContext, useState, useEffect } from 'react';
@@ -13,6 +11,7 @@ function ClienteProvider({ children }) {
     const [clienteId, setClienteId] = useState(null);
     const [clienteNome, setClienteNome] = useState('');
     const [cartItemCount, setCartItemCount] = useState(0);
+    const [profileComplete, setProfileComplete] = useState(null); // Novo estado
     const router = useRouter();
 
     useEffect(() => {
@@ -21,6 +20,7 @@ function ClienteProvider({ children }) {
             const cliente = JSON.parse(clienteCookie);
             setClienteId(cliente.id);
             setClienteNome(cliente.nome);
+            setProfileComplete(cliente.profileComplete); // Recupera profileComplete do cookie
         }
     }, []);
 
@@ -38,12 +38,20 @@ function ClienteProvider({ children }) {
                         const clienteData = await response.json();
                         mudaIdCliente(clienteData.id);
                         mudaNomeCliente(clienteData.nome);
-                        Cookies.set('cliente_logado', JSON.stringify({ id: clienteData.id, nome: clienteData.nome }), { expires: 7 });
+
+                        // Verifica se o perfil está completo
+                        const isProfileComplete = clienteData.cpf && clienteData.dataNasc && clienteData.area && clienteData.celular;
+                        setProfileComplete(isProfileComplete);
+
+                        // Atualiza o cookie
+                        Cookies.set('cliente_logado', JSON.stringify({ id: clienteData.id, nome: clienteData.nome, profileComplete: isProfileComplete }), { expires: 7 });
                     } else {
                         console.error('Erro ao autenticar no backend');
+                        setProfileComplete(false); // Define como falso se a autenticação falhar
                     }
                 } catch (error) {
                     console.error('Erro ao autenticar no backend:', error);
+                    setProfileComplete(false); // Define como falso em caso de erro
                 }
             }
         };
@@ -58,21 +66,16 @@ function ClienteProvider({ children }) {
     function mudaIdCliente(id) {
         setClienteId(id);
         const clienteCookie = Cookies.get('cliente_logado');
-        let clienteData = {};
-        if (clienteCookie) {
-            clienteData = JSON.parse(clienteCookie);
-        }
+        let clienteData = clienteCookie ? JSON.parse(clienteCookie) : {};
         clienteData.id = id;
         Cookies.set('cliente_logado', JSON.stringify(clienteData), { expires: 7 });
     }
 
+
     function mudaNomeCliente(nome) {
         setClienteNome(nome);
         const clienteCookie = Cookies.get('cliente_logado');
-        let clienteData = {};
-        if (clienteCookie) {
-            clienteData = JSON.parse(clienteCookie);
-        }
+        let clienteData = clienteCookie ? JSON.parse(clienteCookie) : {};
         clienteData.nome = nome;
         Cookies.set('cliente_logado', JSON.stringify(clienteData), { expires: 7 });
     }
@@ -81,12 +84,13 @@ function ClienteProvider({ children }) {
         setClienteId(null);
         setClienteNome('');
         setCartItemCount(0);
+        setProfileComplete(null); // Limpa o estado de profileComplete
         Cookies.remove('cliente_logado');
         router.push('/');
     }
 
     return (
-        <ClienteContext.Provider value={{ clienteId, clienteNome, cartItemCount, mudaIdCliente, mudaNomeCliente, logout, atualizarCartItemCount }}>
+        <ClienteContext.Provider value={{ clienteId, clienteNome, cartItemCount, mudaIdCliente, mudaNomeCliente, logout, atualizarCartItemCount, profileComplete, setProfileComplete }}>
             {children}
         </ClienteContext.Provider>
     );

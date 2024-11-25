@@ -1,9 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Swal from 'sweetalert2';
 import styles from './credenciamento-social.module.css';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { ClienteContext } from '@/contexts/client';
+import Cookies from 'js-cookie';
 
 const CredenciamentoSocial = () => {
     const initialClientState = {
@@ -19,6 +21,7 @@ const CredenciamentoSocial = () => {
     const [cliente, setCliente] = useState(initialClientState);
     const { data: session, status } = useSession();
     const router = useRouter();
+    const { setProfileComplete } = useContext(ClienteContext);
 
     useEffect(() => {
         if (session) {
@@ -96,14 +99,23 @@ const CredenciamentoSocial = () => {
             });
 
             if (response.ok) {
-                // Cadastro bem-sucedido
                 Swal.fire({
                     title: 'Sucesso!',
                     text: 'Cadastro efetuado com sucesso!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    localStorage.setItem('profileComplete', 'true');
+                    // Atualiza o estado de profileComplete
+                    if (setProfileComplete) {
+                        setProfileComplete(true);
+                    }
+                    // Atualiza o cookie
+                    const clienteCookie = Cookies.get('cliente_logado');
+                    if (clienteCookie) {
+                        const clienteData = JSON.parse(clienteCookie);
+                        clienteData.profileComplete = true;
+                        Cookies.set('cliente_logado', JSON.stringify(clienteData), { expires: 7 });
+                    }
                     router.push('/'); // Redireciona para a página inicial
                 });
             } else {

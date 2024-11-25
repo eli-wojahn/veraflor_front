@@ -1,21 +1,18 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import Content from "../components/Content.jsx";
+import { ClienteContext } from '@/contexts/client';
 
 const Home = () => {
-    const { data: session, status } = useSession();
     const router = useRouter();
+    const { profileComplete } = useContext(ClienteContext);
 
     useEffect(() => {
-        if (status === 'authenticated') {
-            const profileComplete = localStorage.getItem('profileComplete');
-            if (!profileComplete) {
-                router.push('/credenciamento-social');
-            }
+        if (profileComplete === false) {
+            router.push('/credenciamento-social');
         }
-    }, [status]);
+    }, [profileComplete]);
 
     return (
         <div>

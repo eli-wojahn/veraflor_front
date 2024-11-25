@@ -13,10 +13,10 @@ export const authOptions = {
             // Permite o login
             return true;
         },
-        async redirect({ url, baseUrl }) {
-            // Redireciona para a página de completar perfil
-            return '/credenciamento-social'; // Certifique-se de que o caminho está correto
-        },
+        // Remova o callback redirect
+        // async redirect({ url, baseUrl }) {
+        //     return '/credenciamento-social';
+        // },
         async session({ session, user, token }) {
             // Adiciona o ID do usuário à sessão
             session.user.id = token.sub;

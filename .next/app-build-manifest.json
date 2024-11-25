@@ -30,23 +30,23 @@
       "static/css/app/cliente-dados/page.css",
       "static/chunks/app/cliente-dados/page.js"
     ],
-    "/produtos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/produtos/page.css",
-      "static/chunks/app/produtos/page.js"
-    ],
     "/carrinho/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/carrinho/page.css",
       "static/chunks/app/carrinho/page.js"
     ],
-    "/admin/login/page": [
+    "/produtos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/admin/login/page.css",
-      "static/chunks/app/admin/login/page.js"
+      "static/css/app/produtos/page.css",
+      "static/chunks/app/produtos/page.js"
+    ],
+    "/destaques/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/destaques/page.css",
+      "static/chunks/app/destaques/page.js"
     ]
   }
 }
