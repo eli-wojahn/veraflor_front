@@ -1,0 +1,32 @@
+/* Estilos para o botão do Google */
+.googleLoginBtn {
+    background-color: #4285F4; /* Cor do Google */
+    color: white; /* Texto branco */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.googleLoginBtn i {
+    margin-right: 10px; /* Espaçamento entre o ícone e o texto */
+}
+
+.googleLoginBtn:hover {
+    background-color: #357AE8; /* Cor do Google ao passar o mouse */
+}
+
+.googleLoginBtn:active {
+    background-color: #3367D6; /* Cor do Google ao clicar */
+}
+
+.googleLoginBtn:focus {
+    outline: none; /* Remove o outline padrão do foco */
+}

@@ -10,15 +10,9 @@ export const authOptions = {
     ],
     callbacks: {
         async signIn({ user, account, profile }) {
-            // Permite o login
             return true;
         },
-        // Remova o callback redirect
-        // async redirect({ url, baseUrl }) {
-        //     return '/credenciamento-social';
-        // },
         async session({ session, user, token }) {
-            // Adiciona o ID do usuário à sessão
             session.user.id = token.sub;
             return session;
         },
