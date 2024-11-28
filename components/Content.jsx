@@ -14,6 +14,7 @@ const images = [image1, image2, image3];
 const Content = () => {
   const [destaques, setDestaques] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [cookieConsent, setCookieConsent] = useState(false); // Estado para controle da barra de cookies
 
   useEffect(() => {
     fetch('https://veraflor.onrender.com/produtos/destaque')
@@ -57,6 +58,20 @@ const Content = () => {
     }
   }, []);
 
+  // Função para fechar a barra de consentimento de cookies
+  const handleCookieConsent = () => {
+    setCookieConsent(true);
+    localStorage.setItem('cookieConsent', 'true');
+  };
+
+  // Verifica se o consentimento já foi dado
+  useEffect(() => {
+    const consent = localStorage.getItem('cookieConsent');
+    if (consent) {
+      setCookieConsent(true);
+    }
+  }, []);
+
   return (
     <div className={styles.content}>
       <CustomCarousel images={images} />
@@ -97,6 +112,20 @@ const Content = () => {
           )}
         </div>
       </div>
+
+      {/* Barra de consentimento de cookies */}
+      {!cookieConsent && (
+        <div className={styles.cookieBanner}>
+          <p>
+            Nós utilizamos cookies para personalizar anúncios e melhorar a sua experiência no site.
+            Ao continuar navegando, você concorda com a nossa{' '}
+            <Link href="/politica-privacidade" className={styles.cookieLink}>Política de Privacidade</Link>.
+          </p>
+          <button className={styles.cookieButton} onClick={handleCookieConsent}>
+            Concordar e Fechar
+          </button>
+        </div>
+      )}
     </div>
   );
 };
