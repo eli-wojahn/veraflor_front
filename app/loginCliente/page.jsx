@@ -1,8 +1,6 @@
 'use client'
 import styles from './loginCliente.module.css';
-import { useState } from 'react';
 import Login from './login';
-import GoogleLogin from './loginGoogle';
 
 export default function LoginPage() {
     return (

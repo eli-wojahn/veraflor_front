@@ -21,6 +21,9 @@ export const authOptions = {
                 token.sub = user.id;
             }
             return token;
+        },
+        async redirect({ url, baseUrl }) {
+            return baseUrl;  
         }
     }
 }

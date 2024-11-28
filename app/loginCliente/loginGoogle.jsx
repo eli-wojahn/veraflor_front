@@ -1,15 +1,23 @@
 'use client'
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';  
 import styles from './loginGoogle.module.css';
 
 export default function GoogleLogin() {
-    const googleLogin = () => {
-        signIn('google'); // Inicia o login com Google
+    const router = useRouter();  
+
+    const googleLogin = async () => {
+        const result = await signIn('google', { redirect: false });
+        if (result?.ok) {
+            router.push('/');  
+        } else {
+            console.log('Erro no login com Google');
+        }
     };
 
     return (
         <button
-            className={styles.googleLoginBtn} // Usando a classe de estilo do CSS
+            className={styles.googleLoginBtn} 
             type="button"
             onClick={googleLogin} 
         >
