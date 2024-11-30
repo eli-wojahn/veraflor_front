@@ -1,14 +1,14 @@
 'use client';
 import React, { useEffect, useState, useContext } from 'react';
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 import { ClienteContext } from '@/contexts/client';
 import styles from './ClienteArea.module.css';
 import ClienteForm from './ClienteForm';
 import EnderecoForm from './EnderecoForm';
-import PedidosForm from './PedidosForm'; 
+import PedidosForm from './PedidosForm';
 
 const ClienteArea = () => {
-    const { clienteId } = useContext(ClienteContext); 
+    const { clienteId } = useContext(ClienteContext);
     const [cliente, setCliente] = useState({
         nome: '',
         email: '',
@@ -19,8 +19,8 @@ const ClienteArea = () => {
         celular: '',
     });
     const [enderecos, setEnderecos] = useState([{}]);
-    const [pedidos, setPedidos] = useState([]); 
-    const [activeSection, setActiveSection] = useState('meus-dados'); 
+    const [pedidos, setPedidos] = useState([]);
+    const [activeSection, setActiveSection] = useState('meus-dados');
 
 
     const buscarCliente = async () => {
@@ -50,7 +50,6 @@ const ClienteArea = () => {
             });
         }
     };
-
     const buscarEnderecos = async () => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/endereco/${clienteId}`);
@@ -126,6 +125,53 @@ const ClienteArea = () => {
         }
     };
 
+    const handleSubmitEndereco = async (index) => {
+        const enderecoAtual = enderecos[index]; 
+        const cliente_id = clienteId; 
+
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/endereco/altera/${enderecoAtual.id || ''}`, {
+                method: enderecoAtual.id ? 'PUT' : 'POST',  
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...enderecoAtual,
+                    cliente_id
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao salvar o endereço');
+            }
+
+            buscarEnderecos();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: enderecoAtual.id ? 'Endereço atualizado com sucesso!' : 'Endereço cadastrado com sucesso!',
+            });
+        } catch (error) {
+            console.error('Erro ao salvar endereço:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao salvar endereço. Tente novamente.',
+            });
+        }
+    };
+
+    const handleEnderecoChange = (index, e) => {
+        const { name, value } = e.target;
+        const updatedEnderecos = [...enderecos];
+        updatedEnderecos[index] = {
+            ...updatedEnderecos[index],
+            [name]: value,
+        };
+        setEnderecos(updatedEnderecos);
+
+        console.log('Endereços atualizados:', updatedEnderecos);  
+    };
+
     const formatDateForInput = (dateStr) => {
         if (!dateStr) return '';
         const dateParts = dateStr.split('/');
@@ -159,19 +205,19 @@ const ClienteArea = () => {
         if (clienteId) {
             buscarCliente();
             buscarEnderecos();
-            buscarPedidos(); 
+            buscarPedidos();
         }
-    }, [clienteId]); 
+    }, [clienteId]);
 
 
     const renderContent = () => {
         switch (activeSection) {
             case 'meus-dados':
                 return (
-                    <ClienteForm 
-                        cliente={cliente} 
+                    <ClienteForm
+                        cliente={cliente}
                         setCliente={setCliente}
-                        onSubmit={handleSubmitCliente} 
+                        onSubmit={handleSubmitCliente}
                         handleInputChange={(e) => setCliente({ ...cliente, [e.target.name]: e.target.value })}
                     />
                 );
@@ -180,7 +226,7 @@ const ClienteArea = () => {
                     <div className={styles.content}>
                         <h1>Endereços</h1>
                         {enderecos.map((endereco, index) => (
-                            <EnderecoForm 
+                            <EnderecoForm
                                 key={endereco.id || index}
                                 endereco={endereco}
                                 onChange={(e) => handleEnderecoChange(index, e)}
@@ -190,7 +236,7 @@ const ClienteArea = () => {
                     </div>
                 );
             case 'pedidos':
-                return <PedidosForm pedidos={pedidos} />; 
+                return <PedidosForm pedidos={pedidos} />;
             default:
                 return null;
         }
@@ -200,20 +246,20 @@ const ClienteArea = () => {
         <div className={styles.wrapper}>
             <aside className={styles.sidebar}>
                 <ul>
-                    <li 
-                        onClick={() => setActiveSection('meus-dados')} 
+                    <li
+                        onClick={() => setActiveSection('meus-dados')}
                         className={activeSection === 'meus-dados' ? styles.active : ''}
                     >
                         Meus dados
                     </li>
-                    <li 
-                        onClick={() => setActiveSection('pedidos')} 
+                    <li
+                        onClick={() => setActiveSection('pedidos')}
                         className={activeSection === 'pedidos' ? styles.active : ''}
                     >
                         Pedidos
                     </li>
-                    <li 
-                        onClick={() => setActiveSection('enderecos')} 
+                    <li
+                        onClick={() => setActiveSection('enderecos')}
                         className={activeSection === 'enderecos' ? styles.active : ''}
                     >
                         Endereços
@@ -222,7 +268,7 @@ const ClienteArea = () => {
             </aside>
             <div className={styles.contentContainer}>
                 <main className={styles.mainContent}>
-                    {renderContent()} {}
+                    {renderContent()} { }
                 </main>
             </div>
         </div>
