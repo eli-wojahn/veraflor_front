@@ -1,3 +1,4 @@
+/* Estilo para o container principal */
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -7,6 +8,12 @@
     margin-bottom: 30px;
 }
 
+/* Estilo para o título */
+.title {
+    color: black;
+}
+
+/* Formulário */
 .form {
     display: flex;
     flex-direction: column;
@@ -14,6 +21,7 @@
     margin-top: 25px;
 }
 
+/* Rótulos de campos */
 .label {
     color: black;
     font-weight: bold;
@@ -21,25 +29,38 @@
     margin-bottom: 5px;
 }
 
+/* Estilo básico para inputs */
 .input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: white; 
-    color: black; 
+    background-color: white;
+    color: black;
 }
 
-.title{
-color: black; 
-}
-
+/* Input em foco */
 .input:focus {
     outline: none;
     border-color: #79972B;
 }
 
+/* Container para o input de senha com ícone dentro */
+.inputContainer {
+    position: relative;
+}
+
+/* Estilo do ícone */
+.icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Botões de envio e limpar */
 .buttonGroup {
     display: flex;
     gap: 10px;
@@ -53,25 +74,25 @@ color: black;
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;
-    flex: 1; 
+    flex: 1;
 }
 
 .buttonRosa {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #DE2C62; 
+    background-color: #DE2C62;
     color: white;
     cursor: pointer;
     transition: background 0.3s ease;
-    flex: 1; 
+    flex: 1;
 }
-
 
 .button:hover {
-    background-color: #6a8a2a; 
+    background-color: #6a8a2a;
 }
 
+/* Grupo de inputs de telefone */
 .phoneGroup {
     display: flex;
     gap: 10px;
@@ -83,11 +104,11 @@ color: black;
 }
 
 .dddLabel {
-    flex: 0 0 60px; 
+    flex: 0 0 60px;
 }
 
 .celularLabel {
-    flex: 1; 
+    flex: 1;
 }
 
 .dddInput {
@@ -98,3 +119,60 @@ color: black;
     width: 100%;
 }
 
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin: 0 10px;
+    }
+
+    .form {
+        gap: 15px;
+    }
+
+    .label {
+        font-size: 14px;
+    }
+
+    .input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .button, .buttonRosa {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .form {
+        gap: 10px;
+    }
+
+    .label {
+        font-size: 12px;
+    }
+
+    .input {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .button, .buttonRosa {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

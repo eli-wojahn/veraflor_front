@@ -29,6 +29,12 @@
       "static/chunks/main-app.js",
       "static/css/app/produtos/page.css",
       "static/chunks/app/produtos/page.js"
+    ],
+    "/credenciamento/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/credenciamento/page.css",
+      "static/chunks/app/credenciamento/page.js"
     ]
   }
 }

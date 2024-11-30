@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { VscEye, VscEyeClosed } from 'react-icons/vsc'; // Importando os ícones
 import styles from './credenciamento.module.css';
 
 const Credenciamento = () => {
@@ -16,6 +17,8 @@ const Credenciamento = () => {
 
     const [cliente, setCliente] = useState(initialClientState);
     const [senhaRepetida, setSenhaRepetida] = useState('');
+    const [senhaVisivel, setSenhaVisivel] = useState(false);  // Novo estado para controlar a visibilidade da senha
+    const [senhaRepetidaVisivel, setSenhaRepetidaVisivel] = useState(false); // Controle da visibilidade da senha repetida
 
     const formatarCPF = (cpf) => {
         cpf = cpf.replace(/\D/g, '');
@@ -196,26 +199,47 @@ const Credenciamento = () => {
                         className={styles.input}
                     />
                 </label>
+
+                {/* Campo de senha com ícone dentro */}
                 <label className={styles.label}>
                     Senha
-                    <input
-                        type="password"
-                        name="senha"
-                        value={cliente.senha}
-                        onChange={handleChange}
-                        className={styles.input}
-                    />
+                    <div className={styles.inputContainer}>
+                        <input
+                            type={senhaVisivel ? "text" : "password"}
+                            name="senha"
+                            value={cliente.senha}
+                            onChange={handleChange}
+                            className={styles.input}
+                        />
+                        <div 
+                            className={styles.icon} 
+                            onClick={() => setSenhaVisivel(!senhaVisivel)}
+                        >
+                            {senhaVisivel ? <VscEye /> : <VscEyeClosed />}
+                        </div>
+                    </div>
                 </label>
+
+                {/* Campo de repetição de senha com ícone dentro */}
                 <label className={styles.label}>
                     Repita a senha
-                    <input
-                        type="password"
-                        name="senhaRepetida"
-                        value={senhaRepetida}
-                        onChange={handleSenhaRepetidaChange}
-                        className={styles.input}
-                    />
+                    <div className={styles.inputContainer}>
+                        <input
+                            type={senhaRepetidaVisivel ? "text" : "password"}
+                            name="senhaRepetida"
+                            value={senhaRepetida}
+                            onChange={handleSenhaRepetidaChange}
+                            className={styles.input}
+                        />
+                        <div 
+                            className={styles.icon} 
+                            onClick={() => setSenhaRepetidaVisivel(!senhaRepetidaVisivel)}
+                        >
+                            {senhaRepetidaVisivel ? <VscEye /> : <VscEyeClosed />}
+                        </div>
+                    </div>
                 </label>
+
                 <div className={styles.buttonGroup}>
                     <button type="submit" className={styles.button}>Enviar</button>
                     <button type="button" className={styles.buttonRosa} onClick={handleClear}>Limpar</button>
@@ -226,3 +250,4 @@ const Credenciamento = () => {
 };
 
 export default Credenciamento;
+
