@@ -49,3 +49,20 @@
     font-size: 20px;
     cursor: pointer;
 }
+
+
+@media (max-width: 700px) {
+    .modalContent {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .modalImage {
+        width: 100px; 
+        margin-bottom: 10px; 
+    }
+
+    .modalDetails {
+        text-align: center; 
+    }
+}
