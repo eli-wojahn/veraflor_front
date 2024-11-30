@@ -1,7 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import { VscEye, VscEyeClosed } from 'react-icons/vsc'; // Importando os ícones
+import { VscEye, VscEyeClosed } from 'react-icons/vsc'; 
+import { useRouter } from 'next/navigation'; 
 import styles from './credenciamento.module.css';
 
 const Credenciamento = () => {
@@ -17,8 +18,10 @@ const Credenciamento = () => {
 
     const [cliente, setCliente] = useState(initialClientState);
     const [senhaRepetida, setSenhaRepetida] = useState('');
-    const [senhaVisivel, setSenhaVisivel] = useState(false);  // Novo estado para controlar a visibilidade da senha
-    const [senhaRepetidaVisivel, setSenhaRepetidaVisivel] = useState(false); // Controle da visibilidade da senha repetida
+    const [senhaVisivel, setSenhaVisivel] = useState(false);  
+    const [senhaRepetidaVisivel, setSenhaRepetidaVisivel] = useState(false); 
+
+    const router = useRouter(); 
 
     const formatarCPF = (cpf) => {
         cpf = cpf.replace(/\D/g, '');
@@ -103,6 +106,7 @@ const Credenciamento = () => {
                     confirmButtonText: 'OK'
                 });
                 handleClear();
+                router.push('/loginCliente'); 
             } else {
                 const errorData = await response.json();
                 Swal.fire({
@@ -200,7 +204,6 @@ const Credenciamento = () => {
                     />
                 </label>
 
-                {/* Campo de senha com ícone dentro */}
                 <label className={styles.label}>
                     Senha
                     <div className={styles.inputContainer}>
@@ -220,7 +223,6 @@ const Credenciamento = () => {
                     </div>
                 </label>
 
-                {/* Campo de repetição de senha com ícone dentro */}
                 <label className={styles.label}>
                     Repita a senha
                     <div className={styles.inputContainer}>
@@ -250,4 +252,3 @@ const Credenciamento = () => {
 };
 
 export default Credenciamento;
-
