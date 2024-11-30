@@ -1,6 +1,7 @@
 'use client'
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';  
+import { FcGoogle } from 'react-icons/fc'; 
 import styles from './loginGoogle.module.css';
 
 export default function GoogleLogin() {
@@ -21,7 +22,8 @@ export default function GoogleLogin() {
             type="button"
             onClick={googleLogin} 
         >
-            <i className="bi bi-google"></i>{"  "}Login com Google
+            <FcGoogle size={24} style={{ marginRight: '10px' }} /> 
+            Login com Google
         </button>
     );
 }

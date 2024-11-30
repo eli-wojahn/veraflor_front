@@ -236,9 +236,8 @@
     font-size: 1em;
 }
 
-/* Modal de Sucesso */
 .modalSuccess {
-    background-color: #28a745; /* Cor de sucesso */
+    background-color: #28a745;
 }
 
 .modalSuccess h2 {
