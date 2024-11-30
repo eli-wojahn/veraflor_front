@@ -127,28 +127,44 @@ const ClienteArea = () => {
 
     const handleSubmitEndereco = async (index) => {
         const enderecoAtual = enderecos[index]; 
-        const cliente_id = clienteId; 
-
+        const cliente_id = clienteId;
+    
+        let url;
+        let method;
+    
+        if (enderecoAtual.id) {
+            // Se já existe o ID do endereço, atualiza o endereço específico
+            url = `https://veraflor.onrender.com/endereco/altera/${enderecoAtual.id}`; // Endpoint PUT
+            method = 'PUT';
+        } else {
+            // Se o ID do endereço não existe, cria um novo endereço
+            url = `https://veraflor.onrender.com/endereco/cadastro`;  // Endpoint POST
+            method = 'POST';
+        }
+    
         try {
-            const response = await fetch(`https://veraflor.onrender.com/endereco/altera/${enderecoAtual.id || ''}`, {
-                method: enderecoAtual.id ? 'PUT' : 'POST',  
+            const response = await fetch(url, {
+                method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...enderecoAtual,
                     cliente_id
                 }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Erro ao salvar o endereço');
             }
-
+    
+            // Após salvar, busca novamente os endereços atualizados
             buscarEnderecos();
-
+    
             Swal.fire({
                 icon: 'success',
                 title: 'Sucesso',
-                text: enderecoAtual.id ? 'Endereço atualizado com sucesso!' : 'Endereço cadastrado com sucesso!',
+                text: enderecoAtual.id 
+                    ? 'Endereço atualizado com sucesso!' 
+                    : 'Endereço cadastrado com sucesso!',
             });
         } catch (error) {
             console.error('Erro ao salvar endereço:', error);
@@ -159,6 +175,7 @@ const ClienteArea = () => {
             });
         }
     };
+    
 
     const handleEnderecoChange = (index, e) => {
         const { name, value } = e.target;
