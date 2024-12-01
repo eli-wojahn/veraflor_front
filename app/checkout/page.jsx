@@ -98,7 +98,16 @@ const CheckoutPage = () => {
         e.preventDefault();
         setErroMensagem('');
 
-        // Validações do cartão de crédito
+        if (enderecos.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Endereço não encontrado',
+                text: 'Você precisa cadastrar um endereço para finalizar a compra.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
         if (!paymentData.numeroCartao || paymentData.numeroCartao.length < 16) {
             Swal.fire({
                 icon: 'error',
@@ -155,7 +164,7 @@ const CheckoutPage = () => {
             if (response.ok) {
                 Swal.fire({
                     icon: 'info',
-                    title: 'Pedido conluido, acompanheo status para mais informações!',
+                    title: 'Pedido concluído, acompanhe o status para mais informações!',
                     text: 'Seu pedido foi processado com sucesso.',
                     confirmButtonText: 'OK'
                 }).then(() => {
@@ -188,10 +197,20 @@ const CheckoutPage = () => {
     const handlePixPayment = async () => {
         setErroMensagem('');
 
+        if (enderecos.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Endereço não encontrado',
+                text: 'Você precisa cadastrar um endereço para finalizar a compra.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
         const dadosParaEnviar = {
             clienteId: clienteId,
             carrinhoId: carrinhoId,
-            deliveryOption: deliveryOption // Incluindo a opção de entrega
+            deliveryOption: deliveryOption 
         };
 
         console.log('Dados para enviar (Pix):', dadosParaEnviar);
@@ -206,14 +225,12 @@ const CheckoutPage = () => {
             if (response.ok) {
                 const data = await response.json();
 
-                // Armazena os dados do Pix no localStorage
                 localStorage.setItem('pixData', JSON.stringify({
                     pagseguro_order_id: data.pagseguro_order_id,
                     qr_code_text: data.qr_codes[0].text,
                     qr_code_image_url: data.qr_codes[0].links[0].href
                 }));
 
-                // Redireciona para a página do Pix
                 router.push('/checkout-pix');
             } else {
                 const erroData = await response.json();

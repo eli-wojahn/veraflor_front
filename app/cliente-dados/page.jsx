@@ -22,7 +22,7 @@ const ClienteArea = () => {
     const [pedidos, setPedidos] = useState([]);
     const [activeSection, setActiveSection] = useState('meus-dados');
 
-
+    // Funções para buscar os dados
     const buscarCliente = async () => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/clientes`);
@@ -50,6 +50,7 @@ const ClienteArea = () => {
             });
         }
     };
+
     const buscarEnderecos = async () => {
         try {
             const response = await fetch(`https://veraflor.onrender.com/endereco/${clienteId}`);
@@ -86,6 +87,7 @@ const ClienteArea = () => {
         }
     };
 
+    // Função para salvar os dados do cliente
     const handleSubmitCliente = async (event) => {
         event.preventDefault();
         try {
@@ -125,23 +127,22 @@ const ClienteArea = () => {
         }
     };
 
+    // Função para salvar ou atualizar os endereços
     const handleSubmitEndereco = async (index) => {
-        const enderecoAtual = enderecos[index]; 
+        const enderecoAtual = enderecos[index];
         const cliente_id = clienteId;
-    
+
         let url;
         let method;
-    
+
         if (enderecoAtual.id) {
-            // Se já existe o ID do endereço, atualiza o endereço específico
-            url = `https://veraflor.onrender.com/endereco/altera/${enderecoAtual.id}`; // Endpoint PUT
+            url = `https://veraflor.onrender.com/endereco/altera/${enderecoAtual.id}`;
             method = 'PUT';
         } else {
-            // Se o ID do endereço não existe, cria um novo endereço
-            url = `https://veraflor.onrender.com/endereco/cadastro`;  // Endpoint POST
+            url = `https://veraflor.onrender.com/endereco/cadastro`;
             method = 'POST';
         }
-    
+
         try {
             const response = await fetch(url, {
                 method: method,
@@ -151,19 +152,18 @@ const ClienteArea = () => {
                     cliente_id
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Erro ao salvar o endereço');
             }
-    
-            // Após salvar, busca novamente os endereços atualizados
+
             buscarEnderecos();
-    
+
             Swal.fire({
                 icon: 'success',
                 title: 'Sucesso',
-                text: enderecoAtual.id 
-                    ? 'Endereço atualizado com sucesso!' 
+                text: enderecoAtual.id
+                    ? 'Endereço atualizado com sucesso!'
                     : 'Endereço cadastrado com sucesso!',
             });
         } catch (error) {
@@ -175,8 +175,8 @@ const ClienteArea = () => {
             });
         }
     };
-    
 
+    // Função para atualizar dados do endereço
     const handleEnderecoChange = (index, e) => {
         const { name, value } = e.target;
         const updatedEnderecos = [...enderecos];
@@ -185,10 +185,9 @@ const ClienteArea = () => {
             [name]: value,
         };
         setEnderecos(updatedEnderecos);
-
-        console.log('Endereços atualizados:', updatedEnderecos);  
     };
 
+    // Função para formatar datas no formato de input
     const formatDateForInput = (dateStr) => {
         if (!dateStr) return '';
         const dateParts = dateStr.split('/');
@@ -208,16 +207,18 @@ const ClienteArea = () => {
         }
     };
 
+    // Função para formatar datas para o backend
     const formatDateForBackend = (dateStr) => {
         if (!dateStr) return '';
         const dateParts = dateStr.split('-');
         if (dateParts.length === 3) {
             const [year, month, day] = dateParts;
-            return `${day}/${month}/${year}`;
+            return `${year}-${month}-${day}`;
         }
-        return dateStr;
+        return '';
     };
 
+    // Carregar dados quando o clienteId muda
     useEffect(() => {
         if (clienteId) {
             buscarCliente();
@@ -226,7 +227,7 @@ const ClienteArea = () => {
         }
     }, [clienteId]);
 
-
+    // Função para renderizar o conteúdo com base na seção ativa
     const renderContent = () => {
         switch (activeSection) {
             case 'meus-dados':
@@ -253,40 +254,28 @@ const ClienteArea = () => {
                     </div>
                 );
             case 'pedidos':
-                return <PedidosForm pedidos={pedidos} />;
+                return (
+                    <div className={styles.content}>
+                        <h1>Meus Pedidos</h1>
+                        <PedidosForm pedidos={pedidos} />
+                    </div>
+                );
             default:
-                return null;
+                return <div>Selecione uma opção.</div>;
         }
     };
 
     return (
         <div className={styles.wrapper}>
-            <aside className={styles.sidebar}>
-                <ul>
-                    <li
-                        onClick={() => setActiveSection('meus-dados')}
-                        className={activeSection === 'meus-dados' ? styles.active : ''}
-                    >
-                        Meus dados
-                    </li>
-                    <li
-                        onClick={() => setActiveSection('pedidos')}
-                        className={activeSection === 'pedidos' ? styles.active : ''}
-                    >
-                        Pedidos
-                    </li>
-                    <li
-                        onClick={() => setActiveSection('enderecos')}
-                        className={activeSection === 'enderecos' ? styles.active : ''}
-                    >
-                        Endereços
-                    </li>
-                </ul>
-            </aside>
+            <div className={styles.sidebar}>
+                <button onClick={() => setActiveSection('meus-dados')} className={activeSection === 'meus-dados' ? styles.active : ''}>Meus Dados</button>
+                <button onClick={() => setActiveSection('enderecos')} className={activeSection === 'enderecos' ? styles.active : ''}>Endereços</button>
+                <button onClick={() => setActiveSection('pedidos')} className={activeSection === 'pedidos' ? styles.active : ''}>Pedidos</button>
+            </div>
             <div className={styles.contentContainer}>
-                <main className={styles.mainContent}>
-                    {renderContent()} { }
-                </main>
+                <div className={styles.mainContent}>
+                    {renderContent()}
+                </div>
             </div>
         </div>
     );

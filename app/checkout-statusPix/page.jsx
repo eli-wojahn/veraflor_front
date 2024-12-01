@@ -13,8 +13,9 @@ const CheckoutStatusPix = () => {
   const [pedido, setPedido] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [mostrarDetalhes, setMostrarDetalhes] = useState(false);
-  const [statusAtualizado, setStatusAtualizado] = useState(false); 
+  const [statusAtualizado, setStatusAtualizado] = useState(false);
   const [mensagemStatus, setMensagemStatus] = useState('');
+  const [clienteEmailState, setClienteEmailState] = useState(clienteEmail); 
 
   useEffect(() => {
     const buscarPedidos = async () => {
@@ -45,19 +46,52 @@ const CheckoutStatusPix = () => {
       }
     };
 
+    const buscarEmailCliente = async () => {
+      if (!clienteEmailState && clienteId) { 
+        try {
+          const responseClientes = await fetch('https://veraflor.onrender.com/clientes');
+          if (!responseClientes.ok) {
+            throw new Error('Erro ao buscar os clientes');
+          }
+          const dataClientes = await responseClientes.json();
+          const clienteEncontrado = dataClientes.find(cliente => cliente.id === clienteId); 
+          if (clienteEncontrado) {
+            setClienteEmailState(clienteEncontrado.email); 
+          } else {
+            console.error('Cliente não encontrado');
+          }
+        } catch (error) {
+          console.error('Erro ao buscar o email do cliente:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: 'Erro ao carregar email do cliente.',
+          });
+        }
+      }
+    };
+
     buscarPedidos();
-  }, [clienteId]);
+    buscarEmailCliente(); 
+  }, [clienteId, clienteEmailState]); 
 
   const enviarEmailConfirmacao = (statusPedido, mensagem) => {
+    const isEmailValid = (email) => /\S+@\S+\.\S+/.test(email); 
+  
+    if (!isEmailValid(clienteEmailState)) { 
+      console.error('Email inválido:', clienteEmailState);
+      return;
+    }
+  
     const templateParams = {
       nome: clienteNome,
-      email: clienteEmail,
+      email: clienteEmailState, 
       numero_pedido: pedido.id,
       status_pedido: statusPedido,
       total_pedido: parseFloat(pedido.total).toFixed(2),
       mensagem: mensagem,
     };
-
+  
     emailjs.send('service_70wxah2', 'template_ueeh8dp', templateParams, 'fV6_rIi2IBsbpVQt2')
       .then((response) => {
         console.log('E-mail enviado com sucesso!', response.status, response.text);
@@ -97,7 +131,7 @@ const CheckoutStatusPix = () => {
             mensagem = `Status do pedido: ${novoStatus}`;
           }
 
-          enviarEmailConfirmacao(novoStatus, mensagem);
+          enviarEmailConfirmacao(novoStatus, mensagem); 
 
           setMensagemStatus(mensagem);
 
