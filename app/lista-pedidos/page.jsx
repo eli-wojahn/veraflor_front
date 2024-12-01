@@ -274,7 +274,10 @@ const ListaPedidos = () => {
                                     />
                                 </td>
                                 <td>
-                                    <LuPrinter size={24} onClick={() => console.log('Imprimir', pedido.id)} />
+                                    <LuPrinter
+                                        className={styles.printerIcon}
+                                        onClick={() => router.push(`/pedidos/${pedido.id}`)}
+                                    />
                                 </td>
                                 <td>
                                     <button

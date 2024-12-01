@@ -77,6 +77,12 @@
       "static/chunks/main-app.js",
       "static/css/app/lista-pedidos/page.css",
       "static/chunks/app/lista-pedidos/page.js"
+    ],
+    "/pedidos/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/pedidos/[id]/page.css",
+      "static/chunks/app/pedidos/[id]/page.js"
     ]
   }
 }
