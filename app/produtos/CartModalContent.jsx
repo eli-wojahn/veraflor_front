@@ -71,6 +71,9 @@ const CartModalContent = ({ product, clienteId, onClose }) => {
       await Swal.fire({
         icon: 'warning',
         title: 'Você precisa estar logado para adicionar itens ao carrinho',
+        confirmButtonText: 'OK',
+      }).then(() => {
+        window.location.href = '/loginCliente';
       });
       return;
     }

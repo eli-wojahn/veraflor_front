@@ -29,6 +29,36 @@
       "static/chunks/main-app.js",
       "static/css/app/admin/login/page.css",
       "static/chunks/app/admin/login/page.js"
+    ],
+    "/produtos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/produtos/page.css",
+      "static/chunks/app/produtos/page.js"
+    ],
+    "/carrinho/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/carrinho/page.css",
+      "static/chunks/app/carrinho/page.js"
+    ],
+    "/checkout/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/checkout/page.css",
+      "static/chunks/app/checkout/page.js"
+    ],
+    "/checkout-pix/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/checkout-pix/page.css",
+      "static/chunks/app/checkout-pix/page.js"
+    ],
+    "/checkout-statusPix/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/checkout-statusPix/page.css",
+      "static/chunks/app/checkout-statusPix/page.js"
     ]
   }
 }

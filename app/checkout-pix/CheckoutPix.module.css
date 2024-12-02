@@ -1,6 +1,7 @@
 .checkoutPixContainer {
     text-align: center;
     padding: 20px;
+    color: black;
 }
 
 .qrCodeContainer {
@@ -28,6 +29,8 @@
     border-radius: 10px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
     resize: none; 
+    background-color: white;
+    color: black;
 }
 
 .copyButton {
@@ -35,6 +38,7 @@
     border: none;
     cursor: pointer;
     margin-left: 10px;
+    color: black
 }
 
 .copyButton:hover {
