@@ -256,7 +256,6 @@ const ClienteArea = () => {
             case 'pedidos':
                 return (
                     <div className={styles.content}>
-                        <h1>Meus Pedidos</h1>
                         <PedidosForm pedidos={pedidos} />
                     </div>
                 );

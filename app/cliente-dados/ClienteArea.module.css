@@ -56,6 +56,10 @@
     margin-bottom: 15px;
 }
 
+.content {
+    color:black;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .wrapper {
