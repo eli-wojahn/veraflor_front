@@ -5,6 +5,10 @@
     color: black;
 }
 
+.label {
+background-color: white;
+}
+
 .pedidosList {
     display: flex;
     flex-direction: column;

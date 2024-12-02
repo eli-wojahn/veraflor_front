@@ -98,13 +98,15 @@
 }
 
 .inputContainer {
+    width: 100%;
     padding: 15px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    transition: all linear 160ms;
     outline: none;
-    width: 100%;
+    background-color: white;
+    color: black;
+    transition: border 0.3s ease;
 }
 
 .inputContainer:focus-within {
