@@ -5,17 +5,17 @@ import styles from './Content.module.css';
 import CustomCarousel from './CustomCarousel';
 import Link from 'next/link';
 
-import image1 from '/public/images/image2.jpg';
-import image2 from '/public/images/image3.jpg';
-import image3 from '/public/images/image5.png';
+import image1 from '/public/images/capa12.png';
+import image2 from '/public/images/capa2.png';
+import image3 from '/public/images/capa4.png';
+import image4 from '/public/images/capa52.png';
 
-const images = [image1, image2, image3];
+const images = [image1, image2, image3, image4];
 
 const Content = () => {
   const [destaques, setDestaques] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [cookieConsent, setCookieConsent] = useState(false); // Estado para controle da barra de cookies
-
+  const [cookieConsent, setCookieConsent] = useState(false); 
   useEffect(() => {
     fetch('https://veraflor.onrender.com/produtos/destaque')
       .then(response => response.json())
@@ -58,13 +58,11 @@ const Content = () => {
     }
   }, []);
 
-  // Função para fechar a barra de consentimento de cookies
   const handleCookieConsent = () => {
     setCookieConsent(true);
     localStorage.setItem('cookieConsent', 'true');
   };
 
-  // Verifica se o consentimento já foi dado
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent');
     if (consent) {
@@ -113,7 +111,6 @@ const Content = () => {
         </div>
       </div>
 
-      {/* Barra de consentimento de cookies */}
       {!cookieConsent && (
         <div className={styles.cookieBanner}>
           <p>
