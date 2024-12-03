@@ -28,7 +28,6 @@ const ListaPedidos = () => {
         }
         return '';
     };
-
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
@@ -37,7 +36,17 @@ const ListaPedidos = () => {
                     throw new Error('Erro ao buscar pedidos');
                 }
                 const data = await response.json();
-                setPedidos(data);
+    
+                const pedidosComLoja = data.map(pedido => {
+                    const carrinhoItens = pedido.carrinho?.carrinhoItens;
+                    let loja = '';
+                    if (carrinhoItens && carrinhoItens.length > 0) {
+                        loja = carrinhoItens[0].produto?.loja || '';
+                    }
+                    return { ...pedido, loja };
+                });
+    
+                setPedidos(pedidosComLoja);
             } catch (error) {
                 console.error('Erro ao buscar pedidos:', error);
             }
@@ -65,7 +74,7 @@ const ListaPedidos = () => {
             await Promise.all([fetchPedidos(), fetchClientes()]);
             setLoading(false);
         };
-
+    
         fetchData();
     }, []);
 
@@ -161,6 +170,10 @@ const ListaPedidos = () => {
                     aValue = clientesMap[a.cliente_id] || '';
                     bValue = clientesMap[b.cliente_id] || '';
                     break;
+                case 'loja':
+                    aValue = a.loja || '';
+                    bValue = b.loja || '';
+                    break;
                 case 'total':
                     aValue = parseFloat(a.total);
                     bValue = parseFloat(b.total);
@@ -171,7 +184,7 @@ const ListaPedidos = () => {
                     break;
                 case 'forma_pagamento':
                     aValue = a.forma_pagamento;
-                    bValue = a.forma_pagamento;
+                    bValue = b.forma_pagamento;
                     break;
                 case 'forma_entrega':
                     aValue = a.forma_entrega;
@@ -218,6 +231,9 @@ const ListaPedidos = () => {
                             <th onClick={() => handleSort('cliente')} className={styles.clickableHeader}>
                                 Cliente {sortColumn === 'cliente' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
+                            <th onClick={() => handleSort('loja')} className={styles.clickableHeader}>
+                                Loja {sortColumn === 'loja' && (sortDirection === 'asc' ? '▲' : '▼')}
+                            </th>
                             <th onClick={() => handleSort('status')} className={styles.clickableHeader}>
                                 Status {sortColumn === 'status' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
@@ -246,6 +262,7 @@ const ListaPedidos = () => {
                             >
                                 <td>{pedido.id}</td>
                                 <td>{clientesMap[pedido.cliente_id] || 'N/A'}</td>
+                                <td>{pedido.loja}</td>
                                 <td>
                                     {pedido.status === 'Cancelado' ? (
                                         <span className={styles.canceladoStatus}>{pedido.status}</span>

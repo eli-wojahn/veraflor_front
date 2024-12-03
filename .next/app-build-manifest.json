@@ -12,23 +12,23 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/loginCliente/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/loginCliente/page.css",
-      "static/chunks/app/loginCliente/page.js"
-    ],
-    "/cliente-dados/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/cliente-dados/page.css",
-      "static/chunks/app/cliente-dados/page.js"
-    ],
     "/admin/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/admin/login/page.css",
       "static/chunks/app/admin/login/page.js"
+    ],
+    "/listagem/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/listagem/page.css",
+      "static/chunks/app/listagem/page.js"
+    ],
+    "/lista-pedidos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/lista-pedidos/page.css",
+      "static/chunks/app/lista-pedidos/page.js"
     ],
     "/produtos/page": [
       "static/chunks/webpack.js",
@@ -59,6 +59,12 @@
       "static/chunks/main-app.js",
       "static/css/app/checkout-statusPix/page.css",
       "static/chunks/app/checkout-statusPix/page.js"
+    ],
+    "/pedidos/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/pedidos/[id]/page.css",
+      "static/chunks/app/pedidos/[id]/page.js"
     ]
   }
 }
