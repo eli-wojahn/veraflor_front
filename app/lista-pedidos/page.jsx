@@ -6,6 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import { LuPrinter } from 'react-icons/lu';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import { GoArrowSwitch } from 'react-icons/go';
 
 const ListaPedidos = () => {
     const [pedidos, setPedidos] = useState([]);
@@ -17,6 +18,7 @@ const ListaPedidos = () => {
     const [sortColumn, setSortColumn] = useState('id');
     const [sortDirection, setSortDirection] = useState('asc');
 
+    const [selectedStore, setSelectedStore] = useState('Pelotas');
     const router = useRouter();
 
     const getEntregaClass = (formaEntrega) => {
@@ -28,25 +30,27 @@ const ListaPedidos = () => {
         }
         return '';
     };
+
+    const toggleStore = () => {
+        const newStore = selectedStore === 'Pelotas' ? 'Camaquã' : 'Pelotas';
+        setSelectedStore(newStore);
+        localStorage.setItem('selectedStore', newStore);
+    };
+
     useEffect(() => {
+        const savedStore = localStorage.getItem('selectedStore');
+        if (savedStore) {
+            setSelectedStore(savedStore);
+        }
+
         const fetchPedidos = async () => {
             try {
-                const response = await fetch('https://veraflor.onrender.com/pedidos/listar');
+                const response = await fetch(`https://veraflor.onrender.com/pedidos/listar/${selectedStore}`);
                 if (!response.ok) {
                     throw new Error('Erro ao buscar pedidos');
                 }
                 const data = await response.json();
-    
-                const pedidosComLoja = data.map(pedido => {
-                    const carrinhoItens = pedido.carrinho?.carrinhoItens;
-                    let loja = '';
-                    if (carrinhoItens && carrinhoItens.length > 0) {
-                        loja = carrinhoItens[0].produto?.loja || '';
-                    }
-                    return { ...pedido, loja };
-                });
-    
-                setPedidos(pedidosComLoja);
+                setPedidos(data);
             } catch (error) {
                 console.error('Erro ao buscar pedidos:', error);
             }
@@ -74,9 +78,9 @@ const ListaPedidos = () => {
             await Promise.all([fetchPedidos(), fetchClientes()]);
             setLoading(false);
         };
-    
+
         fetchData();
-    }, []);
+    }, [selectedStore]);
 
     const handleChangePage = (event, value) => {
         setPage(value);
@@ -170,10 +174,6 @@ const ListaPedidos = () => {
                     aValue = clientesMap[a.cliente_id] || '';
                     bValue = clientesMap[b.cliente_id] || '';
                     break;
-                case 'loja':
-                    aValue = a.loja || '';
-                    bValue = b.loja || '';
-                    break;
                 case 'total':
                     aValue = parseFloat(a.total);
                     bValue = parseFloat(b.total);
@@ -219,7 +219,12 @@ const ListaPedidos = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>Gerenciamento de Pedidos</div>
+                <div className={styles.title}>
+                    Gerenciamento de Pedidos - Loja: {selectedStore}
+                    <button className={styles.filterButtonRosa} onClick={toggleStore}>
+                        <GoArrowSwitch />
+                    </button>
+                </div>
             </div>
             <div className={styles.tableContainer}>
                 <table className={styles.table}>
@@ -231,9 +236,7 @@ const ListaPedidos = () => {
                             <th onClick={() => handleSort('cliente')} className={styles.clickableHeader}>
                                 Cliente {sortColumn === 'cliente' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
-                            <th onClick={() => handleSort('loja')} className={styles.clickableHeader}>
-                                Loja {sortColumn === 'loja' && (sortDirection === 'asc' ? '▲' : '▼')}
-                            </th>
+                            {/* Removemos a coluna Loja */}
                             <th onClick={() => handleSort('status')} className={styles.clickableHeader}>
                                 Status {sortColumn === 'status' && (sortDirection === 'asc' ? '▲' : '▼')}
                             </th>
@@ -262,7 +265,7 @@ const ListaPedidos = () => {
                             >
                                 <td>{pedido.id}</td>
                                 <td>{clientesMap[pedido.cliente_id] || 'N/A'}</td>
-                                <td>{pedido.loja}</td>
+                                {/* Removemos a coluna Loja */}
                                 <td>
                                     {pedido.status === 'Cancelado' ? (
                                         <span className={styles.canceladoStatus}>{pedido.status}</span>
@@ -320,5 +323,3 @@ const ListaPedidos = () => {
 };
 
 export default withAuth(ListaPedidos);
-
-
