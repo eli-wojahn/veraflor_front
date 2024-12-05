@@ -11,6 +11,8 @@ import { PiPlantFill, PiPlantThin } from 'react-icons/pi';
 import { IoBulbOutline } from "react-icons/io5";
 import { BiPlusMedical } from "react-icons/bi";
 import { GoArrowSwitch } from "react-icons/go";
+import { IoCloseOutline } from "react-icons/io5";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { useRouter } from 'next/navigation';
 
 const ProductListPage = () => {
@@ -37,7 +39,7 @@ const ProductListPage = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://veraflor.onrender.com/produtos/${selectedStore}`);
+                const response = await fetch(`https://veraflor.onrender.com/produtos/disponibilidade/${selectedStore}`);
                 if (!response.ok) {
                     throw new Error('Erro ao obter produtos');
                 }
@@ -120,6 +122,30 @@ const ProductListPage = () => {
         }
     };
 
+    const toggleDisponibilidade = async (id, currentDisponivel) => {
+        const newDisponivel = !currentDisponivel;
+        try {
+            const response = await fetch(`https://veraflor.onrender.com/produtos/disponibilidade/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ disponivel: newDisponivel })
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao atualizar disponibilidade');
+            }
+
+            setProductList(prevList => 
+                prevList.map(product =>
+                    product.id === id ? { ...product, disponivel: newDisponivel } : product
+                )
+            );
+            Swal.fire('Sucesso!', 'A disponibilidade foi atualizada.', 'success');
+        } catch (error) {
+            Swal.fire('Erro!', error.message, 'error');
+        }
+    };
+
     const handleEditDica = (id) => {
         router.push(`/edit-dica/${id}`);
     };
@@ -145,6 +171,7 @@ const ProductListPage = () => {
                     <thead>
                         <tr>
                             <th className={`${styles.productHeader} ${styles.leftAlign}`}>Produtos</th>
+                            <th className={styles.actionHeader}>Disponibilidade</th>
                             <th className={styles.actionHeader}>Destaque</th>
                             <th className={styles.actionHeader}>Editar</th>
                             <th className={styles.actionHeader}>Dicas</th>
@@ -156,6 +183,21 @@ const ProductListPage = () => {
                             <tr key={product.id} className={index % 2 === 0 ? styles.even : styles.odd}>
                                 <td className={`${styles.productName} ${styles.leftAlign}`} style={product.destaque ? { fontWeight: 'bold' } : {}}>
                                     {product.descricao}
+                                </td>
+                                <td className={styles.actionCell}>
+                                    <button
+                                        className={styles.iconButton}
+                                        onClick={() => toggleDisponibilidade(product.id, product.disponivel)}
+                                    >
+                                        {product.disponivel ? (
+                                            <IoIosCheckmarkCircleOutline className={styles.disponibilidadeIconActive} />
+                                        ) : (
+                                            <IoCloseOutline className={styles.disponibilidadeIcon} />
+                                        )}
+                                        <span className={styles.tooltip}>
+                                            {product.disponivel ? 'Em Estoque' : 'Fora de Estoque'}
+                                        </span>
+                                    </button>
                                 </td>
                                 <td className={styles.actionCell}>
                                     <button

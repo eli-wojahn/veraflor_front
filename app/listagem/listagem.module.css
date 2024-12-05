@@ -154,6 +154,21 @@
     margin-left: 10px; 
 }
 
+.disponibilidadeIcon {
+    color: red; 
+    font-size: 28px;
+}
+
+.disponibilidadeIconActive {
+    color: green;
+    font-size: 28px;
+}
+
+.disponibilidadeIcon:hover,
+.disponibilidadeIconActive:hover {
+    font-size: 28px; 
+}
+
 
 @media (max-width: 768px) {
     .header,
