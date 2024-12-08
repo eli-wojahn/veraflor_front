@@ -5,10 +5,12 @@
 }
 
 .title {
-    font-size: 25px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: black;
+    color: rgb(107, 106, 106);
+    display: flex; 
+    align-items: center; 
 }
 
 .cardContainer {
