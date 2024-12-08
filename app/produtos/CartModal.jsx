@@ -1,7 +1,7 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import { createRoot } from 'react-dom/client'; 
+import ReactDOM from 'react-dom';
 import { ClienteContext } from '@/contexts/client'; 
 import CartModalContent from './CartModalContent'; 
 import styles from './CartModal.module.css';
@@ -10,9 +10,6 @@ const MySwal = withReactContent(Swal);
 
 const CartModal = ({ product, onClose }) => {
   const { clienteId } = useContext(ClienteContext); 
-
-  const rootRef = useRef(null);
-  const containerRef = useRef(null);
 
   useEffect(() => {
     MySwal.fire({
@@ -26,13 +23,7 @@ const CartModal = ({ product, onClose }) => {
         closeButton: styles.customSwalCloseButton,
       },
       didOpen: () => {
-        containerRef.current = document.getElementById('cart-modal-root');
-
-        if (!rootRef.current) {
-          rootRef.current = createRoot(containerRef.current);
-        }
-
-        rootRef.current.render(
+        ReactDOM.render(
           <CartModalContent
             product={product}
             clienteId={clienteId} 
@@ -40,15 +31,12 @@ const CartModal = ({ product, onClose }) => {
               MySwal.close(); 
               onClose();     
             }}
-          />
+          />,
+          document.getElementById('cart-modal-root')
         );
       },
       willClose: () => {
-        if (rootRef.current) {
-          rootRef.current.unmount();
-          rootRef.current = null;
-        }
-        containerRef.current = null;
+        ReactDOM.unmountComponentAtNode(document.getElementById('cart-modal-root'));
       },
     });
   }, [clienteId, onClose, product]);
