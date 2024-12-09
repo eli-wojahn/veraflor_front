@@ -18,35 +18,17 @@
       "static/css/app/loginCliente/page.css",
       "static/chunks/app/loginCliente/page.js"
     ],
+    "/credenciamento-social/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/credenciamento-social/page.css",
+      "static/chunks/app/credenciamento-social/page.js"
+    ],
     "/cliente-dados/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/cliente-dados/page.css",
       "static/chunks/app/cliente-dados/page.js"
-    ],
-    "/destaques/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/destaques/page.css",
-      "static/chunks/app/destaques/page.js"
-    ],
-    "/produtos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/produtos/page.css",
-      "static/chunks/app/produtos/page.js"
-    ],
-    "/pelotas/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/pelotas/page.css",
-      "static/chunks/app/pelotas/page.js"
-    ],
-    "/carrinho/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/carrinho/page.css",
-      "static/chunks/app/carrinho/page.js"
     ]
   }
 }
